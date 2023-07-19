@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App01
+namespace ConceptArchictect.Finance
 {
     public class BankAccount
     {
@@ -20,7 +20,8 @@ namespace App01
             this.accountNumber = accountNumber;
             this.name = name;
             //this.password = password;
-            SetPassword(password);
+            //SetPassword(password);
+            Password = password; //calls Password set
             balance = amount;
             this.interestRate = interestRate;
 
@@ -31,11 +32,11 @@ namespace App01
             if (amount > 0)
             {
                 balance += amount;
-                Console.WriteLine("Amount Deposited");
+               // Console.WriteLine("Amount Deposited");
             }
             else
             {
-                Console.WriteLine("Invalid Amount");
+               // Console.WriteLine("Invalid Amount");
             }
             
         }
@@ -76,24 +77,24 @@ namespace App01
                 interestRate); //password not shown
         }
 
-        public int GetAccountNumber()
+        public int AccountNumber
         {
-            return accountNumber;
+            get{return accountNumber;}
         }
 
-        public string GetName()
+        public string Name
         {
-            return name;
-        }
-
-        public void SetName(string newName)
-        {
-            if (LastName(name) == LastName(newName))
+            get { return name; }
+            set //(string value)
             {
-                name = newName;
+                if (LastName(name) == LastName(value))
+                {
+                    name = value;
+                }
             }
         }
 
+        
         private string LastName(string name)
         {
             int index = name.LastIndexOf(' ');
@@ -103,21 +104,33 @@ namespace App01
                 return name.Substring(index + 1);
         }
 
-        public double GetBalance() { return balance; }
+        public double Balance 
+        { 
+            get 
+            { 
+                return balance; 
+            }
+        }
 
         //Can't set the Balance
         //public void SetBalance(double newBalance) { balance = newBalance; }
 
 
-        public double GetInterestRate() { return interestRate; }
-        public void SetInterestRate(double rate) { interestRate = rate; }
+        public double InterestRate
+        {
+            get { return interestRate; }
+            set { interestRate = value; }
+        }
 
 
         //public string GetPassword() { return password; }    
-        private void SetPassword(string password) 
+        private string Password
         {
-            Encryptor encryptor = new Encryptor();
-            this.password = encryptor.Encrypt(password); 
+            set
+            {
+                Encryptor encryptor = new Encryptor();
+                this.password = encryptor.Encrypt(value);
+            }            
         }
 
         public bool Authenticate(string password)
@@ -129,8 +142,8 @@ namespace App01
 
         public void ChangePassword(string confirmPassword, string newPassword)
         {
-            if(Authenticate(confirmPassword))   
-                SetPassword(newPassword);
+            if (Authenticate(confirmPassword))
+                Password = newPassword;
         }
 
     }

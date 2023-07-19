@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App01
+namespace ConceptArchitect.Utils
 {
     public class Encryptor
     {
@@ -22,7 +22,8 @@ namespace App01
 
         public bool Match(string encryptedText, string normalText)
         {
-            return encryptedText == Encrypt(normalText);
+            var x= Encrypt(normalText);
+            return encryptedText.Equals(x);
         }
         
     }
