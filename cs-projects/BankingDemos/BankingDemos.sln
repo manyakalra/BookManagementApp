@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App02", "App02\App02.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Utils", "ConceptArchitect.Utils\ConceptArchitect.Utils.csproj", "{9F408A7A-5FB4-45DB-888F-78879FBAF68A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountTests", "BankAccountTests\BankAccountTests.csproj", "{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{9F408A7A-5FB4-45DB-888F-78879FBAF68A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F408A7A-5FB4-45DB-888F-78879FBAF68A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F408A7A-5FB4-45DB-888F-78879FBAF68A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

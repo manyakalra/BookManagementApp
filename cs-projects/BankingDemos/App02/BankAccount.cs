@@ -7,6 +7,14 @@ using System.Threading.Tasks;
 
 namespace ConceptArchictect.Finance
 {
+    public enum Status
+    {
+        SUCCESS, //=0
+        INVALID_CREDENTIALS, //=1
+        INSUFFICIENT_BALANCE, //=2
+        INVALID_AMOUNT //=3
+    }
+
     public class BankAccount
     {
         int accountNumber;
@@ -27,45 +35,47 @@ namespace ConceptArchictect.Finance
 
         }
 
-        public void Deposit(double amount)
+        public bool Deposit(double amount)
         {
-            if (amount > 0)
+            if (amount >0)
             {
                 balance += amount;
-               // Console.WriteLine("Amount Deposited");
+                return true;
+
             }
             else
             {
-               // Console.WriteLine("Invalid Amount");
+                // Console.WriteLine("Invalid Amount");
+                return false;
             }
             
         }
 
-        public void Withdraw(double amount, string password)
+        public Status Withdraw(double amount, string password)
         {
             if (amount < 0)
             {
-                Console.WriteLine("Invalid Amount");
+                return Status.INVALID_AMOUNT;
             } 
             else if(amount> balance)
             {
-                Console.WriteLine("Insufficient Balance");
+                return Status.INSUFFICIENT_BALANCE;
             }
-            else if(this.password!=password)
+            else if(!Authenticate(password))
             {
-                Console.WriteLine("Invalid Credentials");
+                return Status.INVALID_CREDENTIALS;
             }
             else
             {
                 balance -= amount;
-                Console.WriteLine("Please collect your cash");
+                return Status.SUCCESS;
             }
         }
 
         public void CreditInterest()
         {
             balance += balance * interestRate / 1200;
-            Console.WriteLine("Inerest Credited");
+            
         }
 
         public void Show()
@@ -140,10 +150,20 @@ namespace ConceptArchictect.Finance
             return matcher.Match(this.password, password);
         }
 
-        public void ChangePassword(string confirmPassword, string newPassword)
+        public bool  ChangePassword(string confirmPassword, string newPassword)
         {
             if (Authenticate(confirmPassword))
+            {
                 Password = newPassword;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+                
+
+
         }
 
     }
