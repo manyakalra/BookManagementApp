@@ -49,6 +49,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App1BankAccountTests.cs" />
+    <Compile Include="BankAccountTests.cs" />
     <Compile Include="HelloTests.cs" />
     <Compile Include="Math.cs" />
     <Compile Include="MathTests.cs" />
@@ -56,6 +58,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\App01\App01.csproj">
+      <Project>{b5184cda-2c36-4f5e-8a92-62400457e250}</Project>
+      <Name>App01</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\App02\App02.csproj">
+      <Project>{87106a99-c95e-4538-9830-34f97fb95935}</Project>
+      <Name>App02</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

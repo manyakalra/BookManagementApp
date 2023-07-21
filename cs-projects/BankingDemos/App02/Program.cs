@@ -44,9 +44,9 @@ namespace App02
 
         private static void TestChangePassword(BankAccount account, string challengePassword, string newPassword, bool expectedResult, string testDescription)
         {
-            bool actualResult=account.ChangePassword(challengePassword, newPassword);
+            account.ChangePassword(challengePassword, newPassword);
 
-            TestReporter.Report(testDescription, expectedResult.ToString(), actualResult.ToString());
+            TestReporter.Report(testDescription, expectedResult.ToString(), account.Authenticate(newPassword).ToString());
                
         }
 
@@ -125,7 +125,8 @@ namespace App02
                         }
                         break;
                     case 3:
-                        a1.Show();
+                        //a1.Show();
+                        Console.WriteLine(a1.GetInfo());
                         break;
                     case 0:
                         break;

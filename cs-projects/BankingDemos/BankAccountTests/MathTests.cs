@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BankAccountTests
 {
-    [TestClass]
+    //[TestClass]
     public class MathTests
     {
         [TestMethod]

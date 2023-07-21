@@ -50,7 +50,7 @@ namespace App01
             {
                 Console.WriteLine("Insufficient Balance");
             }
-            else if(this.password!=password)
+            else if(!Authenticate(password))
             {
                 Console.WriteLine("Invalid Credentials");
             }

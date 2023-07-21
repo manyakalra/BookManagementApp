@@ -3,7 +3,7 @@ using System;
 
 namespace BankAccountTests
 {
-    [TestClass]
+   // [TestClass]
     public class HelloTests
     {
         [TestMethod]

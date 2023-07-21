@@ -78,9 +78,9 @@ namespace ConceptArchictect.Finance
             
         }
 
-        public void Show()
+        public string GetInfo()
         {
-            Console.WriteLine("Account Number ={0}\tName={1}\tBalance={2}\tInterestRate={3}",
+            return string.Format("Account Number ={0}\tName={1}\tBalance={2}\tInterestRate={3}",
                 accountNumber,
                 name,
                 balance,
@@ -147,23 +147,15 @@ namespace ConceptArchictect.Finance
         {
             Encryptor matcher = new Encryptor();
 
-            return matcher.Match(this.password, password);
+            return  matcher.Match(this.password, password);
         }
 
-        public bool  ChangePassword(string confirmPassword, string newPassword)
+        public void  ChangePassword(string confirmPassword, string newPassword)
         {
-            if (Authenticate(confirmPassword))
+            if (Authenticate(confirmPassword) && newPassword.Length>5 && newPassword.Length<10)
             {
                 Password = newPassword;
-                return true;
             }
-            else
-            {
-                return false;
-            }
-                
-
-
         }
 
     }
