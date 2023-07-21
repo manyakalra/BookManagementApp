@@ -25,7 +25,7 @@ namespace BankAccountTests
         public void Setup()
         {
              name = firstName+" " + lastName;
-             account = new BankAccount(accountNumber, name, validPassword, balance, interestRate);
+             account = new BankAccount( name, validPassword, balance);
              
         }
 
@@ -80,7 +80,7 @@ namespace BankAccountTests
             Assert.AreEqual(Status.INSUFFICIENT_BALANCE, result);
         }
         
-        //[TestMethod]
+        [TestMethod]
         public void AllWithdrawTests()
         {
 
@@ -221,6 +221,43 @@ namespace BankAccountTests
             var output = account.GetInfo();
 
             Assert.IsTrue(output.Contains(account.Balance.ToString()));
+        }
+
+        [TestMethod]
+        public void InterestRate_EachNewObjectGetsSameInterestRate()
+        {
+            var account2= new BankAccount("New Account",validPassword, balance);
+
+            Assert.AreEqual( account.AccountInterestRate, account2.AccountInterestRate);
+        }
+
+        [TestMethod]
+        public void InerestRate_ChangedByOneObjectChangesForOtherObjects()
+        {
+            var account2=new BankAccount( "New Account", validPassword, balance);
+
+            BankAccount.InterestRate += 1;
+
+            Assert.AreEqual(account.AccountInterestRate, account2.AccountInterestRate);
+
+        }
+
+        [TestMethod]
+        public void AccountsNumberIsAllocatedInAscendingSequnence()
+        {
+            //Arrange
+            var lastAccountNumber = account.AccountNumber;
+
+            for(int i = 1; i <= 10; i++)
+            {
+                //Act
+                var newAccount = new BankAccount("Name", validPassword, balance);
+                //Assert
+                Assert.AreEqual(lastAccountNumber + i, newAccount.AccountNumber);
+            }
+
+
+
         }
     }
 }

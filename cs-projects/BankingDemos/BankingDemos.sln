@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Utils", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountTests", "BankAccountTests\BankAccountTests.csproj", "{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Finance.V1", "ConceptArchitect.Finance.V1\ConceptArchitect.Finance.V1.csproj", "{5B5760DE-3218-4ED2-AD9C-60987E5359A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankAccountTestsV2", "BankAccountTestsV2\BankAccountTestsV2.csproj", "{A83B5675-1BB3-4437-B455-B4856E725F44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F96EDAA6-70CD-4A6C-8581-FC6EB781FFB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5B5760DE-3218-4ED2-AD9C-60987E5359A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B5760DE-3218-4ED2-AD9C-60987E5359A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B5760DE-3218-4ED2-AD9C-60987E5359A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B5760DE-3218-4ED2-AD9C-60987E5359A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83B5675-1BB3-4437-B455-B4856E725F44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83B5675-1BB3-4437-B455-B4856E725F44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83B5675-1BB3-4437-B455-B4856E725F44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83B5675-1BB3-4437-B455-B4856E725F44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
