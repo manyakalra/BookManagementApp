@@ -6,10 +6,11 @@
         private int size;
         int count = 0;
         int lastElement = -1;
-
+        int []arr;
         public FixedStack(int size)
         {
             this.size = size;
+            arr = new int[size];
         }
 
         bool empty = true;
@@ -40,13 +41,30 @@
                 return false;
 
             lastElement = value;
-            count++;
+            arr[count++] = value;
+            
             return true;
         }
 
-        public int Pop()
+        public int Pop(out bool checkSuccess)
         {
+            checkSuccess = !IsEmpty;
+            if(!checkSuccess)
+            {
+                return 0;
+            }
             count--;
+            return arr[count];
+        }
+
+        public void Clear()
+        {
+            count = 0;
+        }
+
+        public int Peek(out bool success)
+        {
+            success = !IsEmpty;
             return lastElement;
         }
     }

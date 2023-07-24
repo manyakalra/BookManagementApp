@@ -91,9 +91,10 @@ namespace CollectionTests
         )]
         public void PoppingAnItemFromAnEmptyStackShouldFail()
         {
-            bool success= stack.Pop();
+            bool checkSuccess;
+            int val = stack.Pop(out checkSuccess);
 
-            Assert.False(success);
+            Assert.False(checkSuccess);
         }
 
 
@@ -110,7 +111,8 @@ namespace CollectionTests
             }
 
             //Act
-            bool success = stack.Pop();
+            bool checkSuccess;
+            int val = stack.Pop(out checkSuccess);
 
             //Assert
 
@@ -129,36 +131,78 @@ namespace CollectionTests
             int elementToPush = 10;
             stack.Push(elementToPush);
             //Act
-            int lastElement = stack.Pop();
+            bool checkSuccess;
+            int lastElement = stack.Pop(out checkSuccess);
             //Assert
             Assert.Equal(elementToPush, lastElement) ;
         }
 
 
         [Fact(
-                Skip = "Not Yet Implemented"
+               /// Skip = "Not Yet Implemented"
         )]
         public void ClearingAStackMakesItEmpty()
         {
-            AssertFailed();
+            //Arrange
+            stack.Push(1);
+
+            //Act
+            stack.Clear();
+
+            //Assert
+            Assert.True(stack.IsEmpty);
+
         }
 
         [Fact(
-                Skip = "Not Yet Implemented"
+               // Skip = "Not Yet Implemented"
         )]
         public void PeekingInAnEmptyStackFails()
         {
-            AssertFailed();
+            bool success;
+
+            stack.Peek(out success);
+
+            Assert.False(success);
         }
 
         [Fact(
-                Skip = "Not Yet Implemented"
+               // Skip = "Not Yet Implemented"
         )]
         public void PeekingInAnNonEmptyStackReturnsLastItemPushed()
         {
-            AssertFailed();
+            //Arrange
+            int item=10;
+            bool success;
+            stack.Push(item);
+
+            //ACT
+            int value = stack.Peek(out success);
+
+            //Assert
+            Assert.True(success);
+            Assert.Equal(item, value);
         }
 
+        [Fact]
+        public void PopShouldPopItemsInLastInFirstOutOrder()
+        {
+            bool checkSuccess;
+            int[] values = { 5, 10, 6 };
+            foreach(var item in values)
+            {
+                stack.Push(item);
+            }
+            for(var i=0; i<values.Length; i++)
+            {
+                int value = stack.Pop(out checkSuccess);
+                Assert.Equal(values[values.Length-1-i], value);
+                Assert.True(checkSuccess);
+            }
+            
+
+            
+        }
 
 
 
