@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConceptArchictect.Finance.Core
+namespace ConceptArchitect.Finance.Core
 {
    
 
@@ -15,17 +15,11 @@ namespace ConceptArchictect.Finance.Core
         string name;
         string password;
         double balance;
-        static double interestRate;
-        static int accountCount=0;
+       
 
-        static BankAccount()
+        public BankAccount(int accountNumber, string name, string password, double amount)
         {
-            interestRate = 12;
-        }
-
-        public BankAccount(string name, string password, double amount)
-        {
-            this.accountNumber = ++accountCount;
+            this.accountNumber = accountNumber;
             this.name = name;
             //this.password = password;
             //SetPassword(password);
@@ -72,19 +66,19 @@ namespace ConceptArchictect.Finance.Core
             }
         }
 
-        public void CreditInterest()
-        {
-            balance += balance * interestRate / 1200;
+        //public void CreditInterest()
+        //{
+        //    balance += balance * interestRate / 1200;
             
-        }
+        //}
 
         public string GetInfo()
         {
             return string.Format("Account Number ={0}\tName={1}\tBalance={2}\tInterestRate={3}",
                 accountNumber,
                 name,
-                balance,
-                interestRate); //password not shown
+                balance
+                ); //password not shown
         }
 
         public int AccountNumber
@@ -126,18 +120,7 @@ namespace ConceptArchictect.Finance.Core
         //public void SetBalance(double newBalance) { balance = newBalance; }
 
 
-        public static double InterestRate
-        {
-            get { return interestRate; }
-            set { interestRate = value; }
-        }
-
-        public double AccountInterestRate
-        {
-            get { return interestRate; }
-        }
-
-
+      
         //public string GetPassword() { return password; }    
         private string Password
         {
@@ -147,6 +130,8 @@ namespace ConceptArchictect.Finance.Core
                 this.password = encryptor.Encrypt(value);
             }            
         }
+
+        public bool InActive { get; internal set; }
 
         public bool Authenticate(string password)
         {
