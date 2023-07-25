@@ -66,11 +66,11 @@ namespace ConceptArchitect.Finance.Core
             }
         }
 
-        //public void CreditInterest()
-        //{
-        //    balance += balance * interestRate / 1200;
-            
-        //}
+        public void CreditInterest(double interestRate)
+        {
+            balance += balance * interestRate / 1200;
+
+        }
 
         public string GetInfo()
         {

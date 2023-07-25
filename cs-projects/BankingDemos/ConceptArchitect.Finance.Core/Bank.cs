@@ -105,5 +105,12 @@
 
             return account.Balance;
           }
+
+        public void CreditInterest()
+        {
+            for (int i = 1; i <= lastId; i++)
+                if(!accounts[i].InActive)
+                    accounts[i].CreditInterest(Rate);
+        }
     }
 }

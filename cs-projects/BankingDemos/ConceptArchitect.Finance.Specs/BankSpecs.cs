@@ -203,5 +203,16 @@ namespace ConceptArchitect.Finance.Specs
             Assert.Equal(Status.SUCCESS, status);
             Assert.Equal(amount + 1, bank.GetBalance(account1,validPassword));
         }
+
+        [Fact]
+        public void CreditInterestCreditsOneMonthInterestToAllAccounts()
+        {
+            var newBalance = amount + amount * rate / 1200;
+
+            bank.CreditInterest();
+
+            Assert.Equal(newBalance, bank.GetBalance(account1, validPassword));
+            Assert.Equal(newBalance, bank.GetBalance(account3, validPassword));
+        }
     }
 }
