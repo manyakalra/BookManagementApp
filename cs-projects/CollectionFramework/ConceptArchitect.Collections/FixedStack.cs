@@ -65,6 +65,10 @@
         public int Peek(out bool success)
         {
             success = !IsEmpty;
+            if(!success)
+            {
+                return 0;
+            }
             return lastElement;
         }
     }
