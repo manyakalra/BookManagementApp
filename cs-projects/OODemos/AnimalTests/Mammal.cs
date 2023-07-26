@@ -8,13 +8,13 @@ namespace AnimalTests
 {
     class Mammal : Animal
     {
-        public string Breed() { return $"{this} is child-bearing"; }
+        public override string Breed() { return $"{this} is child-bearing"; }
     }
 
     class Horse : Mammal
     {
-        public string Eat() { return $"{this} is a grass eater"; }
-        public string Move() { return $"{this} runs"; }
+        public override string Eat() { return $"{this} is a grass eater"; }
+        public override string Move() { return $"{this} runs"; }
 
         public string Ride() { return $"{this} is an ancient ride"; }
 
@@ -22,8 +22,8 @@ namespace AnimalTests
 
     class Camel : Mammal
     {
-        public string Eat() { return $"{this} is a grass eater"; }
-        public string Move() { return $"{this} runs"; }
+        public override string Eat() { return $"{this} is a grass eater"; }
+        public override string Move() { return $"{this} runs"; }
 
         public string Ride() { return $"{this} is an desert ride"; }
 
@@ -31,8 +31,8 @@ namespace AnimalTests
 
     class Dog : Mammal
     {
-        public string Eat() { return $"{this} is a flesh eater"; }
-        public string Move() { return $"{this} walks"; }
+        public override string Eat() { return $"{this} is a flesh eater"; }
+        public override string Move() { return $"{this} walks"; }
 
         public string Hunt() { return $"{this} hunts"; }
 
@@ -40,8 +40,8 @@ namespace AnimalTests
 
     class Cat : Mammal
     {
-        public string Eat() { return $"{this} is a flesh eater"; }
-        public string Move() { return $"{this} walks"; }
+        public override string Eat() { return $"{this} is a flesh eater"; }
+        public override string Move() { return $"{this} walks"; }
 
         public string Hunt() { return $"{this} hunts"; }
 

@@ -8,11 +8,11 @@ namespace AnimalTests
 {
     public class Animal
     {
-        public string Eat() { return $"{this} eats something"; }
+        public virtual string Eat() { return $"{this} eats something"; }
 
-        public string Move() { return $"{this} moves somehow"; }
+        public virtual string Move() { return $"{this} moves somehow"; }
 
-        public string Breed() { return $"{this} breeds somehow"; }
+        public virtual string Breed() { return $"{this} breeds somehow"; }
 
         public string Die() { return $"{this} dies"; }
     }
