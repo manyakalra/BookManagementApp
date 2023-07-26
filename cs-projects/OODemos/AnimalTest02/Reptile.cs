@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace AnimalTests
 {
-    public class Reptile: Animal
+    public abstract class Reptile: Animal
     {
         public override string Breed() { return $"{this} is egg laying"; }
         public override string Eat() { return $"{this} is omnivore"; }
 
-        public virtual string Hunt() { return $"{this} hunts"; }
+        public abstract string Hunt();// { return $"{this} hunts"; }
 
         public override string Move() { return $"{this} crawls"; }
     }
