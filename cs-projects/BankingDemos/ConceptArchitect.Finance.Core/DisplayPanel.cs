@@ -2,7 +2,7 @@
 {
     public class DisplayPanel
     {
-        public void Show(string message, ConsoleColor color=ConsoleColor.Black)
+        public void Show(string message, ConsoleColor color=ConsoleColor.White)
         {
             Console.ForegroundColor = color;
             Console.WriteLine(message);

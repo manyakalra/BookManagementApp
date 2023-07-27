@@ -29,13 +29,21 @@ namespace ConceptArchitect.Finance.Core
 
         public void Start()
         {
-            accountNumber = keyboard.ReadInt("Account Number? ");
-            password = keyboard.ReadString("Password?");
-            if (accountNumber == -1 && password == "NIMDA")
-                if (AdminMenu() == false)
-                    return; 
-            else
-                MainMenu();
+            while(true)
+            {
+                Console.WriteLine($"Welcome to {bank.Name} Bank ATM");
+
+                accountNumber = keyboard.ReadInt("Account Number? ");
+                password = keyboard.ReadString("Password?");
+                if (accountNumber == -1 && password == "NIMDA")
+                {
+                    if (AdminMenu() == false)
+                        return;
+                }
+                else
+                    MainMenu();
+            }
+            
         }
 
         private bool AdminMenu()
@@ -110,7 +118,8 @@ namespace ConceptArchitect.Finance.Core
                         break;
                     case 5:
                         DoClose();
-                        break;
+                        return;                      
+                        
                     default:
                         displayPanel.Show("Invalid Choice. Retry",ConsoleColor.Red);
                         break;
@@ -130,13 +139,13 @@ namespace ConceptArchitect.Finance.Core
             }
             
 
-            var amount=0;
+            var amount=0.0;
             var status= bank.CloseAccount(accountNumber, confirmation,out amount);
 
             if (status == Status.SUCCESS)
             {
                 displayPanel.Show("Your account is closed. Please collect your cash");
-                cashDispenser.Dispense(amount);
+                cashDispenser.Dispense((int)amount);
 
             }
             else
