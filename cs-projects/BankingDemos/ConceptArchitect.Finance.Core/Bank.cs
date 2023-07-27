@@ -59,6 +59,16 @@
                 
         }
 
+        public string GetInfo(int accountNumber, string password)
+        {
+            var account=GetAccount(accountNumber);
+            if (account == null)
+                return null;
+            if (account.Authenticate(password))
+                return account.ToString();
+            else
+                return null;
+        }
 
         public Status CloseAccount(int accountNumber, string password, out double balance)
         {
@@ -78,6 +88,15 @@
             //accounts[accountNumber] = null;
             account.InActive = true;
             return Status.SUCCESS;
+        }
+
+        internal string[] GetAccountsInfo()
+        {
+            var accountsInfo = new String[lastId+1];
+            for (int i = 1; i <= lastId; i++)
+                accountsInfo[i] = accounts[i].ToString();
+
+            return accountsInfo;
         }
 
         public Status Deposit(int accountNumber, double amount)
@@ -111,6 +130,33 @@
             for (int i = 1; i <= lastId; i++)
                 if(!accounts[i].InActive)
                     accounts[i].CreditInterest(Rate);
+        }
+
+        public Status Withdraw(int accountNumber, double amount, string password)
+        {
+            var account = GetAccount(accountNumber);
+            if(account==null)
+                return Status.INVALID_ACCOUNT_NUMBER;
+
+            if (!account.Authenticate(password))
+                return Status.INVALID_CREDENTIALS;
+
+            return account.Withdraw(amount,password);
+        }
+
+        public Status Transfer(int sourceAccountNumber, double amount, string password, int targetAccountNumber)
+        {
+            var sourceAccount=GetAccount(sourceAccountNumber);
+            var targetAccount = GetAccount(targetAccountNumber);
+            if(sourceAccount==null || targetAccount==null)
+                return Status.INVALID_ACCOUNT_NUMBER;
+
+            var status= sourceAccount.Withdraw(amount, password);
+
+            if (status == Status.SUCCESS)
+                return targetAccount.Deposit(amount) ? Status.SUCCESS : Status.INVALID_AMOUNT;
+            else
+                return status;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AnimalTests
         public override string Breed() { return $"{this} is child-bearing"; }
     }
 
-    class Horse : Mammal
+    class Horse : Mammal, IDomestic, IRideable
     {
         public override string Eat() { return $"{this} is a grass eater"; }
         public override string Move() { return $"{this} runs"; }
@@ -20,7 +20,7 @@ namespace AnimalTests
 
     }
 
-    class Camel : Mammal
+    class Camel : Mammal, IRideable, IDomestic
     {
         public override string Eat()
         {
@@ -36,7 +36,7 @@ namespace AnimalTests
 
     }
 
-    class Dog : Mammal
+    class Dog : Mammal, IHunter, IDomestic
     {
         public override string Eat() { return $"{this} is a flesh eater"; }
         public override string Move() { return $"{this} walks"; }
@@ -45,7 +45,7 @@ namespace AnimalTests
 
     }
 
-    class Cat : Mammal
+    abstract class Cat : Mammal, IHunter
     {
         public override string Eat() { return $"{this} is a flesh eater"; }
         public override string Move() { return $"{this} walks"; }

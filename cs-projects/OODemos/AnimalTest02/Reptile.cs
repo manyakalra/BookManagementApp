@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AnimalTests
 {
-    public abstract class Reptile: Animal
+    public abstract class Reptile: Animal, IHunter
     {
         public override string Breed() { return $"{this} is egg laying"; }
         public override string Eat() { return $"{this} is omnivore"; }

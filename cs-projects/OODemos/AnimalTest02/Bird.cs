@@ -15,14 +15,14 @@ namespace AnimalTests
         public virtual string Fly() { return $"{this} flies"; }
     }
 
-    public class Parrot : Bird
+    public class Parrot : Bird, IDomestic
     {
         public override string Eat() { return $"{this} a fruitarian"; }
 
         public string HumanSpeak() { return $"{this} can mimic Human speech"; }
     }
 
-    public class Eagle : Bird
+    public class Eagle : Bird, IHunter
     {
         public override string Eat() { return $"{this} a flesh eater"; }
         public string Hunt() { return $"{this} is a flying Hunter"; }

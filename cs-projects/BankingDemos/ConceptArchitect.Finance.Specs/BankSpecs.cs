@@ -36,6 +36,17 @@ namespace ConceptArchitect.Finance.Specs
             Assert.True(false, reason);
         }
 
+        private void AssertBalance(int accountNumber, double expectedBalance)
+        {
+            Assert.Equal(expectedBalance, bank.GetBalance(accountNumber, validPassword));
+        }
+
+        private void AssertBalanceUnchanged(int accountNumber)
+        {
+            AssertBalance(accountNumber, amount);
+        }
+
+
         [Fact]
         public void BankShouldHaveAName()
         {
@@ -143,6 +154,7 @@ namespace ConceptArchitect.Finance.Specs
 
             Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
             
+            
         }
 
         [Fact]
@@ -151,6 +163,7 @@ namespace ConceptArchitect.Finance.Specs
             var status = bank.Deposit(closedAccount, 1);
 
             Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            
         }
 
         [Fact]
@@ -192,6 +205,7 @@ namespace ConceptArchitect.Finance.Specs
             var status = bank.Deposit(account1, -1);
 
             Assert.Equal(Status.INVALID_AMOUNT, status);
+            AssertBalanceUnchanged(account1);
 
         }
 
@@ -201,7 +215,9 @@ namespace ConceptArchitect.Finance.Specs
             var status = bank.Deposit(account1, 1);
 
             Assert.Equal(Status.SUCCESS, status);
-            Assert.Equal(amount + 1, bank.GetBalance(account1,validPassword));
+            //Assert.Equal(amount + 1, bank.GetBalance(account1,validPassword));
+            AssertBalance(account1, amount + 1);
+
         }
 
         [Fact]
@@ -211,8 +227,153 @@ namespace ConceptArchitect.Finance.Specs
 
             bank.CreditInterest();
 
-            Assert.Equal(newBalance, bank.GetBalance(account1, validPassword));
-            Assert.Equal(newBalance, bank.GetBalance(account3, validPassword));
+            //Assert.Equal(newBalance, bank.GetBalance(account1, validPassword));
+            //Assert.Equal(newBalance, bank.GetBalance(account3, validPassword));
+
+            AssertBalance(account1, newBalance);
+            AssertBalance(account3, newBalance);
         }
+
+
+        [Fact]
+        public void WithdrawFailsForInvalidAccountNumber()
+        {
+            Status status = bank.Withdraw(100, 1, validPassword);
+            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+        }
+        [Fact]
+        public void WithdrawFailsForClosedAccountNumber()
+        {
+            var status = bank.Withdraw(closedAccount, 1, validPassword);
+            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+        }
+
+        [Fact]
+        public void WithdrawFailsForInvalidCredentials()
+        {
+            var status = bank.Withdraw(account1, 1, "invalid password");
+
+            Assert.Equal(Status.INVALID_CREDENTIALS, status);
+            AssertBalanceUnchanged(account1);
+        }
+
+        [Fact]
+        public void WithdrawFailsForInvalidAmount()
+        {
+            var status = bank.Withdraw(account1, -1, validPassword);
+            Assert.Equal(Status.INVALID_AMOUNT, status);
+            AssertBalanceUnchanged(account1);
+
+        }
+
+        [Fact]
+        public void WithdrawFailsForInsufficientBalance()
+        {
+            var status = bank.Withdraw(account1, amount+1, validPassword);
+            Assert.Equal(Status.INSUFFICIENT_BALANCE, status);
+            AssertBalanceUnchanged(account1);
+        }
+
+        [Fact]
+        public void WithdrawUpdatesBalanceOnSuccess()
+        {
+            var status = bank.Withdraw(account1, amount - 1, validPassword);
+            Assert.Equal(Status.SUCCESS, status);
+            AssertBalance(account1, 1);
+        }
+
+
+
+        [Fact]
+        public void TransferFailsForInvalidSourceAccountNumber()
+        {
+            
+            Status status = bank.Transfer(-1, amount, validPassword, account1);
+            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            AssertBalanceUnchanged(account1);
+
+        }
+        [Fact]
+        public void TransferFailsForClosedSourceAccountNumber()
+        {
+            Status status = bank.Transfer(closedAccount, amount, validPassword, account1);
+            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            AssertBalanceUnchanged(account1);
+        }
+
+        [Fact]
+        public void TransferFailsForInvalidTargetAccountNumber()
+        {
+            Status status = bank.Transfer(account1, amount, validPassword, 1000);
+            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            AssertBalanceUnchanged(account1);
+        }
+        [Fact]
+        public void TransferFailsForClosedTargetAccountNumber()
+        {
+            Status status = bank.Transfer(account1, amount, validPassword, closedAccount);
+            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            AssertBalanceUnchanged(account1); 
+        }
+
+        [Fact]
+        public void TransferFailsForInvalidCredentials()
+        {
+            Status status = bank.Transfer(account1, amount, "invalid password", account3);
+            Assert.Equal(Status.INVALID_CREDENTIALS, status);
+            AssertBalanceUnchanged(account1);
+            AssertBalanceUnchanged(account3);
+        }
+
+        [Fact]
+        public void TransferFailsForInvalidAmount()
+        {
+            Status status = bank.Transfer(account1, -1,validPassword, account3);
+            Assert.Equal(Status.INVALID_AMOUNT, status);
+            AssertBalanceUnchanged(account1);
+            AssertBalanceUnchanged(account3);
+        }
+
+        [Fact]
+        public void TransferFailsForInsufficientBalance()
+        {
+            Status status = bank.Transfer(account1, amount+1, validPassword, account3);
+            Assert.Equal(Status.INSUFFICIENT_BALANCE, status);
+            AssertBalanceUnchanged(account1);
+            AssertBalanceUnchanged(account3);
+        }
+
+        [Fact]
+        public void TransferSUpdatesBalancesOnSuccess()
+        {
+            Status status = bank.Transfer(account1,  1, validPassword, account3);
+            Assert.Equal(Status.SUCCESS, status);
+            AssertBalance(account1, amount-1);
+            AssertBalance(account3, amount+1);
+        }
+
+
+        [Fact]
+        public void GetInfoFailsForInvalidCredentials()
+        {
+            Assert.Null(bank.GetInfo(account1, "invalid password"));
+        }
+
+        [Fact]
+        public void GetInfoFailsForInvalidAccountNumber()
+        {
+            Assert.Null(bank.GetInfo(-1, "invalid password"));
+        }
+
+
+        [Fact]
+        public void GetInfoReturnsInfoAboutValidAccountOnSuccess()
+        {
+            var data = bank.GetInfo(account1, validPassword);
+
+            Assert.NotNull(data);
+            Assert.Contains($"Account Number={account1}", data);
+        }
+
     }
 }

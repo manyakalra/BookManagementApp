@@ -72,13 +72,10 @@ namespace ConceptArchitect.Finance.Core
 
         }
 
-        public string GetInfo()
+        public override string ToString()
         {
-            return string.Format("Account Number ={0}\tName={1}\tBalance={2}\tInterestRate={3}",
-                accountNumber,
-                name,
-                balance
-                ); //password not shown
+            return $"Account Number={accountNumber}\tName={name}\tBalance={balance}";
+                
         }
 
         public int AccountNumber
