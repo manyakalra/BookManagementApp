@@ -6,9 +6,9 @@
 
     <IsPackable>false</IsPackable>
 
-    <StartupObject>ShapeTest2.Program</StartupObject>
+    <StartupObject>CalculatorApp01.Program</StartupObject>
 
-    <RootNamespace>ConceptArchitect.Shapes</RootNamespace>
+    <RootNamespace>ConceptArchitect.Calculators</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

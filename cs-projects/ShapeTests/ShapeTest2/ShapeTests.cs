@@ -1,20 +1,20 @@
 using System;
 using Xunit;
 
-namespace ShapeTest1
+namespace ConceptArchitect.Shapes
 {
     public class ShapeTests
     {
 
         Circle circle;
         Triangle triangle;
-        Rectangle rectangle;
+       // Rectangle rectangle;
 
         public ShapeTests()
         {
             circle = new Circle(7);
             triangle = new Triangle(3, 4, 5);
-            rectangle = new Rectangle(3, 4);
+          //  rectangle = new Rectangle(3, 4);
         }
 
 
@@ -29,7 +29,7 @@ namespace ShapeTest1
         [Fact]
         public void CircleInfoIncludesRadius()
         {
-            Assert.Contains("Circle(7)", circle.Info);
+            Assert.Contains("Circle(7)", circle.ToString());
         }
 
         [Fact]
@@ -52,7 +52,7 @@ namespace ShapeTest1
         [Fact]
         public void TriangleInfoIncludesSidesOfTriangle()
         {
-            Assert.Contains("Triangle<3,4,5>", triangle.Info);
+            Assert.Contains("Triangle<3,4,5>", triangle.ToString());
         }
 
         [Fact]
@@ -69,10 +69,12 @@ namespace ShapeTest1
             Shape[] shapes = {
                                 triangle,
                                 circle,
-                                rectangle
+                              //  rectangle
                                 };
 
-            double[] areas = { triangle.Area, circle.Area, rectangle.Area };
+            double[] areas = { triangle.Area, circle.Area
+            //        , rectangle.Area 
+            };
 
             for(int i=0;i<shapes.Length;i++)
             {

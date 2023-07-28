@@ -1,3 +1,4 @@
+using ConceptArchitect.Shapes;
 using System;
 using Xunit;
 

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShapeTest1
+namespace ConceptArchitect.Shapes
 {
-    public enum ShapeType { Circle, Triangle, Rectangle}
+    public enum ShapeType { Circle, Triangle, Rectangle,Star}
     public class Shape
     {
         public ShapeType Type { get; private set; }
         double radius;
         double s1, s2, s3;
         double width, height;
+        int sides, length;
 
         public Shape(double width, double height)
         {
@@ -65,7 +66,7 @@ namespace ShapeTest1
                     double s = Periemeter / 2;
                     area = Math.Sqrt(s * (s - s1) * (s - s2) * (s - s3));
                 }
-                else if (Type == ShapeType.Rectangle)
+                if (Type == ShapeType.Rectangle)
                 {
                     return width * height;
                 }

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeTest1", "ShapeTest1\ShapeTest1.csproj", "{2BC9D4E4-8069-4967-B42D-DEE84D5F3A1D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeTest1", "ShapeTest1\ShapeTest1.csproj", "{2BC9D4E4-8069-4967-B42D-DEE84D5F3A1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShapeTest2", "ShapeTest2\ShapeTest2.csproj", "{2DEEA02C-F7D6-4340-BB3F-0011F7120ED0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShapeTest2", "ShapeTest2\ShapeTest2.csproj", "{2DEEA02C-F7D6-4340-BB3F-0011F7120ED0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EcoLabsShapeProject", "EcoLabsShapeProject\EcoLabsShapeProject.csproj", "{94DC3FDF-1EDE-4ED2-94F5-6A2C99FD06F2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{2DEEA02C-F7D6-4340-BB3F-0011F7120ED0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2DEEA02C-F7D6-4340-BB3F-0011F7120ED0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2DEEA02C-F7D6-4340-BB3F-0011F7120ED0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94DC3FDF-1EDE-4ED2-94F5-6A2C99FD06F2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94DC3FDF-1EDE-4ED2-94F5-6A2C99FD06F2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94DC3FDF-1EDE-4ED2-94F5-6A2C99FD06F2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94DC3FDF-1EDE-4ED2-94F5-6A2C99FD06F2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

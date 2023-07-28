@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShapeTest2
+namespace ConceptArchitect.Shapes
 {
     class Point
     {
