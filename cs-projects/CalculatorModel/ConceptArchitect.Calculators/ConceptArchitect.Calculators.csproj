@@ -20,8 +20,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\ShapeTest2\ShapeTest2.csproj" />
-  </ItemGroup>
-
 </Project>

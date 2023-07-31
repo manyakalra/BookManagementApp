@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegateDemo03", "DelegateD
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DelegateDemo04", "DelegateDemo04\DelegateDemo04.csproj", "{FED5C45F-1108-4185-942F-43F0040CADBF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Calculators", "ConceptArchitect.Calculators\ConceptArchitect.Calculators.csproj", "{6FF797B2-8FBF-4C0A-AF64-476419AD046F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CalculatorApp", "CalculatorApp\CalculatorApp.csproj", "{1CA2034A-7BCA-4654-81EF-553C26834E97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{FED5C45F-1108-4185-942F-43F0040CADBF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FED5C45F-1108-4185-942F-43F0040CADBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FED5C45F-1108-4185-942F-43F0040CADBF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FF797B2-8FBF-4C0A-AF64-476419AD046F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FF797B2-8FBF-4C0A-AF64-476419AD046F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FF797B2-8FBF-4C0A-AF64-476419AD046F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FF797B2-8FBF-4C0A-AF64-476419AD046F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1CA2034A-7BCA-4654-81EF-553C26834E97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1CA2034A-7BCA-4654-81EF-553C26834E97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1CA2034A-7BCA-4654-81EF-553C26834E97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1CA2034A-7BCA-4654-81EF-553C26834E97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

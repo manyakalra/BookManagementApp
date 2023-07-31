@@ -9,5 +9,20 @@ namespace EcoLabsShapeProject
 {
     public class Elipse : Shape
     {
+        public override double Area
+        {
+            get
+            {
+                return 0;
+            }
+        }
+
+        public override double Perimeter
+        {
+            get
+            {
+                return 0;
+            }
+        }
     }
 }
