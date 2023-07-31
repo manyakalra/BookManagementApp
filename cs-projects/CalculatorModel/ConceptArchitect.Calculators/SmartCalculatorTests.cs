@@ -56,5 +56,11 @@ namespace ConceptArchitect.Calculators
 
             calc.PrintResult(1, "Foo", 1);
         }
+
+        [Fact]
+        public void CalculatorPassesParameterV1AndV2ToOperators()
+        {
+
+        }
     }
 }
