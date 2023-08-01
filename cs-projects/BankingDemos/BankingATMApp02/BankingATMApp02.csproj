@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ConceptArchitect.Banking.V2\ConceptArchitect.Banking.Core.V2.csproj" />
+    <ProjectReference Include="..\ConceptArchitect.Banking.V2\ConceptArchitect.Finance.Core.V2.csproj" />
   </ItemGroup>
 
 </Project>

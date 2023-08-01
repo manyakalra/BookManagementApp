@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConceptArchitect.Finance.Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BankingATMApp", "BankingATMApp\BankingATMApp.csproj", "{2AE18B14-E729-4709-AE51-9907C2F291BD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Banking.Core.V2", "ConceptArchitect.Banking.V2\ConceptArchitect.Banking.Core.V2.csproj", "{53470A62-5934-44EF-93AA-606B5D614B57}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Finance.Core.V2", "ConceptArchitect.Banking.V2\ConceptArchitect.Finance.Core.V2.csproj", "{53470A62-5934-44EF-93AA-606B5D614B57}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BankingATMApp02", "BankingATMApp02\BankingATMApp02.csproj", "{58047900-1133-4C44-92CF-CC8AA4F4673E}"
 EndProject

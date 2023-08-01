@@ -66,10 +66,10 @@ namespace ConceptArchitect.Finance.Core
             var account=GetAccount(accountNumber);
             if (account == null)
                 return null;
-            if (account.Authenticate(password))
-                return account.ToString();
-            else
-                return null;
+            
+            account.Authenticate(password);
+            return account.ToString();
+            
         }
 
         public Status CloseAccount(int accountNumber, string password, out double balance)
@@ -80,8 +80,7 @@ namespace ConceptArchitect.Finance.Core
             if (account == null)
                 return Status.INVALID_ACCOUNT_NUMBER;
 
-            if(!account.Authenticate(password))
-                return Status.INVALID_CREDENTIALS;
+            account.Authenticate(password);
 
             if (account.Balance < 0)
                 return Status.INSUFFICIENT_BALANCE;
@@ -121,8 +120,7 @@ namespace ConceptArchitect.Finance.Core
             if (account == null)
                 return -1;
 
-            if (!account.Authenticate(password))
-                return -1;
+            account.Authenticate(password);
 
             return account.Balance;
           }
@@ -139,9 +137,6 @@ namespace ConceptArchitect.Finance.Core
             var account = GetAccount(accountNumber);
             if(account==null)
                 return Status.INVALID_ACCOUNT_NUMBER;
-
-            if (!account.Authenticate(password))
-                return Status.INVALID_CREDENTIALS;
 
             return account.Withdraw(amount,password);
         }

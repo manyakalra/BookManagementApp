@@ -98,34 +98,50 @@ namespace ConceptArchitect.Finance.Core
 
         private void MainMenu()
         {
-            int choice;
+            int choice=0;
             do
             {
-                choice = keyboard.ReadInt("1. Info  2. Deposit  3. Withdraw  4. Transfer  5. Close  0. Exit\n Choose: ");
-                switch (choice)
+                
+                try
                 {
-                    case 1:
-                        displayPanel.Show(bank.GetInfo(accountNumber, password));
-                        break;
-                    case 2:
-                        DoDeposit();
-                        break;
-                    case 3:
-                        DoWithdraw();
-                        break;
-                    case 4:
-                        DoTransfer();
-                        break;
-                    case 5:
-                        DoClose();
-                        return;                      
-                        
-                    default:
-                        displayPanel.Show("Invalid Choice. Retry",ConsoleColor.Red);
-                        break;
-                    case 0:
-                        break;
+                    choice = keyboard.ReadInt("1. Info  2. Deposit  3. Withdraw  4. Transfer  5. Close  0. Exit\n Choose: ");
+                    switch (choice)
+                    {
+                        case 1:
+                            displayPanel.Show(bank.GetInfo(accountNumber, password));
+                            break;
+                        case 2:
+                            DoDeposit();
+                            break;
+                        case 3:
+                            DoWithdraw();
+                            break;
+                        case 4:
+                            DoTransfer();
+                            break;
+                        case 5:
+                            DoClose();
+                            return;
+
+                        default:
+                            displayPanel.Show("Invalid Choice. Retry", ConsoleColor.Red);
+                            break;
+                        case 0:
+                            break;
+                    }
+
                 }
+                catch (InvalidCredentialsException ex)
+                {
+                    displayPanel.Show($"Error: Invalid Credentials", ConsoleColor.Red);
+                }
+                catch(InsufficientBalanceException ex)
+                {
+                    displayPanel.Show($"Error: You don't have sufficient balance to carry out the transaction");
+                }
+
+
+
             } while (choice != 0);
         }
 

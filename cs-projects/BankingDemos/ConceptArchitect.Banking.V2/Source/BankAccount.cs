@@ -47,18 +47,19 @@ namespace ConceptArchitect.Finance.Core
 
         public Status Withdraw(double amount, string password)
         {
+            Authenticate(password);
+
+            //if you reach here, you are authenticated.
+
             if (amount < 0)
             {
                 return Status.INVALID_AMOUNT;
             } 
             else if(amount> balance)
             {
-                return Status.INSUFFICIENT_BALANCE;
+                throw new InsufficientBalanceException();
             }
-            else if(!Authenticate(password))
-            {
-                return Status.INVALID_CREDENTIALS;
-            }
+            
             else
             {
                 balance -= amount;
@@ -137,7 +138,7 @@ namespace ConceptArchitect.Finance.Core
             if (matcher.Match(this.password, password))
                 return true;
             else
-                throw new Exception($"Invalid Credentials for account {AccountNumber}");
+                throw new InvalidCredentialsException(AccountNumber, 1, "Invalid Credentials");
         }
 
         public void  ChangePassword(string confirmPassword, string newPassword)
