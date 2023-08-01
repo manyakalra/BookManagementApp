@@ -29,6 +29,7 @@ namespace ConceptArchitect.Finance.Core
 
         public InvalidCredentialsException(int accountNumber, int invalidAttempts, string message = "Invalid Credentials") : base(accountNumber, message)
         {
+            InvalidAttempts = invalidAttempts;
         }
     }
 
@@ -37,6 +38,7 @@ namespace ConceptArchitect.Finance.Core
         public double Deficit { get; private set; }
         public InsufficientBalanceException(int accountNumber,double deficit, string message = "Insufficient Balance") : base(accountNumber, message)
         {
+            Deficit = deficit;
         }
     }
 

@@ -30,20 +30,20 @@ namespace ConceptArchitect.Finance.Core
 
         }
 
-        private void ValidateAmount(double amount)
+        public void ValidateAmount(double amount)
         {
             if (amount < 0)
                 throw new InvalidDenominationException(accountNumber, "Amount Must be greater than 0");
         }
 
-        public void Deposit(double amount)
+        public virtual void Deposit(double amount)
         {
             ValidateAmount(amount);
             balance += amount;
             
         }
 
-        public void Withdraw(double amount, string password)
+        public virtual void Withdraw(double amount, string password)
         {
 
             ValidateAmount(amount);
@@ -57,7 +57,7 @@ namespace ConceptArchitect.Finance.Core
             balance -= amount;
         }
 
-        public void CreditInterest(double interestRate)
+        public virtual void CreditInterest(double interestRate)
         {
             balance += balance * interestRate / 1200;
 
@@ -122,12 +122,17 @@ namespace ConceptArchitect.Finance.Core
 
         public bool InActive { get; internal set; }
 
+        public int InvalidAttempts { get; internal set; }
+
         public void Authenticate(string password)
         {
             Encryptor matcher = new Encryptor();
 
             if (!matcher.Match(this.password, password))
-                throw new InvalidCredentialsException(AccountNumber, 1, "Invalid Credentials");
+                throw new InvalidCredentialsException(AccountNumber, ++InvalidAttempts, "Invalid Credentials");
+
+            //Authentication was success
+            InvalidAttempts = 0;
         }
 
         private void CheckPasswordRule(string newPassword)

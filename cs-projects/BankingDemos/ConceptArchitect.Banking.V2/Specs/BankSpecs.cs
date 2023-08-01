@@ -370,26 +370,48 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void AuthenticationFailsReturnsInvalidAttemptCount()
         {
+            var ex = Assert.Throws<InvalidCredentialsException>(()=>bank.GetInfo(account1, "invalid-password"));
 
+            Assert.Equal(1, ex.InvalidAttempts);
         }
 
         [Fact]
-        public void AuthenticationIncreasesInvalidAttemptCount()
+        public void AuthenticationWhenFailedIncreasesInvalidAttemptCount()
         {
-
+            for(int i=1;i<=5;i++)
+            {
+                var ex = Assert.Throws<InvalidCredentialsException>(() => bank.GetInfo(account1, "invalid-password"));
+                Assert.Equal(i, ex.InvalidAttempts);
+            }
         }
 
 
         [Fact]
         public void AuthenticationSuccessResetsInvalidAttemptCount()
         {
+            //Arrange
+            Assert.Throws<InvalidCredentialsException>(() => bank.GetInfo(account1, "invalid-password"));
+            var ex = Assert.Throws<InvalidCredentialsException>(() => bank.GetInfo(account1, "invalid-password"));
+            Assert.Equal(2, ex.InvalidAttempts); //pre condition assert
+
+            //Act
+            bank.GetInfo(account1, validPassword); //this should reset invalid attempt count 0
+
+            ex = Assert.Throws<InvalidCredentialsException>(() => bank.GetInfo(account1, "invalid-password")); //this should set it to 1
+
+
+            //Assert
+            Assert.Equal(1,ex.InvalidAttempts);
+
 
         }
 
         [Fact]
         public void WithdrawFailingForInsufficientBalanceIncludesDeficitInErrorMessage()
         {
+            var ex = Assert.Throws<InsufficientBalanceException>(() => bank.Withdraw(account1, amount + 1, validPassword));
 
+            Assert.Equal(1, ex.Deficit);
         }
 
     }
