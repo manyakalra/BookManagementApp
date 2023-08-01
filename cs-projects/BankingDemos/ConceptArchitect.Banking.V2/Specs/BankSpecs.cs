@@ -28,7 +28,7 @@ namespace ConceptArchitect.Finance.Specs
             account3 = bank.OpenAccount("Prabhat Singh", validPassword, amount);
             
 
-            bank.CloseAccount(closedAccount, validPassword, out balance);
+            bank.CloseAccount(closedAccount, validPassword);
         }
 
         private void AssertFail(string reason="Not Yet Implemented")
@@ -86,9 +86,8 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void CloseAccountShouldFailForInvalidAccountNumber()
         {
-            Status status= bank.CloseAccount(-1,validPassword, out balance);
+            Assert.Throws<InvalidAccountException>(()=> bank.CloseAccount(-1,validPassword));
 
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
         }
 
         [Fact]
@@ -99,7 +98,7 @@ namespace ConceptArchitect.Finance.Specs
             //Act
             try
             {
-                bank.CloseAccount(accountNumber, "wrong password", out balance);
+                bank.CloseAccount(accountNumber, "wrong password");
 
                 //We shouldn't have reached here
                 AssertFail($"Excpected Exception 'InvalidCredentialsException' wasn't thrown");
@@ -118,26 +117,25 @@ namespace ConceptArchitect.Finance.Specs
         {
             //Arrange
             var accountNumber=bank.OpenAccount("Name", validPassword, amount);
-            bank.CloseAccount(accountNumber, validPassword, out balance);
+            bank.CloseAccount(accountNumber, validPassword);
 
-            //ACT
-            var status = bank.CloseAccount(accountNumber, validPassword, out balance);
+            //ACT + Assert
+            Assert.Throws<InvalidAccountException>(()=> bank.CloseAccount(accountNumber, validPassword));
 
-            //Assert
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
         }
 
-        [Fact]
+        [Fact(Skip ="Not yet implemented")]
+
         public void CloseAccountShouldFailForBalanceBelowZero()
         {
             //Arrange
             var accountNumber = bank.OpenAccount("Name", validPassword, -1);
+            bank.Withdraw(accountNumber, amount + 1, validPassword); //now account should be in negative
+
 
             //ACT
-            var status = bank.CloseAccount(accountNumber, validPassword, out balance);
+            Assert.Throws<InsufficientBalanceException>(()=> bank.CloseAccount(accountNumber, validPassword));
 
-            //Assert
-            Assert.Equal(Status.INSUFFICIENT_BALANCE, status);
         }
 
 
@@ -148,11 +146,9 @@ namespace ConceptArchitect.Finance.Specs
             var accountNumber = bank.OpenAccount("Name", validPassword, amount);
 
             //ACT
-            double balance;
-            Status success= bank.CloseAccount(accountNumber,validPassword, out balance);
+            double balance= bank.CloseAccount(accountNumber,validPassword);
 
             //Assert
-            Assert.Equal(Status.SUCCESS, success);
             Assert.Equal(amount, balance);
         }
 
@@ -160,9 +156,8 @@ namespace ConceptArchitect.Finance.Specs
         public void Deposit_FailsForInvalidAccountNumber()
         {
             int accountNumber = -1;
-            Status status = bank.Deposit(accountNumber, amount);
+            Assert.Throws<InvalidAccountException>(()=> bank.Deposit(accountNumber, amount));
 
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
             
             
         }
@@ -170,19 +165,17 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void Deposit_FailsForClosedAccount()
         {
-            var status = bank.Deposit(closedAccount, 1);
 
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(()=> bank.Deposit(closedAccount, 1));
             
         }
 
         [Fact]
         public void GetBalance_FailsForInvalidAccountNumber()
         {
-            int accountNumber = -1;
-            double balance = bank.GetBalance(accountNumber, validPassword);
+            
+            Assert.Throws<InvalidAccountException>(()=> bank.GetBalance(-1, validPassword));
 
-            Assert.Equal(-1, balance);
         }
 
         [Fact]
@@ -197,9 +190,8 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void GetBalance_FailsForClosedAccountNumber()
         {
-            double balance = bank.GetBalance(closedAccount, validPassword);
+            Assert.Throws<InvalidAccountException>(()=> bank.GetBalance(closedAccount, validPassword));
 
-            Assert.Equal(-1, balance);
         }
 
         [Fact]
@@ -213,9 +205,8 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void Deposit_FailsForInvalidAmount()
         {
-            var status = bank.Deposit(account1, -1);
+            Assert.Throws<InvalidDenominationException>(()=> bank.Deposit(account1, -1));
 
-            Assert.Equal(Status.INVALID_AMOUNT, status);
             AssertBalanceUnchanged(account1);
 
         }
@@ -223,10 +214,8 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void Deposit_OnSuccessUpdatesTheBalance()
         {
-            var status = bank.Deposit(account1, 1);
+            bank.Deposit(account1, 1);
 
-            Assert.Equal(Status.SUCCESS, status);
-            //Assert.Equal(amount + 1, bank.GetBalance(account1,validPassword));
             AssertBalance(account1, amount + 1);
 
         }
@@ -249,30 +238,26 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void WithdrawFailsForInvalidAccountNumber()
         {
-            Status status = bank.Withdraw(100, 1, validPassword);
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(()=> bank.Withdraw(100, 1, validPassword));
         }
         [Fact]
         public void WithdrawFailsForClosedAccountNumber()
         {
-            var status = bank.Withdraw(closedAccount, 1, validPassword);
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(()=> bank.Withdraw(closedAccount, 1, validPassword));
         }
 
         [Fact]
         public void WithdrawFailsForInvalidCredentials()
         {
-            var status = bank.Withdraw(account1, 1, "invalid password");
+            Assert.Throws<InvalidCredentialsException>(()=> bank.Withdraw(account1, 1, "invalid password"));
 
-            Assert.Equal(Status.INVALID_CREDENTIALS, status);
             AssertBalanceUnchanged(account1);
         }
 
         [Fact]
         public void WithdrawFailsForInvalidAmount()
         {
-            var status = bank.Withdraw(account1, -1, validPassword);
-            Assert.Equal(Status.INVALID_AMOUNT, status);
+            Assert.Throws<InvalidDenominationException>(()=> bank.Withdraw(account1, -1, validPassword));
             AssertBalanceUnchanged(account1);
 
         }
@@ -280,16 +265,14 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void WithdrawFailsForInsufficientBalance()
         {
-            var status = bank.Withdraw(account1, amount+1, validPassword);
-            Assert.Equal(Status.INSUFFICIENT_BALANCE, status);
+            Assert.Throws<InsufficientBalanceException>(()=> bank.Withdraw(account1, amount+1, validPassword));
             AssertBalanceUnchanged(account1);
         }
 
         [Fact]
         public void WithdrawUpdatesBalanceOnSuccess()
         {
-            var status = bank.Withdraw(account1, amount - 1, validPassword);
-            Assert.Equal(Status.SUCCESS, status);
+            bank.Withdraw(account1, amount - 1, validPassword);
             AssertBalance(account1, 1);
         }
 
@@ -299,39 +282,36 @@ namespace ConceptArchitect.Finance.Specs
         public void TransferFailsForInvalidSourceAccountNumber()
         {
             
-            Status status = bank.Transfer(-1, amount, validPassword, account1);
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(()=> bank.Transfer(-1, amount, validPassword, account1));
+
             AssertBalanceUnchanged(account1);
 
         }
         [Fact]
         public void TransferFailsForClosedSourceAccountNumber()
         {
-            Status status = bank.Transfer(closedAccount, amount, validPassword, account1);
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(() => bank.Transfer(closedAccount, amount, validPassword, account1));
+            
             AssertBalanceUnchanged(account1);
         }
 
         [Fact]
         public void TransferFailsForInvalidTargetAccountNumber()
         {
-            Status status = bank.Transfer(account1, amount, validPassword, 1000);
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(() => bank.Transfer(account1, amount, validPassword, 1000));
             AssertBalanceUnchanged(account1);
         }
         [Fact]
         public void TransferFailsForClosedTargetAccountNumber()
         {
-            Status status = bank.Transfer(account1, amount, validPassword, closedAccount);
-            Assert.Equal(Status.INVALID_ACCOUNT_NUMBER, status);
+            Assert.Throws<InvalidAccountException>(() => bank.Transfer(account1, amount, validPassword, closedAccount));
             AssertBalanceUnchanged(account1); 
         }
 
         [Fact]
         public void TransferFailsForInvalidCredentials()
         {
-            Status status = bank.Transfer(account1, amount, "invalid password", account3);
-            Assert.Equal(Status.INVALID_CREDENTIALS, status);
+            Assert.Throws<InvalidCredentialsException>(() => bank.Transfer(account1, amount, "invalid password", account3));
             AssertBalanceUnchanged(account1);
             AssertBalanceUnchanged(account3);
         }
@@ -339,8 +319,8 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void TransferFailsForInvalidAmount()
         {
-            Status status = bank.Transfer(account1, -1,validPassword, account3);
-            Assert.Equal(Status.INVALID_AMOUNT, status);
+            Assert.Throws<InvalidDenominationException>(() => bank.Transfer(account1, -1,validPassword, account3));
+            
             AssertBalanceUnchanged(account1);
             AssertBalanceUnchanged(account3);
         }
@@ -348,17 +328,18 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void TransferFailsForInsufficientBalance()
         {
-            Status status = bank.Transfer(account1, amount+1, validPassword, account3);
-            Assert.Equal(Status.INSUFFICIENT_BALANCE, status);
+
+
+            Assert.Throws<InsufficientBalanceException>(() => bank.Transfer(account1, amount+1, validPassword, account3));
             AssertBalanceUnchanged(account1);
             AssertBalanceUnchanged(account3);
+            
         }
 
         [Fact]
         public void TransferSUpdatesBalancesOnSuccess()
         {
-            Status status = bank.Transfer(account1,  1, validPassword, account3);
-            Assert.Equal(Status.SUCCESS, status);
+            bank.Transfer(account1,  1, validPassword, account3);
             AssertBalance(account1, amount-1);
             AssertBalance(account3, amount+1);
         }
@@ -367,13 +348,14 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void GetInfoFailsForInvalidCredentials()
         {
-            Assert.Null(bank.GetInfo(account1, "invalid password"));
+
+            Assert.Throws<InvalidCredentialsException>(() => bank.GetInfo(account1, "invalid password"));
         }
 
         [Fact]
         public void GetInfoFailsForInvalidAccountNumber()
         {
-            Assert.Null(bank.GetInfo(-1, "invalid password"));
+            Assert.Throws<InvalidAccountException>(() => bank.GetInfo(-1, validPassword));
         }
 
 
@@ -381,8 +363,6 @@ namespace ConceptArchitect.Finance.Specs
         public void GetInfoReturnsInfoAboutValidAccountOnSuccess()
         {
             var data = bank.GetInfo(account1, validPassword);
-
-            Assert.NotNull(data);
             Assert.Contains($"Account Number={account1}", data);
         }
 

@@ -139,6 +139,18 @@ namespace ConceptArchitect.Finance.Core
                 {
                     displayPanel.Show($"Error: You don't have sufficient balance to carry out the transaction");
                 }
+                catch(InvalidAccountException ex)
+                {
+                    DisplayErrorMessage(ex.Message);
+                }
+                catch(InvalidDenominationException ex)
+                {
+                    DisplayErrorMessage(ex.Message);
+                }
+                catch(InvalidPasswordException ex)
+                {
+                    DisplayErrorMessage(ex.Message);
+                }
 
 
 
@@ -155,17 +167,9 @@ namespace ConceptArchitect.Finance.Core
             }
             
 
-            var amount=0.0;
-            var status= bank.CloseAccount(accountNumber, confirmation,out amount);
-
-            if (status == Status.SUCCESS)
-            {
-                displayPanel.Show("Your account is closed. Please collect your cash");
-                cashDispenser.Dispense((int)amount);
-
-            }
-            else
-                DisplayErrorMessage(status);
+            var amount= bank.CloseAccount(accountNumber, confirmation);
+            displayPanel.Show("Your account is closed. Please collect your cash");
+            cashDispenser.Dispense((int)amount);
 
             
         }
@@ -174,45 +178,28 @@ namespace ConceptArchitect.Finance.Core
         {
             var toAccount = keyboard.ReadInt("Recipient:");
             var amount = keyboard.ReadInt("Amount?");
-            var status = bank.Transfer(accountNumber, amount, password,toAccount);
-            if (status == Status.SUCCESS)
-            {
-                displayPanel.Show("Amount Transferred");
-            }
-
-            else
-                DisplayErrorMessage(status);
+            bank.Transfer(accountNumber, amount, password,toAccount);
+            displayPanel.Show("Amount Transferred");
         }
 
         private void DoWithdraw()
         {
             var amount = keyboard.ReadInt("Amount?");
-            var status = bank.Withdraw(accountNumber, amount, password);
-            if (status == Status.SUCCESS)
-            {
-                displayPanel.Show("Please Collect Your Cash");
-                cashDispenser.Dispense(amount);
-            }
-                
-            else
-                DisplayErrorMessage(status);
+            bank.Withdraw(accountNumber, amount, password);
+            displayPanel.Show("Please Collect Your Cash");
+            cashDispenser.Dispense(amount);
         }
 
         private void DoDeposit()
         {
             var amount = keyboard.ReadInt("Amount?");
-            var status = bank.Deposit(accountNumber, amount);
-            if (status == Status.SUCCESS)
-                displayPanel.Show("Amount Deposited");
-            else
-                DisplayErrorMessage(status);
-
+            bank.Deposit(accountNumber, amount);
+            displayPanel.Show("Amount Deposited");
         }
 
-        private void DisplayErrorMessage(Status status)
+        private void DisplayErrorMessage(string message)
         {
-            if(status!=Status.SUCCESS)
-                displayPanel.Show($"Failed: {status}", ConsoleColor.Red);
+            displayPanel.Show($"Failed: {message}", ConsoleColor.Red);
         }
     }
 }

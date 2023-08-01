@@ -49,8 +49,8 @@ namespace ConceptArchitect.Finance.Core
         private BankAccount GetAccount(int accountNumber)
         {
             if (accountNumber < 0 || accountNumber > lastId || accounts[accountNumber].InActive)
-            {   
-                return null;
+            {
+                throw new InvalidAccountException(accountNumber);
             }
             else
             {
@@ -72,23 +72,17 @@ namespace ConceptArchitect.Finance.Core
             
         }
 
-        public Status CloseAccount(int accountNumber, string password, out double balance)
+        public double CloseAccount(int accountNumber, string password)
         {
-            balance = 0;
             var account = GetAccount(accountNumber);
-
-            if (account == null)
-                return Status.INVALID_ACCOUNT_NUMBER;
-
             account.Authenticate(password);
 
             if (account.Balance < 0)
-                return Status.INSUFFICIENT_BALANCE;
+                throw new InsufficientBalanceException(accountNumber,-account.Balance, $"You must not have pending dues before closing the account");
 
-            balance = account.Balance;
-            //accounts[accountNumber] = null;
+            
             account.InActive = true;
-            return Status.SUCCESS;
+            return account.Balance;
         }
 
         internal string[] GetAccountsInfo()
@@ -100,28 +94,17 @@ namespace ConceptArchitect.Finance.Core
             return accountsInfo;
         }
 
-        public Status Deposit(int accountNumber, double amount)
+        public void Deposit(int accountNumber, double amount)
         {
             var account=GetAccount(accountNumber);
-            if(account==null)
-                return Status.INVALID_ACCOUNT_NUMBER;
-
-            if(amount<=0)
-                return Status.INVALID_AMOUNT;
 
             account.Deposit(amount);
-            return Status.SUCCESS;
         }
 
         public double GetBalance(int accountNumber, string password)
         {
             var account= GetAccount(accountNumber);
-
-            if (account == null)
-                return -1;
-
             account.Authenticate(password);
-
             return account.Balance;
           }
 
@@ -132,28 +115,19 @@ namespace ConceptArchitect.Finance.Core
                     accounts[i].CreditInterest(Rate);
         }
 
-        public Status Withdraw(int accountNumber, double amount, string password)
+        public void Withdraw(int accountNumber, double amount, string password)
         {
             var account = GetAccount(accountNumber);
-            if(account==null)
-                return Status.INVALID_ACCOUNT_NUMBER;
-
-            return account.Withdraw(amount,password);
+            account.Withdraw(amount,password);
         }
 
-        public Status Transfer(int sourceAccountNumber, double amount, string password, int targetAccountNumber)
+        public void Transfer(int sourceAccountNumber, double amount, string password, int targetAccountNumber)
         {
             var sourceAccount=GetAccount(sourceAccountNumber);
             var targetAccount = GetAccount(targetAccountNumber);
-            if(sourceAccount==null || targetAccount==null)
-                return Status.INVALID_ACCOUNT_NUMBER;
 
-            var status= sourceAccount.Withdraw(amount, password);
-
-            if (status == Status.SUCCESS)
-                return targetAccount.Deposit(amount) ? Status.SUCCESS : Status.INVALID_AMOUNT;
-            else
-                return status;
+            sourceAccount.Withdraw(amount, password);
+            targetAccount.Deposit(amount);
         }
     }
 }

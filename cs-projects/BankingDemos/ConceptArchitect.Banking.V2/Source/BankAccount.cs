@@ -19,6 +19,7 @@ namespace ConceptArchitect.Finance.Core
 
         public BankAccount(int accountNumber, string name, string password, double amount)
         {
+            ValidateAmount(amount);
             this.accountNumber = accountNumber;
             this.name = name;
             //this.password = password;
@@ -29,42 +30,31 @@ namespace ConceptArchitect.Finance.Core
 
         }
 
-        public bool Deposit(double amount)
+        private void ValidateAmount(double amount)
         {
-            if (amount >0)
-            {
-                balance += amount;
-                return true;
+            if (amount < 0)
+                throw new InvalidDenominationException(accountNumber, "Amount Must be greater than 0");
+        }
 
-            }
-            else
-            {
-                // Console.WriteLine("Invalid Amount");
-                return false;
-            }
+        public void Deposit(double amount)
+        {
+            ValidateAmount(amount);
+            balance += amount;
             
         }
 
-        public Status Withdraw(double amount, string password)
+        public void Withdraw(double amount, string password)
         {
+
+            ValidateAmount(amount);
             Authenticate(password);
 
-            //if you reach here, you are authenticated.
-
-            if (amount < 0)
+            if(amount> balance)
             {
-                return Status.INVALID_AMOUNT;
-            } 
-            else if(amount> balance)
-            {
-                throw new InsufficientBalanceException();
+                throw new InsufficientBalanceException(AccountNumber, amount-balance);
             }
             
-            else
-            {
-                balance -= amount;
-                return Status.SUCCESS;
-            }
+            balance -= amount;
         }
 
         public void CreditInterest(double interestRate)
@@ -124,6 +114,7 @@ namespace ConceptArchitect.Finance.Core
         {
             set
             {
+                CheckPasswordRule(value);
                 Encryptor encryptor = new Encryptor();
                 this.password = encryptor.Encrypt(value);
             }            
@@ -131,22 +122,24 @@ namespace ConceptArchitect.Finance.Core
 
         public bool InActive { get; internal set; }
 
-        public bool Authenticate(string password)
+        public void Authenticate(string password)
         {
             Encryptor matcher = new Encryptor();
 
-            if (matcher.Match(this.password, password))
-                return true;
-            else
+            if (!matcher.Match(this.password, password))
                 throw new InvalidCredentialsException(AccountNumber, 1, "Invalid Credentials");
+        }
+
+        private void CheckPasswordRule(string newPassword)
+        {
+            if (newPassword.Length < 5 && newPassword.Length > 10)
+                throw new InvalidPasswordException(accountNumber, $"Password must be between 5-10 chars");
         }
 
         public void  ChangePassword(string confirmPassword, string newPassword)
         {
-            if (Authenticate(confirmPassword) && newPassword.Length>5 && newPassword.Length<10)
-            {
-                Password = newPassword;
-            }
+            Authenticate(confirmPassword);            
+            Password = newPassword;            
         }
 
     }
