@@ -51,7 +51,7 @@ namespace CollectionTests
 
             list.Add(data);
 
-            Assert.Equal(data, list.Get(list.Length - 1));
+            Assert.Equal(data, list[list.Length-1]);
         }
 
         [Fact(Skip ="We are Not implementing this")]
@@ -64,13 +64,13 @@ namespace CollectionTests
         {
             
             for(var index=0;index<dataSet.Length;index++)
-                Assert.Equal(dataSet[index], list.Get(index));
+                Assert.Equal(dataSet[index], list[index]);
 
         }
         [Fact()]
         public void Get_FailsForInvalidIndex()
         {
-            Assert.Throws<IndexOutOfRangeException>(()=>list.Get(dataSet.Length));
+            Assert.Throws<IndexOutOfRangeException>(()=>list[dataSet.Length]);
         }
 
 
@@ -81,8 +81,8 @@ namespace CollectionTests
 
             for(int i=0;i<list.Length;i++)
             {
-                list.Set(i, i * 10);
-                Assert.Equal(i * 10, list.Get(i));
+                list[i] = i * 10;   //list.Set(i, i * 10);
+                Assert.Equal(i * 10, list[i]);
             }
 
         }

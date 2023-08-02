@@ -12,7 +12,7 @@
         }
 
 
-        private Node first;
+        private Node first, last;
 
         public LinkedList(params X[] items)
         {
@@ -34,36 +34,35 @@
 
         public void Add(X item)
         {
-            var newNode=new Node() { Value = item };
+            var newNode=new Node() { Value = item, Previous=last };
+            
 
-            if(first==null)
-                first=newNode;
-            else
-            {
-                var n = first;
-                while(n.Next!=null)
-                    n=n.Next;
 
-                newNode.Previous = n;
-                n.Next=newNode;
-            }
+            if (first == null) //list is empty
+                first = newNode;
+            else 
+                last.Next=newNode;
+
+            last = newNode;
+
+
+
+            //if(first==null)
+            //    first=newNode;
+            //else
+            //{
+            //    var n = first;
+            //    while(n.Next!=null)
+            //        n=n.Next;
+
+            //    newNode.Previous = n;
+            //    n.Next=newNode;
+            //}
 
 
         }
 
-        public X Get(int index)
-        {
-            if(index<0 || index>=Length)
-                throw new IndexOutOfRangeException($"Invalid Index {index}");
-
-            var n = first;
-            for(int i=0; i<index ; i++)
-                n=n.Next;
-
-            return n.Value;
-        }
-
-        public void Set(int index, X value)
+        private Node Locate(int index)
         {
             if (index < 0 || index >= Length)
                 throw new IndexOutOfRangeException($"Invalid Index {index}");
@@ -72,17 +71,36 @@
             for (int i = 0; i < index; i++)
                 n = n.Next;
 
-            n.Value = value;
+            return n;
+
+        }
+
+        public X this[ int index]
+        {
+            get
+            {
+                return Locate(index).Value;
+            }
+            set
+            {
+                Locate(index).Value = value;
+            }
+        }
+
+        public X Get(int index)
+        {
+            
+            return Locate(index).Value;
+        }
+
+        public void Set(int index, X value)
+        {
+            Locate(index).Value = value;
         }
 
         public X Remove(int index)
         {
-            if (index < 0 || index >= Length)
-                throw new IndexOutOfRangeException($"Invalid Index {index}");
-
-            var d = first;
-            for (int i = 0; i < index; i++)
-                d = d.Next;
+            var d = Locate(index);
 
 
             if(d.Next!=null)
@@ -99,12 +117,7 @@
 
         public void Insert(int index, X value)
         {
-            if (index < 0 || index >= Length)
-                throw new IndexOutOfRangeException($"Invalid Index {index}");
-
-            var n = first;
-            for (int i = 0; i < index; i++)
-                n = n.Next;
+            var n = Locate(index);
 
             //insert after n
             var newNode = new Node() { Value = value };
