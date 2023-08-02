@@ -19,8 +19,9 @@ class Program
         };
 
 
-       
-       
+        calc.Formatter = (v1, v2, opr, result) => $"{v1} {opr} {v2} = {result}";
+
+        calc.AddOperator((n, r) => Factorial(n) / Factorial(n - r), "permutation", "per");
 
 
         int x = 50, y = 15;
@@ -29,15 +30,38 @@ class Program
 
         calc.PrintResult(x, "plus", y);
 
+        calc.PrintResult(x, "add", y);
+
+        calc.PrintResult(x, "sum", y);
+
+
+
+        calc.PrintResult(5, "permutation", 3);
+
         calc.PrintResult(x, "Minus", y);
+
+        calc.PrintResult(x, "-", y );
 
         calc.PrintResult(x, "Mod" , y);
 
         calc.AddOperator(Mod);
 
+        
+
+
+
         calc.Formatter = ResultFormatters.Raw;
 
         calc.PrintResult(x, "MOD", y);
+    }
+
+    static int Factorial(int x)
+    {
+        if (x <= 1)
+            return 1;
+        else
+            return x * Factorial(x - 1);
+           
     }
 
     static int Mod(int x,int y)

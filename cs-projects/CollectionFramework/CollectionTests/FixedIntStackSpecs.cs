@@ -1,17 +1,16 @@
 using ConceptArchitect.Collections;
-using System;
 using Xunit;
 
 namespace CollectionTests
 {
-    public class FixedStackSpecs
+    public class FixedIntStackSpecs
     {
-        FixedStack<int> intStack;
+        FixedIntStack stack;
         int size = 3;
 
-        public FixedStackSpecs()
+        public FixedIntStackSpecs()
         {
-            intStack = new FixedStack<int>(size);
+            stack = new FixedIntStack(size);
         }
 
         private void AssertFailed(string reason = "Not Yet Implemented")
@@ -24,7 +23,7 @@ namespace CollectionTests
         )]
         public void StackShouldBeInitializedWithSize()
         {
-            var stack = new FixedStack<int>(10);
+            var stack = new FixedIntStack(10);
             Assert.NotNull(stack);
         }
         [Fact(
@@ -32,7 +31,7 @@ namespace CollectionTests
         )]
         public void StackShouldBeInitiallyEmpty()
         {
-            Assert.True(intStack.IsEmpty);
+            Assert.True(stack.IsEmpty);
         }
 
         [Fact(
@@ -40,9 +39,9 @@ namespace CollectionTests
         )]
         public void PushPushesNumberToStack()
         {
-            intStack.Push(20);
+            var success=stack.Push(20);
 
-            Assert.Equal(1, intStack.Length);
+            Assert.True(success);
         }
 
 
@@ -51,9 +50,9 @@ namespace CollectionTests
         )]
         public void PushingAnItemToAnEmptyStackMakesItNonEmpty()
         {
-            intStack.Push(20);
+            stack.Push(20);
 
-            Assert.False(intStack.IsEmpty);
+            Assert.False(stack.IsEmpty);
         }
 
 
@@ -63,10 +62,10 @@ namespace CollectionTests
         public void PushingItemsEqualsToTheSizeOfStackMakesItFull()
         {
             for (int i = 0; i < size; i++)
-                intStack.Push(i);
+                stack.Push(i);
 
 
-            Assert.True(intStack.IsFull);
+            Assert.True(stack.IsFull);
         }
 
         [Fact(
@@ -77,12 +76,14 @@ namespace CollectionTests
             //Arrange --- Get a Full Stack
             for(var i = 0; i < size; i++)
             {
-                intStack.Push(i);
+                stack.Push(i);
             }
 
-            //Act+Assert
+            //Act
+            bool success = stack.Push(10); //This should fail
 
-            Assert.Throws<StackOverflowException>(()=> intStack.Push(10)); //This should fail
+            //Assert
+            Assert.False(success);
         }
 
         [Fact(
@@ -90,8 +91,10 @@ namespace CollectionTests
         )]
         public void PoppingAnItemFromAnEmptyStackShouldFail()
         {
-            Assert.Throws<EmptyContainerException>(() => intStack.Pop());
+            bool checkSuccess;
+            int val = stack.Pop(out checkSuccess);
 
+            Assert.False(checkSuccess);
         }
 
 
@@ -104,15 +107,16 @@ namespace CollectionTests
 
            for(int i = 0; i < size; i++)
             {
-                intStack.Push(i);
+                stack.Push(i);
             }
 
             //Act
-             intStack.Pop();
+            bool checkSuccess;
+            int val = stack.Pop(out checkSuccess);
 
             //Assert
 
-            Assert.False(intStack.IsFull);
+            Assert.False(stack.IsFull);
 
 
 
@@ -125,11 +129,10 @@ namespace CollectionTests
         {
             //Arrange
             int elementToPush = 10;
-            intStack.Push(elementToPush);
-            
+            stack.Push(elementToPush);
             //Act
-            int lastElement = intStack.Pop();
-
+            bool checkSuccess;
+            int lastElement = stack.Pop(out checkSuccess);
             //Assert
             Assert.Equal(elementToPush, lastElement) ;
         }
@@ -141,13 +144,13 @@ namespace CollectionTests
         public void ClearingAStackMakesItEmpty()
         {
             //Arrange
-            intStack.Push(1);
+            stack.Push(1);
 
             //Act
-            intStack.Clear();
+            stack.Clear();
 
             //Assert
-            Assert.True(intStack.IsEmpty);
+            Assert.True(stack.IsEmpty);
 
         }
 
@@ -158,7 +161,9 @@ namespace CollectionTests
         {
             bool success;
 
-            Assert.Throws<EmptyContainerException>( ()=>intStack.Peek());
+            stack.Peek(out success);
+
+            Assert.False(success);
         }
 
         [Fact(
@@ -168,27 +173,31 @@ namespace CollectionTests
         {
             //Arrange
             int item=10;
-            intStack.Push(item);
+            bool success;
+            stack.Push(item);
 
             //ACT
-            int value = intStack.Peek();
+            int value = stack.Peek(out success);
 
             //Assert
+            Assert.True(success);
             Assert.Equal(item, value);
         }
 
         [Fact]
         public void PopShouldPopItemsInLastInFirstOutOrder()
         {
+            bool checkSuccess;
             int[] values = { 5, 10, 6 };
             foreach(var item in values)
             {
-                intStack.Push(item);
+                stack.Push(item);
             }
             for(var i=0; i<values.Length; i++)
             {
-                int value = intStack.Pop();
+                int value = stack.Pop(out checkSuccess);
                 Assert.Equal(values[values.Length-1-i], value);
+                Assert.True(checkSuccess);
             }
             
 

@@ -1,75 +1,65 @@
 ﻿namespace ConceptArchitect.Collections
 {
-    public class FixedStack
+    public class FixedStack<T>
     {
 
-        private int size;
-        int count = 0;
-        int lastElement = -1;
-        int []arr;
+        public int Size { get { return arr.Length; }  }
+
+        public int Length { get { return top; } }
+
+        int top = 0;
+        T []arr;
         public FixedStack(int size)
         {
-            this.size = size;
-            arr = new int[size];
+            arr = new T[size];
         }
 
-        bool empty = true;
         public bool IsEmpty { 
             get
             {
-                return count==0;
+                return top==0;
             }
         }
 
-
-        
-        
 
         public bool IsFull 
         { 
             get
             {
-                return count == size;
+                return top == Size;
             }
         }
 
         
         
-        public bool Push(int value)
+        public void Push(T value)
         {
             if (IsFull)
-                return false;
+                throw new StackOverflowException($"Stack overflow while pushing: {value}");
 
-            lastElement = value;
-            arr[count++] = value;
+            arr[top++] = value;
             
-            return true;
         }
 
-        public int Pop(out bool checkSuccess)
+        public T Pop()
         {
-            checkSuccess = !IsEmpty;
-            if(!checkSuccess)
-            {
-                return 0;
-            }
-            count--;
-            return arr[count];
+            if (IsEmpty)
+                throw new EmptyContainerException();
+            top--;
+            return arr[top];
         }
 
         public void Clear()
         {
-            count = 0;
+            top = 0;
         }
 
-        public int Peek(out bool success)
+        public T Peek()
         {
-            success = !IsEmpty;
-            if(!success)
-            {
-                return 0;
-            }
-            return lastElement;
+            if (IsEmpty)
+                throw new EmptyContainerException();
+
+            return arr[top - 1];
         }
     }
 }

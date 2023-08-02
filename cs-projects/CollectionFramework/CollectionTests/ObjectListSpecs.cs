@@ -4,16 +4,15 @@ using Xunit;
 
 namespace CollectionTests
 {
-    public class LinkedListSpecs
+    public class ObjectListSpecs
     {
 
-        string[] dataSet = { "India", "USA", "UK", "France", "Japan" };
-        LinkedList<string> list;
+        Object[] dataSet = { "India", "USA", "UK", "France", "Japan" };
+        ObjectList list;
 
-
-        public LinkedListSpecs()
+        public ObjectListSpecs()
         {
-            list = new LinkedList<string>();
+            list = new ObjectList();
             foreach (var data in dataSet)
                 list.Add(data);
         }
@@ -21,7 +20,7 @@ namespace CollectionTests
         [Fact()]
         public void NewList_HasZeroLength()
         {
-            var list = new LinkedList<int>();
+            var list = new ObjectList();
 
             Assert.Equal(0, list.Length);
         }
@@ -30,7 +29,7 @@ namespace CollectionTests
         [Fact()]
         public void NewList_CanBeSuppliedWithInitializerList()
         {
-            var list = new LinkedList<int>(1, 2, 3, 4);
+            var list = new ObjectList(1, 2, 3, 4);
 
             Assert.Equal(4, list.Length);
         }
@@ -77,8 +76,7 @@ namespace CollectionTests
         [Fact()]
         public void Set_CanSetTheItemAtZeroBasedIndex()
         {
-            var list = new LinkedList<int>();
-
+            var data = "something";
             for(int i=0;i<list.Length;i++)
             {
                 list.Set(i, i * 10);

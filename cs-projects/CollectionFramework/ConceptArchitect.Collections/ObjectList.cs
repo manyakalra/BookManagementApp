@@ -2,11 +2,11 @@
 {
     
 
-    public class LinkedList<X>
+    public class ObjectList
     {
         class Node
         {
-            public X Value { get; set; }
+            public object Value { get; set; }
             public Node Next { get; set; }
             public Node Previous { get; set; }
         }
@@ -14,7 +14,7 @@
 
         private Node first;
 
-        public LinkedList(params X[] items)
+        public ObjectList(params object[] items)
         {
             foreach (var item in items)
                 Add(item);
@@ -32,7 +32,7 @@
             }
         }
 
-        public void Add(X item)
+        public void Add(object item)
         {
             var newNode=new Node() { Value = item };
 
@@ -51,7 +51,7 @@
 
         }
 
-        public X Get(int index)
+        public object Get(int index)
         {
             if(index<0 || index>=Length)
                 throw new IndexOutOfRangeException($"Invalid Index {index}");
@@ -63,7 +63,7 @@
             return n.Value;
         }
 
-        public void Set(int index, X value)
+        public void Set(int index, object value)
         {
             if (index < 0 || index >= Length)
                 throw new IndexOutOfRangeException($"Invalid Index {index}");
@@ -75,7 +75,7 @@
             n.Value = value;
         }
 
-        public X Remove(int index)
+        public object Remove(int index)
         {
             if (index < 0 || index >= Length)
                 throw new IndexOutOfRangeException($"Invalid Index {index}");
@@ -97,7 +97,7 @@
             return d.Value;
         }
 
-        public void Insert(int index, X value)
+        public void Insert(int index, object v2)
         {
             if (index < 0 || index >= Length)
                 throw new IndexOutOfRangeException($"Invalid Index {index}");
@@ -107,7 +107,7 @@
                 n = n.Next;
 
             //insert after n
-            var newNode = new Node() { Value = value };
+            var newNode = new Node() { Value = v2 };
 
             newNode.Previous = n.Previous;
             newNode.Next = n;
@@ -123,12 +123,12 @@
             
         }
 
-        public int IndexOf(X value)
+        public int IndexOf(object value)
         {
             int index = 0;
 
             for (Node n = first; n != null; n = n.Next)
-                if (n.Value.Equals( value))
+                if (n.Value == value)
                     return index;
                 else
                     index++;
