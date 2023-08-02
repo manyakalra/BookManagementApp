@@ -88,11 +88,12 @@ namespace ConceptArchitect.Finance.Core
 
         private void DoOpenAccount()
         {
+            var accountType = keyboard.ReadString("AccountType[savings/current/overdraft]:");
             var name = keyboard.ReadString("Name?");
             var password = keyboard.ReadString("Password?");
             var amount = keyboard.ReadInt("Amount?");
 
-            var accountNumber = bank.OpenAccount(name, password, amount);
+            var accountNumber = bank.OpenAccount(accountType,name, password, amount);
             displayPanel.Show($"Your Account Number is : {accountNumber}");
         }
 

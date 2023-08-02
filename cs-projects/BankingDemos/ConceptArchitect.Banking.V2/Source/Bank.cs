@@ -34,11 +34,31 @@ namespace ConceptArchitect.Finance.Core
         }
 
         int lastId = 0;
-        public int OpenAccount(string name, string validPassword, double amount)
+        public int OpenAccount(string accountType, string name, string validPassword, double amount)
         {
             var accountNumber = ++lastId;
 
-            var account = new BankAccount(accountNumber, name, validPassword, amount);
+            BankAccount account = null;
+
+
+            switch (accountType)
+            {
+                case "savings":
+                    account = new SavingsAccount(accountNumber, name, validPassword, amount);
+                    break;
+                case "current":
+                    account= new CurrentAccount(accountNumber, name, validPassword, amount);
+                    break;
+                case "overdraft":
+                    account=new OverdraftAccount(accountNumber, name, validPassword, amount);
+                    break;
+                default:
+                    throw new ArgumentException($"Invalid Account Type: {accountType}");
+
+
+            }
+
+
             accounts[accountNumber] = account;
 
 

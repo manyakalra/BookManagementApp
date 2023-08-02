@@ -12,11 +12,11 @@ namespace ConceptArchitect.Finance.Core.V2.Specs
         string password = "p@ssword";
         double amount = 20000;
         double minBalance = 5000;
-        CurentAccount account;
+        SavingsAccount account;
 
         public SavingsAccountSpecs()
         {
-            account = new CurentAccount(1, "Name", password, amount);
+            account = new SavingsAccount(1, "Name", password, amount);
         }
         
         [Fact]

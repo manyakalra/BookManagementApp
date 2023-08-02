@@ -43,13 +43,21 @@ namespace ConceptArchitect.Finance.Core
             
         }
 
+        public virtual double SufficientBalance 
+        { 
+            get
+            {
+                return Balance;
+            }
+        }
+
         public virtual void Withdraw(double amount, string password)
         {
 
             ValidateAmount(amount);
             Authenticate(password);
 
-            if(amount> balance)
+            if(amount> SufficientBalance)
             {
                 throw new InsufficientBalanceException(AccountNumber, amount-balance);
             }
@@ -101,6 +109,11 @@ namespace ConceptArchitect.Finance.Core
             get 
             { 
                 return balance; 
+            }
+
+            protected set
+            {
+                balance = value;
             }
         }
 

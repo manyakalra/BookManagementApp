@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConceptArchitect.Finance.Core
 {
-    public class CurentAccount : BankAccount
+    public class SavingsAccount : BankAccount
     {
-        public CurentAccount(int accountNumber, string name, string password, double amount) : base(accountNumber, name, password, amount)
+        public SavingsAccount(int accountNumber, string name, string password, double amount) : base(accountNumber, name, password, amount)
         {
         }
 
@@ -20,14 +20,22 @@ namespace ConceptArchitect.Finance.Core
             }
         }
 
-        public override void Withdraw(double amount, string password)
+        public override double SufficientBalance
         {
-            if (amount > Balance - MinBalance)
-                throw new InsufficientBalanceException(AccountNumber, amount - Balance - MinBalance);
-
-            //let base withdraw do it's magic
-            base.Withdraw(amount, password);    
-            
+            get
+            {
+                return Balance - MinBalance;
+            }
         }
+
+        //public override void Withdraw(double amount, string password)
+        //{
+        //    if (amount > Balance - MinBalance)
+        //        throw new InsufficientBalanceException(AccountNumber, amount - Balance - MinBalance);
+
+        //    //let base withdraw do it's magic
+        //    base.Withdraw(amount, password);    
+            
+        //}
     }
 }

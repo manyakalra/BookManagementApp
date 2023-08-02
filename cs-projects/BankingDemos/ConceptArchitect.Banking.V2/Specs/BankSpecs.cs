@@ -17,16 +17,21 @@ namespace ConceptArchitect.Finance.Specs
         double amount = 20000,balance;
         Bank bank;
 
-        int account1, account3, closedAccount;
+        int account1,account2, account3, closedAccount;
+        int savingsAccount, currentAccount, overDraftAccount;
 
         public BankSpecs()
         {
             bank = new Bank(bankName, rate);
             
-            account1 = bank.OpenAccount("Sanjay Mall", validPassword, amount);
-            closedAccount = bank.OpenAccount("Amit Singh", validPassword, amount);
-            account3 = bank.OpenAccount("Prabhat Singh", validPassword, amount);
-            
+            account1 = bank.OpenAccount("savings","Sanjay Mall", validPassword, amount);
+            account2 = bank.OpenAccount("current","Amit Singh", validPassword, amount);
+            closedAccount = bank.OpenAccount("current", "Amit Singh", validPassword, amount);
+            account3 = bank.OpenAccount("overdraft","Prabhat Singh", validPassword, amount);
+
+            savingsAccount = account1;
+            currentAccount = account2;
+            overDraftAccount = account3;
 
             bank.CloseAccount(closedAccount, validPassword);
         }
@@ -68,17 +73,17 @@ namespace ConceptArchitect.Finance.Specs
         public void OpenAccountShouldAcceptNamePasswordAndBalance()
         {
             string name = "Name";
-            bank.OpenAccount(name, validPassword, amount);
+            bank.OpenAccount("savings",name, validPassword, amount);
         }
 
         [Fact]
         public void OpenAccountShouldHaveAccountNumberInIncreasingSequence()
         {
-            int first = bank.OpenAccount("First", validPassword, amount);
+            int first = bank.OpenAccount("savings", "First", validPassword, amount);
 
             for(int i = 1;i<=3; i++)
             {
-                int newAccount = bank.OpenAccount("New Account", "p@ssword", 20000);
+                int newAccount = bank.OpenAccount("savings", "New Account", "p@ssword", 20000);
                 Assert.Equal(first+i, newAccount);
             }
         }
@@ -93,12 +98,11 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void CloseAccountShouldFailForInvalidPassword()
         {
-            //Arrange
-            var accountNumber=bank.OpenAccount("Name", validPassword, amount);
+          
             //Act
             try
             {
-                bank.CloseAccount(accountNumber, "wrong password");
+                bank.CloseAccount(account1, "wrong password");
 
                 //We shouldn't have reached here
                 AssertFail($"Excpected Exception 'InvalidCredentialsException' wasn't thrown");
@@ -115,26 +119,22 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void CloseAccountShouldFailForAlreadyClosedAccount()
         {
-            //Arrange
-            var accountNumber=bank.OpenAccount("Name", validPassword, amount);
-            bank.CloseAccount(accountNumber, validPassword);
+            
 
             //ACT + Assert
-            Assert.Throws<InvalidAccountException>(()=> bank.CloseAccount(accountNumber, validPassword));
+            Assert.Throws<InvalidAccountException>(()=> bank.CloseAccount(closedAccount, validPassword));
 
         }
 
-        [Fact(Skip ="Not yet implemented")]
+        [Fact()]
 
         public void CloseAccountShouldFailForBalanceBelowZero()
         {
             //Arrange
-            var accountNumber = bank.OpenAccount("Name", validPassword, -1);
-            bank.Withdraw(accountNumber, amount + 1, validPassword); //now account should be in negative
-
+            bank.Withdraw(overDraftAccount, amount + 1, validPassword);
 
             //ACT
-            Assert.Throws<InsufficientBalanceException>(()=> bank.CloseAccount(accountNumber, validPassword));
+            Assert.Throws<InsufficientBalanceException>(()=> bank.CloseAccount(overDraftAccount, validPassword));
 
         }
 
@@ -142,11 +142,10 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void CloseAccountOnSuccessShouldReturnTheRemainingBalance()
         {
-            //Arrange
-            var accountNumber = bank.OpenAccount("Name", validPassword, amount);
+           
 
             //ACT
-            double balance= bank.CloseAccount(accountNumber,validPassword);
+            double balance= bank.CloseAccount(account1,validPassword);
 
             //Assert
             Assert.Equal(amount, balance);
@@ -272,8 +271,8 @@ namespace ConceptArchitect.Finance.Specs
         [Fact]
         public void WithdrawUpdatesBalanceOnSuccess()
         {
-            bank.Withdraw(account1, amount - 1, validPassword);
-            AssertBalance(account1, 1);
+            bank.Withdraw(currentAccount, amount - 1, validPassword);
+            AssertBalance(currentAccount, 1);
         }
 
 
