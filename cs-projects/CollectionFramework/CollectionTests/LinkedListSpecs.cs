@@ -1,4 +1,5 @@
 ﻿using ConceptArchitect.Collections;
+using ConceptArchitect.Utils;
 using System;
 using Xunit;
 
@@ -190,6 +191,67 @@ namespace CollectionTests
         public void IndexOfReturnsMinusOneForFailedSearch() {
             Assert.Equal(-1, list.IndexOf("missing item"));
         }
+
+
+        [Fact]
+        public void CountReturnsOccuranceOfAGivenValueInTheList()
+        {
+            var list = new LinkedList<int>(2, 3, 9, 2, 2, 1, 4, 5, 1);
+
+            Assert.Equal(3, list.Count(2));
+
+            Assert.Equal(2, list.Count(1));
+
+            Assert.Equal(0, list.Count(10));
+        }
+
+        [Fact]
+        public void LastIndexOfReturnsLastIndexOfAValueInTheList()
+        {
+            var list = new LinkedList<int>(2, 3, 9, 2, 2, 1, 4, 5, 1);
+
+            Assert.Equal(4, list.LastIndexOf(2));
+
+            Assert.Equal(8, list.LastIndexOf(1));
+
+            Assert.Equal(-1, list.LastIndexOf(10));
+        }
+
+        [Fact]
+        public void FindPrimesReturnsAllPrimes()
+        {
+
+            var list = new LinkedList<int>(2, 9, 7, 14, 4, 15, 19, 7);
+
+            int [] expectedResult = { 2, 7, 19, 7 };
+
+            var actualResult = list.Find(PrimeUtils.IsPrime);
+
+            for (int i = 0; i < expectedResult.Length; i++)
+            {
+                Assert.Equal(expectedResult[i], actualResult[i]);
+            }
+
+        }
+
+        [Fact]
+        public void FindNamesOfGreaterThanThree()
+        {
+
+            var list = new LinkedList<string>("India", "USA", "UK", "France", "UAE");
+
+
+            var result = list.Find(name => name.Length > 3);
+
+            Assert.Equal(2, result.Length);
+
+            for (int i = 0; i < result.Length; i++)
+            {
+                Assert.True(result[i].Length > 3);
+            }
+
+        }
+
 
     }
 }

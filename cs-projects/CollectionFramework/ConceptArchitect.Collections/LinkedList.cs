@@ -1,8 +1,10 @@
 ﻿namespace ConceptArchitect.Collections
 {
-    
 
-    public class LinkedList<X>
+    public delegate bool Matcher<T>(T item);
+
+
+    public class LinkedList<X> : IIndexedList<X>
     {
         class Node
         {
@@ -34,14 +36,14 @@
 
         public void Add(X item)
         {
-            var newNode=new Node() { Value = item, Previous=last };
-            
+            var newNode = new Node() { Value = item, Previous = last };
+
 
 
             if (first == null) //list is empty
                 first = newNode;
-            else 
-                last.Next=newNode;
+            else
+                last.Next = newNode;
 
             last = newNode;
 
@@ -75,7 +77,7 @@
 
         }
 
-        public X this[ int index]
+        public X this[int index]
         {
             get
             {
@@ -89,7 +91,7 @@
 
         public X Get(int index)
         {
-            
+
             return Locate(index).Value;
         }
 
@@ -103,7 +105,7 @@
             var d = Locate(index);
 
 
-            if(d.Next!=null)
+            if (d.Next != null)
                 d.Next.Previous = d.Previous;
 
             if (d.Previous != null)
@@ -133,7 +135,7 @@
             n.Previous = newNode;
 
 
-            
+
         }
 
         public int IndexOf(X value)
@@ -141,13 +143,50 @@
             int index = 0;
 
             for (Node n = first; n != null; n = n.Next)
-                if (n.Value.Equals( value))
+                if (n.Value.Equals(value))
                     return index;
                 else
                     index++;
 
             return -1;
 
+        }
+
+        public int LastIndexOf(X value)
+        {
+            int index = -1;
+            int i = 0;
+            for (Node n = first; n != null; n = n.Next)
+            {
+                if (n.Value.Equals(value))
+                    index = i;
+
+                i++;
+            }
+
+            return index;
+
+        }
+
+        public int Count(X value)
+        {
+            var count = 0;
+            for (var n = first; n != null; n = n.Next)
+            {
+                if (n.Value.Equals(value))
+                    count++;
+            }
+            return count;
+        }
+
+
+
+        public void Show()
+        {
+            for (var n = first; n != null; n = n.Next)
+            {
+                Console.WriteLine(n.Value);
+            }
         }
 
         public override string ToString()
@@ -161,5 +200,21 @@
 
             return str + "]";
         }
+
+
+        public LinkedList<X> Find(Matcher<X> matcher)
+        {
+            var result = new LinkedList<X>();
+
+            for (var n = first; n != null; n = n.Next)
+            {
+                if (matcher(n.Value))
+                    result.Add(n.Value);
+
+            }
+
+            return result;
+        }
+
     }
 }

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConceptArchitect.Collections\ConceptArchitect.Collections.csproj" />
+    <ProjectReference Include="..\ConceptArchitect.Utils\ConceptArchitect.Utils.csproj" />
   </ItemGroup>
 
 </Project>
