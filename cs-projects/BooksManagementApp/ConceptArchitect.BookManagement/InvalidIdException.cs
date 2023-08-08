@@ -1,6 +1,7 @@
 ﻿namespace ConceptArchitect.BookManagement
 {
-    public class InvalidIdException:Exception
+    public class InvalidIdException<ID>:Exception
     {
+        public ID Id { get; set; }
     }
 }
