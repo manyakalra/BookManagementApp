@@ -1,6 +1,7 @@
 using ConceptArchitect.BookManagement;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using Xunit;
 
 namespace ConceptArchitect.BookManaement.Tests
@@ -25,7 +26,13 @@ namespace ConceptArchitect.BookManaement.Tests
             setup = new TestSetup() { ConnectionString = connectionString };
             setup.SetUpAuthors(author1, author2, author3);
 
-            authorManager=new AuthorManager() { ConnectionString=connectionString };
+            authorManager = new AuthorManager(() =>
+            {
+                var connection = new SqlConnection(connectionString);
+                connection.Open();
+                return connection;
+            });
+            
             authorCount = 3;
         }
 

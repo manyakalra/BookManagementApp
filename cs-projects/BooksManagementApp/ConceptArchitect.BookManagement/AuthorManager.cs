@@ -1,5 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -12,7 +11,16 @@ namespace ConceptArchitect.BookManagement
     {
         //const string connectionString= @"Data Source = (LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\MyWorks\Corporate\202307-ecolab-cs\booksdb.mdf;Integrated Security = True; Connect Timeout = 30";
 
-        public string ConnectionString { get; set; }
+        //public string ConnectionString { get; set; }
+
+        //public IConnectionFactory ConnectionFactory { get; set; }
+
+        private Func<IDbConnection> connectionFactory;
+
+        public AuthorManager(Func<IDbConnection> factory)
+        {
+            connectionFactory = factory;
+        }
 
 
         public List<Author> GetAllAuthors()
@@ -22,9 +30,7 @@ namespace ConceptArchitect.BookManagement
 
             try
             {
-                connection = new SqlConnection();
-                connection.ConnectionString = ConnectionString;
-                connection.Open();
+                connection= connectionFactory();
 
                 var command=connection.CreateCommand();
                 command.CommandText = "select * from authors";
@@ -51,7 +57,7 @@ namespace ConceptArchitect.BookManagement
 
                 
 
-            }catch(SqlException ex)
+            }catch(Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
                 
@@ -74,9 +80,8 @@ namespace ConceptArchitect.BookManagement
 
             try
             {
-                connection = new SqlConnection();
-                connection.ConnectionString = ConnectionString;
-                connection.Open();
+
+                connection = connectionFactory();
 
                 var command = connection.CreateCommand();
                 command.CommandText = $"select * from authors where id='{id}'";
@@ -104,7 +109,7 @@ namespace ConceptArchitect.BookManagement
 
 
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
 
@@ -122,8 +127,9 @@ namespace ConceptArchitect.BookManagement
             IDbConnection connection=null;
             try
             {
-                connection = new SqlConnection(ConnectionString);
-                connection.Open();
+
+                connection = connectionFactory();
+
                 var command = connection.CreateCommand();
 
                 command.CommandText = "select count(*) from authors";
@@ -144,8 +150,8 @@ namespace ConceptArchitect.BookManagement
             var result = new List<Author>();
             try
             {
-                connection =  new SqlConnection(ConnectionString);
-                connection.Open();
+                connection = connectionFactory();
+
                 var command = connection.CreateCommand();
 
                 command.CommandText = $"select * from authors where name like '%{text}%' or biography like '%{text}%'";
@@ -182,8 +188,7 @@ namespace ConceptArchitect.BookManagement
             IDbConnection connection = null;
             try
             {
-                connection = new SqlConnection(ConnectionString);
-                connection.Open();
+                connection = connectionFactory();
                 var command = connection.CreateCommand();
 
                 command.CommandText = $"insert into authors(id,name,biography,photo,email) " +
@@ -193,7 +198,7 @@ namespace ConceptArchitect.BookManagement
                 
 
             }
-            catch(SqlException ex)
+            catch(Exception ex)
             {
                 var expectedMessage = "Violation of PRIMARY KEY constraint";
                 var expectedMessage2 = "The duplicate key value";
@@ -217,8 +222,8 @@ namespace ConceptArchitect.BookManagement
             IDbConnection connection = null;
             try
             {
-                connection = new SqlConnection(ConnectionString);
-                connection.Open();
+                connection = connectionFactory();
+
                 var command = connection.CreateCommand();
 
                 command.CommandText = $"delete from authors where id='{id}'";
