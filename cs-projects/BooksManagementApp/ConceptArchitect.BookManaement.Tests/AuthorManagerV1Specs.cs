@@ -5,6 +5,7 @@ using Xunit;
 
 namespace ConceptArchitect.BookManaement.Tests
 {
+    [Collection("Author Manager Specs")]
     public class AuthorManagerV1Specs: IDisposable
     {
         AuthorManagerV1 authorManager;
