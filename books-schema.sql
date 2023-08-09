@@ -38,6 +38,8 @@ create table BOOKS(
 	
 );
 
+alter table books alter column cover_photo varchar(500)
+
 create table BookTags(
 	tag varchar(50) foreign key references Tags(tag),
 	book_id varchar(100) foreign key references Books(id)

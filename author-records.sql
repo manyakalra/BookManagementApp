@@ -19,7 +19,7 @@ insert into books(id,title,author_id, description,cover_photo)
 				'An Amazon #1 best-seller, book#1 of The Lost Epic series, explores the unexplored facets of Mahabharata',
 				'https://m.media-amazon.com/images/I/81c-qj2VZSL._AC_UY327_FMwebp_QL65_.jpg'
 			),
-			(	'my-experimets-with-truth',
+			(	'my-experiments-with-truth',
 			   	'My Experiements with Truth','mahatma-gandhi',
 				'The autobiography of Mahatma Gandhi presnted as his experiments with truth. A must read',
 				'https://m.media-amazon.com/images/I/71GWX22G92L._AC_UY327_FMwebp_QL65_.jpg'
@@ -85,7 +85,7 @@ insert into users (name,email,password,profile_photo)
 			('Fagun Pandya','fagun@gmail.com','p@ss#1',''),
 			('Reena Upadhyaya','reena1234@gmail.com','p@ss#1','')
 
-insert into Reviews(book_id, rating,title,details,reviewer_email)
+insert into Reviews(book_id, reviewer_email, rating,title,details)
 			values( 'the-accursed-god','reena1234@gmail.com',5,'Must Read','The book offers a new perspective and great character buildup'),
 			( 'the-accursed-god','fagun@gmail.com',4,'New Mahabharata','The story of Mahbharata told from different people perspective. Many new ideas'),
 			( 'the-accursed-god','prabhat@gmail.com',5,'Must Read','Great story with so many unheard perspective'),
