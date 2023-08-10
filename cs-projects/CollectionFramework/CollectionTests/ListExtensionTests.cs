@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+using ConceptArchitect.Collections.Extensions;
 
 namespace CollectionTests
 {
@@ -24,7 +25,7 @@ namespace CollectionTests
         [Fact]
         public void FindCanReturnAllNamesGreaterThan3Char()
         {
-            var result = stringList.FindAll(str => str.Length > 3);
+            var result = stringList.Where(str => str.Length > 3);
 
             //for(int i=0;i<result.Length;i++)
             //{
@@ -37,7 +38,7 @@ namespace CollectionTests
         [Fact]
         public void TransformCanReturnAListContainsLengthsOfString()
         {
-            var lengths = ListUtils.Transform(stringList, s => s.Length);
+            var lengths = ListUtils.Select(stringList, s => s.Length);
 
             //for (int i = 0; i < lengths.Length; i++)
             //    Assert.Equal(stringList[i].Length, lengths[i]);
@@ -51,7 +52,7 @@ namespace CollectionTests
         [Fact]
         public void TransformCanReturnUpperCasedStrings()
         {
-            var upperStringList = stringList.Transform(s => s.ToUpper());
+            var upperStringList = stringList.Select(s => s.ToUpper());
 
             //for (int i = 0; i < upperStringList.Length; i++)
             //    Assert.Equal(stringList[i].ToUpper(), upperStringList[i]);

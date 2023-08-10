@@ -2,6 +2,7 @@
 using ConceptArchitect.Utils;
 using System;
 using Xunit;
+using ConceptArchitect.Collections.Extensions;
 
 namespace CollectionTests
 {
@@ -250,7 +251,7 @@ namespace CollectionTests
 
             int [] expectedResult = { 2, 7, 19, 7 };
 
-            var actualResult = list.FindAll(PrimeUtils.IsPrime);
+            var actualResult = list.Where(PrimeUtils.IsPrime);
 
             for (int i = 0; i < expectedResult.Length; i++)
             {
@@ -266,7 +267,7 @@ namespace CollectionTests
             var list = new LinkedList<string>("India", "USA", "UK", "France", "UAE");
 
 
-            var result = list.FindAll(name => name.Length > 3);
+            var result = list.Where(name => name.Length > 3);
 
             Assert.Equal(2, result.Length);
 

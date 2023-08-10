@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConceptArchitect.Collections
+namespace ConceptArchitect.Collections.Extensions
 {
     public static  class ListUtils
     {
@@ -15,7 +15,7 @@ namespace ConceptArchitect.Collections
 
             return list;
         }
-        public static IIndexedList<O> Transform<I,O>(this IIndexedList<I> list, Func<I,O> converter)
+        public static IIndexedList<O> Select<I,O>(this IIndexedList<I> list, Func<I,O> converter)
         {
             var result = new LinkedList<O>();
 
@@ -25,7 +25,7 @@ namespace ConceptArchitect.Collections
             return result;
         }
 
-        public static IIndexedList<X> FindAll<X>(this IIndexedList<X> list, Func<X,bool> matcher)
+        public static IIndexedList<X> Where<X>(this IIndexedList<X> list, Func<X,bool> matcher)
         {
             var result = new LinkedList<X>();
             for(int i=0;i<list.Length;i++)
@@ -34,6 +34,7 @@ namespace ConceptArchitect.Collections
 
             return result;
         }
+
 
         public static X FindOne<X>(this IIndexedList<X> list, Func<X,bool> matcher)
         {
@@ -55,5 +56,33 @@ namespace ConceptArchitect.Collections
                 action(list[i],i);
         }
 
+        public static IIndexedList<X> Distinct<X>(this IIndexedList<X> list )
+        {
+            var distinctList = new LinkedList<X>();
+
+            list.ForEach(item =>
+            {
+                if (distinctList.IndexOf(item) == -1)
+                    distinctList.Add(item);
+            });
+
+            return distinctList;
+
+
+        }
+
+        public static double Average<T>(this IIndexedList<T> list, Func<T,double> extractor)
+        {
+            double sum = 0;
+
+            list.ForEach( item => sum+=extractor(item));
+
+            //for(var i=0;i<list.Length;i++)
+            //{
+            //    sum += extractor(list[i]);
+            //}
+
+            return sum/list.Length;
+        }
     }
 }

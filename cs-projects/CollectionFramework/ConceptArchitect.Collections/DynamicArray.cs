@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -65,6 +66,43 @@ namespace ConceptArchitect.Collections
                     return i;
 
             return -1;
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            return new DynamicArrayEnumerator<T>() { Target = this };
+        }
+
+        class DynamicArrayEnumerator<T> : IEnumerator<T>
+        {
+            int index = -1;
+            public DynamicArray<T> Target { get; set; }
+            public T Current
+            {
+                get
+                {
+                    return Target[index];
+                }
+            }
+
+            public bool MoveNext()
+            {
+                index++;
+                return index < Target.Length;
+            }
+
+
+
+            public void Reset()
+            {
+            }
+
+            public void Dispose()
+            {
+            }
+
+            object IEnumerator.Current => throw new NotImplementedException();
+
         }
     }
 }
