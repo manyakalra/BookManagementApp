@@ -6,12 +6,35 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data;
 using Npgsql;
+using ConceptArchitect.Data;
+using ConceptArchitect.BookManagement;
 
 namespace BooksManagmentConsole
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
+        {
+            var conenctionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\MyWorks\Corporate\202307-ecolab-cs\booksdb3.mdf;Integrated Security=True;Connect Timeout=30";
+            var connectionProvider = () =>
+             {
+                 var connection = new SqlConnection(conenctionString);
+                 connection.Open();
+                 return connection;
+             };
+
+            var db = new DbManager(connectionProvider);
+            var bookManager = new BookManager(db);
+
+            foreach(var result in bookManager.GetBookVariant("the-accursed-god"))
+            {
+                Console.WriteLine($"{result.Isbn}\t{result.Format}\t{result.Title}");
+            }
+
+
+        }
+
+        static void PostGrestTestApp()
         {
             var password = "22GbE2lDoF2v3HYG7L7o0Qoa4BBwUSBh";
             var userName = "dexynogt";

@@ -38,7 +38,7 @@ namespace ConceptArchitect.BookManagement
                 var authors = new List<Author>();
                 while (reader.Read())
                 {
-                    var author = new Author()`
+                    var author = new Author()
                     {
                         Id = reader["id"].ToString(),
                         Name = reader["name"].ToString(),

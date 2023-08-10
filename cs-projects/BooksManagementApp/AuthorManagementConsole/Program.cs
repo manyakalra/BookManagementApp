@@ -27,7 +27,7 @@ class Program
     {
         //var connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\MyWorks\Corporate\202307-ecolab-cs\booksdb.mdf;Integrated Security=True;Connect Timeout=30";
        
-        var manager = new AuthorManager(() =>
+        var manager = new AuthorManagerV2(() =>
         {
             var password = "22GbE2lDoF2v3HYG7L7o0Qoa4BBwUSBh";
             var userName = "dexynogt";

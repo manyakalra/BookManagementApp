@@ -33,7 +33,7 @@ create table BOOKS(
 	description varchar(2000) not null,
 	author_id varchar(50) not null,
 	author_name varchar(100), --denormalized duplicate information
-	cover_photo varchar(100), --duplicate information
+	cover_photo varchar(500), --duplicate information
 	foreign key(author_id) references authors(id),
 	
 );
@@ -47,7 +47,7 @@ create table ISBNS(
 	isbn varchar(15) primary key,
 	book_id varchar(100) foreign key references books(id),
 	publisher_id varchar(50) foreign key references publishers(id),
-	cover_photo varchar(256) not null,
+	cover_photo varchar(500) not null,
 	price int not null,
 	book_format varchar(10) default('paperback')
 	

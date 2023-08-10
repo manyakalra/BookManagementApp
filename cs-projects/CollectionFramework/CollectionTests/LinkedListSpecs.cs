@@ -10,6 +10,7 @@ namespace CollectionTests
 
         string[] dataSet = { "India", "USA", "UK", "France", "Japan" };
         LinkedList<string> list;
+        int originalLength;
 
 
         public LinkedListSpecs()
@@ -17,6 +18,8 @@ namespace CollectionTests
             list = new LinkedList<string>();
             foreach (var data in dataSet)
                 list.Add(data);
+
+            originalLength = list.Length;
         }
 
         [Fact()]
@@ -42,6 +45,28 @@ namespace CollectionTests
             list.Add("something");
 
             Assert.Equal(dataSet.Length+1, list.Length);
+        }
+
+        [Fact]
+        public void Add_ReturnsTheSameList()
+        {
+            var result = list.Add("something");
+
+            result.Add("soemthing else"); //adding to the same list
+
+            Assert.Equal(list.GetHashCode(), result.GetHashCode());
+        }
+
+        [Fact]
+        public void Add_CanChainAdds()
+        {
+            var newLength = list
+                                .Add("one")
+                                .Add("two")
+                                .Add("three")
+                                .Length;
+
+            Assert.Equal(originalLength+3,newLength);
         }
 
 
@@ -225,7 +250,7 @@ namespace CollectionTests
 
             int [] expectedResult = { 2, 7, 19, 7 };
 
-            var actualResult = list.Find(PrimeUtils.IsPrime);
+            var actualResult = list.FindAll(PrimeUtils.IsPrime);
 
             for (int i = 0; i < expectedResult.Length; i++)
             {
@@ -241,7 +266,7 @@ namespace CollectionTests
             var list = new LinkedList<string>("India", "USA", "UK", "France", "UAE");
 
 
-            var result = list.Find(name => name.Length > 3);
+            var result = list.FindAll(name => name.Length > 3);
 
             Assert.Equal(2, result.Length);
 

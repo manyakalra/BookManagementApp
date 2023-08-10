@@ -24,7 +24,7 @@ namespace CollectionTests
         [Fact]
         public void FindCanReturnAllNamesGreaterThan3Char()
         {
-            var result = stringList.Find(str => str.Length > 3);
+            var result = stringList.FindAll(str => str.Length > 3);
 
             //for(int i=0;i<result.Length;i++)
             //{
@@ -43,7 +43,9 @@ namespace CollectionTests
             //    Assert.Equal(stringList[i].Length, lengths[i]);
 
             int i = 0;
-            lengths.ForEach(x => Assert.Equal(stringList[++i].Length, x));
+            lengths.ForEach(x => {
+                Assert.Equal(stringList[i++].Length, x);
+               });
         }
 
         [Fact]
@@ -74,5 +76,13 @@ namespace CollectionTests
 
             Assert.Equal(5, i);
         }
+   
+    
+        [Fact]
+        public void FindAllReturnsAllMatchingItems()
+        {
+
+        }
+    
     }
 }

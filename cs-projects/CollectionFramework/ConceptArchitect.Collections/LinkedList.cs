@@ -15,6 +15,7 @@
 
 
         private Node first, last;
+        int length = 0;
 
         public LinkedList(params X[] items)
         {
@@ -26,19 +27,13 @@
         {
             get
             {
-                int count = 0;
-                for (var n = first; n != null; n = n.Next)
-                    count++;
-
-                return count;
+                return length;
             }
         }
 
-        public void Add(X item)
+        public IIndexedList<X> Add(X item)
         {
             var newNode = new Node() { Value = item, Previous = last };
-
-
 
             if (first == null) //list is empty
                 first = newNode;
@@ -46,22 +41,9 @@
                 last.Next = newNode;
 
             last = newNode;
+            length++;
 
-
-
-            //if(first==null)
-            //    first=newNode;
-            //else
-            //{
-            //    var n = first;
-            //    while(n.Next!=null)
-            //        n=n.Next;
-
-            //    newNode.Previous = n;
-            //    n.Next=newNode;
-            //}
-
-
+            return this;
         }
 
         private Node Locate(int index)
@@ -113,7 +95,7 @@
             else
                 first = d.Next;
 
-
+            length--;
             return d.Value;
         }
 
@@ -123,7 +105,7 @@
 
             //insert after n
             var newNode = new Node() { Value = value };
-
+            length++;
             newNode.Previous = n.Previous;
             newNode.Next = n;
 
@@ -202,19 +184,7 @@
         }
 
 
-        public LinkedList<X> Find(Matcher<X> matcher)
-        {
-            var result = new LinkedList<X>();
-
-            for (var n = first; n != null; n = n.Next)
-            {
-                if (matcher(n.Value))
-                    result.Add(n.Value);
-
-            }
-
-            return result;
-        }
+        
 
     }
 }

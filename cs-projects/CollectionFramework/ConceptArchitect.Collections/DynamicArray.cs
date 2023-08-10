@@ -50,10 +50,12 @@ namespace ConceptArchitect.Collections
 
         public int Length { get; private set; }
 
-        public void Add(T item)
+        public IIndexedList<T> Add(T item)
         {
             EnsureCapacity();
             array[Length++] = item;
+
+            return this;
         }
 
         public int IndexOf(T value)
