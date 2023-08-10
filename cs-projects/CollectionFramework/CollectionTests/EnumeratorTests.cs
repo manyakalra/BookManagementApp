@@ -1,6 +1,5 @@
 ﻿using ConceptArchitect.Collections;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,6 +30,8 @@ namespace CollectionTests
 
         }
         
+        
+
         [Fact]
         public void WeCanEnumerateDynamicArrayUsingForEach()
         {
@@ -39,7 +40,26 @@ namespace CollectionTests
             array.AddAll(1, 2, 3, 4, 5);
 
             int count = 0;
-            foreach(var value in array)
+            foreach (var value in array)
+            {
+                count++;
+                Assert.Equal(count, value);
+            }
+
+            Assert.Equal(5, count);
+
+
+        }
+
+        [Fact]
+        public void WeCanEnumerateLinkedListUsingForEach()
+        {
+            var array = new LinkedList<int>();
+
+            array.AddAll(1, 2, 3, 4, 5);
+
+            int count = 0;
+            foreach (var value in array)
             {
                 count++;
                 Assert.Equal(count, value);
