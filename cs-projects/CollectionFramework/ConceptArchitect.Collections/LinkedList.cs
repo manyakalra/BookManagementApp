@@ -1,4 +1,6 @@
-﻿namespace ConceptArchitect.Collections
+﻿using System.Collections;
+
+namespace ConceptArchitect.Collections
 {
 
     public delegate bool Matcher<T>(T item);
@@ -183,7 +185,50 @@
             return str + "]";
         }
 
+        public IEnumerator<X> GetEnumerator()
+        {
+            return new LinkedListEnumerator<X>(this);
+        }
 
+        class LinkedListEnumerator<T> : IEnumerator<T>
+        {
+            LinkedList<T> list;
+            LinkedList<T>.Node current = null; //haven't started yet
+            public LinkedListEnumerator(LinkedList<T> list)
+            {
+                this.list = list;
+            }
+
+            public T Current
+            {
+                get
+                {
+                    return current.Value;
+                }
+            }
+
+            
+
+            public bool MoveNext()
+            {
+                if (current == null)
+                    current = list.first;
+                else
+                    current = current.Next;
+
+                return current != null;
+            }
+
+            public void Reset()
+            {
+            }
+
+            object IEnumerator.Current => throw new NotImplementedException();
+
+            public void Dispose()
+            {
+            }
+        }
         
 
     }

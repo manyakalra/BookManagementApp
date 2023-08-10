@@ -6,5 +6,7 @@
         int Length { get; }
         IIndexedList<X> Add(X item);
         int IndexOf(X value);
+
+        IEnumerator<X> GetEnumerator();
     }
 }
