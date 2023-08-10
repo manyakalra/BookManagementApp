@@ -86,5 +86,25 @@ namespace CollectionTests
 
             Assert.Equal(books[0].Title, title);
         }
+
+        [Fact]
+        public void CanGetADistinctListOfAuthors()
+        {
+            var authors = books
+                            .Transform(b=>b.Author)
+                            .Distinct(b => b.Author);
+
+            Assert.Equal(3, authors.Count());
+        }
+
+        [Fact]
+        public void CanReturnAveragePriceOfHighRatedBooks()
+        {
+            var average = books
+                             .FindAll(b => b.Rating > 4)
+                             .Average(b => b.Price);
+
+            Assert.Equal(200, average.Count());
+        }
     }
 }
