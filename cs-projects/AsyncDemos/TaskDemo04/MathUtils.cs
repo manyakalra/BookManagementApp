@@ -1,4 +1,4 @@
-﻿using ConceptArchitect.Async;
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,36 +31,20 @@ namespace MultithreadingDemos04_Permutation
             return fn / fn_r;
         }
 
-        public static int PermutationAsyncV1(this int n, int r)
-        {
-            int fn = 1;
-            var fnThread = new Thread(() =>fn= n.Factorial());
-            fnThread.Start();
-            
-            int fn_r = 1;
-            var fn_rThread = new Thread(() => fn_r = (n - r).Factorial());
-            fn_rThread.Start();
-
-            fnThread.Join();
-            fn_rThread.Join();
-           
-
-
-            return fn / fn_r;
-        }
+       
 
         public static int PermutationAsync(this int n, int r)
         {
+            //var fn = new Task<int>(() => n.Factorial());
+            //fn.Start();
 
-            var fn = new AsyncFunction<int>(() => n.Factorial());
+            var fn = Task.Factory.StartNew(() => n.Factorial());
+            var fn_r = Task.Factory.StartNew(() => (n - r).Factorial());
 
-            var fn_r = new AsyncFunction<int>(() => (n - r).Factorial());
-
-
-            
-
+            //Task.WaitAll(fn, fn_r);
 
             return fn.Result / fn_r.Result;
+
         }
 
 
