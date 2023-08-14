@@ -3,13 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadDemo01_SingleThread", "MultiThreadDemo01_SingleThread\MultiThreadDemo01_SingleThread.csproj", "{1A9518E5-101D-47D2-B046-CF97EC5875D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiThreadDemo01_SingleThread", "MultiThreadDemo01_SingleThread\MultiThreadDemo01_SingleThread.csproj", "{1A9518E5-101D-47D2-B046-CF97EC5875D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadingDemo02_UserThread", "Demo02_UserDefinedThread\MultiThreadingDemo02_UserThread.csproj", "{EA4B2904-B237-4D3D-8C88-5B8C66C32B7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiThreadingDemo02_UserThread", "Demo02_UserDefinedThread\MultiThreadingDemo02_UserThread.csproj", "{EA4B2904-B237-4D3D-8C88-5B8C66C32B7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadingDemo03_CountDownThreads", "MultiThreadingDemo03_CountDownThreads\MultiThreadingDemo03_CountDownThreads.csproj", "{CFB36972-D7D0-4872-9159-D82DE10915EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiThreadingDemo03_CountDownThreads", "MultiThreadingDemo03_CountDownThreads\MultiThreadingDemo03_CountDownThreads.csproj", "{CFB36972-D7D0-4872-9159-D82DE10915EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiThreadingDemo04_ThreadParameter", "MultiThreadingDemo04_ThreadParameter\MultiThreadingDemo04_ThreadParameter.csproj", "{3207D966-E213-406A-B008-3A6C31F66090}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MultiThreadingDemo04_ThreadParameter", "MultiThreadingDemo04_ThreadParameter\MultiThreadingDemo04_ThreadParameter.csproj", "{3207D966-E213-406A-B008-3A6C31F66090}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultithreadingDemos04_Permutation", "MultithreadingDemos04_Permutation\MultithreadingDemos04_Permutation.csproj", "{A4CCB61E-93D0-4AB5-8D0E-85DFA7DC7408}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConceptArchitect.Async", "ConceptArchitect.Async\ConceptArchitect.Async.csproj", "{FBCB012B-A0E8-491B-9AE1-B01A0C7166D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{3207D966-E213-406A-B008-3A6C31F66090}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3207D966-E213-406A-B008-3A6C31F66090}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3207D966-E213-406A-B008-3A6C31F66090}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4CCB61E-93D0-4AB5-8D0E-85DFA7DC7408}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4CCB61E-93D0-4AB5-8D0E-85DFA7DC7408}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4CCB61E-93D0-4AB5-8D0E-85DFA7DC7408}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4CCB61E-93D0-4AB5-8D0E-85DFA7DC7408}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBCB012B-A0E8-491B-9AE1-B01A0C7166D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBCB012B-A0E8-491B-9AE1-B01A0C7166D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBCB012B-A0E8-491B-9AE1-B01A0C7166D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBCB012B-A0E8-491B-9AE1-B01A0C7166D8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
