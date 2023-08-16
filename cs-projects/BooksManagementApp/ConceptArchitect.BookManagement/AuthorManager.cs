@@ -37,6 +37,11 @@ namespace ConceptArchitect.BookManagement
             return db.Query("select * from authors", AuthorExtractor);            
         }
 
+        public async Task<List<Author>> GetAllAuthorsAsync()
+        {
+            return await db.QueryAsync("select * from authors", AuthorExtractor);
+        }
+
 
 
         public Author GetAuthorById(string id)
