@@ -1,13 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
     <title>Book List</title>
 </head>
+
 <body>
-    <div>
-        <h1>Book's Web</h1>
+    <div class="header">
+        <h1>
+            <img src="images/books-logo.png" />
+            Book's Web
+        </h1>
     </div>
+
+    <div class="content">
+        <a href="book-add.html">Add New Book</a>
+        <h2>Our Book List</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Cover</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td><img src="images/the-accursed-god.jpg" class="cover" /></td>
+                    <td><a href="/book-details.html?id=the-accursed-god">The Accursed God</a></td>
+                    <td>Vivek Dutta Mishra</td>
+                </tr>
+                <tr>
+                    <td><img src="images/the-accursed-god.jpg" class="cover" /></td>
+                    <td><a href="/book-details.html?id=manas">Manas</a></td>
+                    <td>Vivek Dutta Mishra</td>
+                </tr>
+                <tr>
+                    <td><img src="images/the-accursed-god.jpg" class="cover" /></td>
+                    <td><a href="/book-details.html?id=brethren">The Brethren</a></td>
+                    <td>John Grisham</td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
 </body>
+
 </html>

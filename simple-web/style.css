@@ -1,0 +1,15 @@
+.header{
+    border-bottom: 2px solid gray;
+}
+
+.header img{
+    height:40px;
+}
+
+.cover{
+    height:80px;
+}
+
+.cover-large{
+    height:150px;
+}
