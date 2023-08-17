@@ -11,6 +11,7 @@ class Program
 
         app.ConfigureMiddlewares();
 
+        Console.WriteLine("Starting the Server");
         app.Run();
 
     }
