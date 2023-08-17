@@ -6,4 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="ConceptArchitect.BookManagement">
+      <HintPath>..\..\BooksManagementApp\ConceptArchitect.BookManagement\bin\Debug\net6.0\ConceptArchitect.BookManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="ConceptArchitect.Data">
+      <HintPath>..\..\BooksManagementApp\ConceptArchitect.BookManagement\bin\Debug\net6.0\ConceptArchitect.Data.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

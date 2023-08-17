@@ -9,7 +9,7 @@
                return async context =>
                {
                    var path = context.Request.Path.ToString();
-                   if(exactMatch && path==url || path.Contains(url))
+                   if(exactMatch && path==url || (!exactMatch && path.Contains(url)))
                    {
                        await action(context);
                    }

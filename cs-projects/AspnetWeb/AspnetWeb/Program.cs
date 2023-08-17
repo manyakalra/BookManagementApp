@@ -1,4 +1,6 @@
 
+using AspnetWeb.Services;
+
 namespace AspnetWeb;
 
 class Program
@@ -6,6 +8,10 @@ class Program
     static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+
+        builder.Services.ConfigureAppServices();
+        
 
         var app = builder.Build();
 
