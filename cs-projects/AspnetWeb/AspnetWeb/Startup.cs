@@ -9,17 +9,34 @@ namespace AspnetWeb
     {
         public static void ConfigureAppServices(this IServiceCollection services)
         {
+
+            
+
+
             //services.AddSingleton<IGreetService, SimpleGreetService>();
 
             services.AddSingleton<ITimePrefix, EnglishTimePrefix>();
 
 
-            services.AddSingleton<IGreetService, TimedGreetService>();
+            //services.AddSingleton<IGreetService, TimedGreetService>();
+
+            services.AddTransient<IGreetService,TimedGreetService>();
+
+            services.AddSingleton<IGreetService, ConfigurableGreetService>();
+
+            services.AddSingleton<IGreetService, AdvancedConfigurableGreetService>();
         }
 
 
         public  static void ConfigureMiddlewares(this IApplicationBuilder app)
         {
+            var logger = app.ApplicationServices.GetService<ILogger<Program>>();
+
+            var environment = app.ApplicationServices.GetService<IHostEnvironment>();
+
+            logger.LogInformation($"Current Environment: {environment.EnvironmentName}");
+
+
             app.Use(async (HttpContext context, RequestDelegate next) =>
             {
                 Console.WriteLine($"Requested Path : {context.Request.Path}");
@@ -27,11 +44,27 @@ namespace AspnetWeb
                 Console.WriteLine();
             });
 
+            if(environment.EnvironmentName == "HarryPotter")
+            {
+                app.UseOnUrl("/934", async context =>
+                {
+                    await context.Response.WriteAsync("Welcome to Hogwards instutitue of Wizard and Witchcraft");
+                });
+            }
+
+            
+
+
             app.UseOnUrl("/greet3", async context =>
             {
                 var name = context.Request.Path.ToString().Split("/")[2];
 
                 //var service = new SimpleGreetService();
+
+                //manual creation
+                //var service = new TimedGreetService(new EnglishTimePrefix());
+
+                //Getting from service
                 var service = app.ApplicationServices.GetService<IGreetService>();
 
                 var greetingMessage = service.Greet(name);
@@ -141,11 +174,11 @@ namespace AspnetWeb
 
 
 
-            app.Run(context =>
-            {
-                Console.WriteLine($"Default Hanlder Received Request for {context.Request.Path} ");
-                return context.Response.WriteAsync($"Welcome to Book's Server: {context.Request.Path}");
-            });
+            //app.Run(context =>
+            //{
+            //    Console.WriteLine($"Default Hanlder Received Request for {context.Request.Path} ");
+            //    return context.Response.WriteAsync($"Welcome to Book's Server: {context.Request.Path}");
+            //});
 
 
            

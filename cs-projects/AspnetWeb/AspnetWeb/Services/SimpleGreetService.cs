@@ -15,6 +15,10 @@
 
     public class EnglishTimePrefix : ITimePrefix
     {
+        public EnglishTimePrefix()
+        {
+            Console.WriteLine($"EnglishGreetPrfix #{GetHashCode()} created");
+        }
         public string Prefix
         {
             get
@@ -47,6 +51,7 @@
         {
             timePrefix= prefix;
             Id = ++instanceCount;
+            Console.WriteLine($"TimedGreetService #{Id} created");
         }
         public string Greet(string name)
         {
