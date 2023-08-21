@@ -1,0 +1,44 @@
+﻿
+@model IEnumerable<ConceptArchitect.BookManagement.Author> 
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <h1>Book Server</h1>
+    <hr/>
+
+    <h2>Recommended Authors</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Photograph</th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var author in Model)
+            {
+                <tr>
+                    <td><img src="@author.Photo" height='100' /></td>
+                    <td>@author.Name</td>
+                    <td>
+                        <a href="#">Details</a>
+                        <a href="#">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <hr/>
+    &copy; vivek@conceptarchitect.in | follow me at @@vivekdmishra
+    
+
+</body>
+</html>

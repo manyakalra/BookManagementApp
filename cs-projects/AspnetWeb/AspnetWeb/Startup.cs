@@ -1,6 +1,7 @@
 ﻿using AspnetWeb.Services;
 using ConceptArchitect.BookManagement;
 using ConceptArchitect.Data;
+using System.Data;
 using System.Data.SqlClient;
 
 namespace AspnetWeb
@@ -9,8 +10,8 @@ namespace AspnetWeb
     {
         public static void ConfigureAppServices(this IServiceCollection services)
         {
+            services.AddStats();
 
-            
 
 
             //services.AddSingleton<IGreetService, SimpleGreetService>();
@@ -25,6 +26,44 @@ namespace AspnetWeb
             services.AddSingleton<IGreetService, ConfigurableGreetService>();
 
             services.AddSingleton<IGreetService, AdvancedConfigurableGreetService>();
+
+
+
+            //Author Services
+
+            services.AddSingleton<Func<IDbConnection>>((s) =>
+            {
+
+                var config= s.GetRequiredService<IConfiguration>();
+                return () =>
+                {
+                    var connection = new SqlConnection()
+                    {
+                        ConnectionString = config.GetConnectionString("bms")                        
+                    };
+                    connection.Open();
+                    return connection;
+                };
+
+            }); 
+
+            services.AddSingleton<DbManager>();
+
+            
+
+            services.AddSingleton<AuthorManager>();
+
+
+
+
+            //services.AddSingleton<IVisitStatsService, InMemoryVisitStatsService>();
+
+
+            services.AddMvc(opt =>
+            {
+                opt.EnableEndpointRouting = false;
+            });
+           
         }
 
 
@@ -35,6 +74,38 @@ namespace AspnetWeb
             var environment = app.ApplicationServices.GetService<IHostEnvironment>();
 
             logger.LogInformation($"Current Environment: {environment.EnvironmentName}");
+
+
+            //fake data
+
+
+            app.UseOnUrl("/add-fake-stats", async context =>
+            {
+                var service = context.RequestServices.GetService<IVisitStatsService>();
+                for (int i = 0; i < 10;i++)
+                    service.AddUrl("/authors");
+
+                service.AddUrl("/author/vivek");
+                service.AddUrl("/author/vivek");
+                service.AddUrl("/author/vivek");
+                service.AddUrl("/author/archer");
+                service.AddUrl("/author/archer");
+                service.AddUrl("/author/dinkar");
+
+                await Task.Yield();
+                context.Response.Redirect("/stats/visited");
+            });
+
+            app.UseStaticFiles();
+
+            app.UseStats();
+
+            
+            app.UseMvcWithDefaultRoute();
+
+
+
+            app.UseExceptionMapper<EntityNotFoundException>(404,false);
 
 
             app.Use(async (HttpContext context, RequestDelegate next) =>
@@ -108,17 +179,19 @@ namespace AspnetWeb
 
             app.UseOnUrl("/authors", async context =>
             {
-                var db = new DbManager(() =>
-                 {
-                     var connection = new SqlConnection()
-                     {
-                         ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\MyWorks\Corporate\202307-ecolab-cs\booksdb3.mdf;Integrated Security=True;Connect Timeout=30"
-                     };
-                     connection.Open();
-                     return connection;
-                 });
+                //var db = new DbManager(() =>
+                // {
+                //     var connection = new SqlConnection()
+                //     {
+                //         ConnectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\MyWorks\Corporate\202307-ecolab-cs\booksdb3.mdf;Integrated Security=True;Connect Timeout=30"
+                //     };
+                //     connection.Open();
+                //     return connection;
+                // });
 
-                var authorManager = new AuthorManager(db);
+                //var authorManager = new AuthorManager(db);
+
+                var authorManager = app.ApplicationServices.GetService<AuthorManager>();
 
                 var authors = authorManager.GetAllAuthors();
                
