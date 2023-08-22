@@ -1,5 +1,9 @@
-﻿namespace BooksWeb02
-{
+﻿using  ConceptArchitect.BookManagement;
+
+using  BooksWeb02.Extensions;
+
+namespace BooksWeb02
+{ 
     public static class Startup
     {
         public static IServiceCollection ConfigureServices(this IServiceCollection services)
@@ -7,6 +11,9 @@
             
             services.AddControllersWithViews();
 
+            services.AddAdoBMSRepository();
+
+            services.AddSingleton<IAuthorService, PersistentAuthorService>();
 
             return services;
         }
@@ -25,7 +32,7 @@
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{action=Index}/{controller=Home}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
             return app;

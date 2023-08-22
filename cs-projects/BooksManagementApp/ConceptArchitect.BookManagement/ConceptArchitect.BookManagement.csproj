@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ConceptArchitect.Data\ConceptArchitect.Data.csproj" />
+    <ProjectReference Include="..\ConceptArchitect.Utils\ConceptArchitect.Utils.csproj" />
   </ItemGroup>
 
 </Project>

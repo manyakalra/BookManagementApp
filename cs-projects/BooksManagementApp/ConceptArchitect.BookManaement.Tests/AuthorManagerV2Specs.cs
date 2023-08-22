@@ -9,7 +9,7 @@ namespace ConceptArchitect.BookManaement.Tests
     [Collection("Author Manager Specs")]
     public class AuthorManagerV2Specs: IDisposable
     {
-        AuthorManager authorManager;
+        AuthorManagerV2 authorManager;
         string validId = "vivek-dutta-mishra";
         string authorName = "Vivek Dutta Mishra";
         Author author1, author2, author3;
@@ -27,7 +27,7 @@ namespace ConceptArchitect.BookManaement.Tests
             setup = new TestSetup() { ConnectionString = connectionString };
             setup.SetUpAuthors(author1, author2, author3);
 
-            authorManager = new AuthorManager(() =>
+            authorManager = new AuthorManagerV2(() =>
             {
                 var connection = new SqlConnection(connectionString);
                 connection.Open();

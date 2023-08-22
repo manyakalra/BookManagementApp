@@ -23,5 +23,15 @@ namespace ConceptArchitect.Data
         {
             return await Task.Factory.StartNew( ()=> db.Query<T>(query, extractor));
         }
+
+        public static async Task<int> ExecuteUpdateAsync(this DbManager db, string query)
+        {
+            return await Task.Factory.StartNew(() => db.ExecuteUpdate(query));
+        }
+
+        public static async Task<T> QueryOneAsync<T>(this DbManager db, string query, Func<IDataReader,T> extractor)
+        {
+            return await Task.Factory.StartNew(()=> db.QueryOne(query, extractor));
+        }
     }
 }
