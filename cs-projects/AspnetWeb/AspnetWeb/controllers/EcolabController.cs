@@ -1,4 +1,5 @@
-﻿using ConceptArchitect.BookManagement;
+﻿using AspnetWeb.data;
+using ConceptArchitect.BookManagement;
 using Microsoft.AspNetCore.Mvc;
 using System.Text;
 
@@ -14,9 +15,9 @@ namespace AspnetWeb
         }
 
 
-        public ViewResult Home()
+        public ViewResult Index()
         {
-            return View();
+            return View("Home");
         }
 
 
@@ -46,10 +47,27 @@ namespace AspnetWeb
             return View("DateTimeView", date);
         }
 
-        public ViewResult AfterDays(int id)
+        public ActionResult AfterDays(Nullable<int> id)
         {
-            var date = DateTime.Now.AddDays(id);
-            return View("DateTimeView", date);
+            if (id != null)
+            {
+                var date = DateTime.Now.AddDays(id.Value);
+                return View("DateTimeView", date);
+            }
+            else //invalid value
+            {
+                Response.StatusCode = 400;
+                return View("ErrorView", new ErrorModel()
+                {
+                    Title = "Invalid URL",
+                    Message = "Please pass number of days as : /afterdays/20"
+                });
+
+                //return Today();
+
+                // return RedirectToAction("Today");
+            }
+            
         }
 
 

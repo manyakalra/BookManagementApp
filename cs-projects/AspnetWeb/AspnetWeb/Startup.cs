@@ -3,6 +3,7 @@ using ConceptArchitect.BookManagement;
 using ConceptArchitect.Data;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc.Routing;
 
 namespace AspnetWeb
 {
@@ -100,8 +101,22 @@ namespace AspnetWeb
 
             app.UseStats();
 
-            
-            app.UseMvcWithDefaultRoute();
+
+            //app.UseMvcWithDefaultRoute();
+
+            app.UseMvc(builder =>
+            {
+                builder.MapRoute("MathRoute", "m/{x}/{action}/{y}", new
+                {
+                    Controller="math",
+                    x=0,
+                    y=0
+                });
+
+                builder.MapRoute("Default", "{controller=Home}/{action=Index}/{id?}");
+
+                
+            });
 
 
 

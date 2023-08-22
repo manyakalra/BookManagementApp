@@ -1,0 +1,25 @@
+﻿body {
+}
+
+
+.header{
+    border-bottom:2px solid gray;
+    padding-bottom:5px;
+    margin-bottom:5px;
+}
+
+.header h1{
+    text-shadow: -2px -2px 2px gray;
+}
+
+.header li{
+    display:inline;
+}
+
+footer{
+    border-top:2px solid gray;
+    text-align:center;
+    font-size: small;
+    color:gray;
+    font-weight:bold;
+}
