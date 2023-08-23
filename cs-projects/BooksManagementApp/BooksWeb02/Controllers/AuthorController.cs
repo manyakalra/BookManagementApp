@@ -7,7 +7,7 @@ namespace BooksWeb02.Controllers
     {
         IAuthorService authorService;
 
-        public AuthorController(IAuthorService authors)
+        public AuthorController(IAuthorService  authors)
         {
             this.authorService = authors;
         }
@@ -41,43 +41,38 @@ namespace BooksWeb02.Controllers
             return RedirectToAction("Index");
         }
 
-
-        public async Task<ActionResult> SaveV2(Author author)
+        public async Task<ActionResult> Delete(string id)
         {
-            await authorService.AddAuthor(author);
-
+            await authorService.DeleteAuthor(id);
             return RedirectToAction("Index");
         }
 
-
-
-        public Author SaveV1(string id, string name, string bio, string email, string photourl, DateTime dob)
+        [HttpGet]
+        public async Task<ViewResult> Update(string id)
         {
-            var author = new Author()
+            var author = await authorService.GetAuthorById(id);
+            return View(new Author()
             {
-               Id=id,
-               Name=name,
-               Biography=bio,
-               Email=email,
-               BirthDate=dob,
-               Photo=photourl
-            };
-
-            return author;
+                Id = author.Id,
+                Name = author.Name,
+                Biography = author.Biography,
+                BirthDate = author.BirthDate,
+                Email = author.Email,
+                Photo = author.Photo
+            });
         }
 
-        public Author SaveV0()
+        [HttpPost]
+        public async Task<ActionResult> Update(Author author)
         {
-            var author = new Author()
-            {
-                Id = Request.Form["id"],
-                Name = Request.Form["name"],
-                Biography = Request.Form["bio"],
-                Email = Request.Form["email"],
-                Photo = Request.Form["photourl"]
-            };
+            await authorService.UpdateAuthor(author);
+            return RedirectToAction("Index");
+        }
 
-            return author;
+        public async Task<ViewResult> Search(string term)
+        {
+            var authors = await authorService.SearchAuthors(term);
+            return View("Index", authors);
         }
     }
 }

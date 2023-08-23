@@ -1,3 +1,52 @@
-﻿
+﻿@model IEnumerable<ConceptArchitect.BookManagement.Book>
+
+
+<a asp-action="Add" class='btn-secondary btn btn-sm'>Add New</a>
 
 <h2>Recommended Books</h2>
+
+
+@*<table class="table">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Description</th>
+            <th>Cover Photo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>*@
+    <div class="row">
+        @foreach (var book in Model)
+        {
+            <div class='col col-md-3'>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="@book.CoverPhoto" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">Book Description</p>
+                        <a asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
+                        <a asp-action="Update" asp-route-id="@book.Id" class="btn  btn-warning">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@book.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
+                    </div>
+                </div>
+            </div>
+            @*<tr>
+                <td>@book.Title</td>
+                <td>@book.AuthorId</td>
+                <td>@book.Description</td>
+                <td><img src="@book.CoverPhoto" alt="Cover Photo" class="img-thumbnail" /></td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
+                    <a asp-action="Update" asp-route-id="@book.Id" class="btn  btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@book.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
+                </td>
+            </tr>*@
+
+        }
+
+
+
+    </div>
+@*</table>*@
+    

@@ -1,4 +1,5 @@
-﻿using ConceptArchitect.Utils;
+﻿using ConceptArchitect.Data;
+using ConceptArchitect.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,19 +33,27 @@ namespace ConceptArchitect.BookManagement
             return await repository.Add(author);
         }
 
-        private async Task<string> GenerateId(string name)
+        private async Task<string> GenerateId(string title)
         {
-            var id = name.ToLower().Replace(" ", "-");
-            
-            if (await repository.GetById(id) == null)
-                return id;
+            var id = title.ToLower().Replace(" ", "-");
 
+            try
+            {
+                await repository.GetById(id);
+            }
+            catch (Exception ex)
+            {
+                if (ex is EntityNotFoundException)
+                {
+                    return id;
+                }
+            }
+            
             int d = 1;
             while (await repository.GetById($"{id}-{d}") != null)
                 d++;
 
             return $"{id}-{d}";
-            
         }
 
         public async Task DeleteAuthor(string authorId)

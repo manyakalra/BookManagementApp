@@ -15,7 +15,10 @@
                 <div class="card-body">
                     <h5 class="card-title">@author.Name</h5>
                     <p class="card-text">author biography</p>
-                    <a asp-action="details" asp-route-id="@author.Id" class="btn  btn-primary">details</a>
+                    <a asp-action="details" asp-route-id="@author.Id" class="btn  btn-info">Details</a>
+                    <a asp-action="Update" asp-route-id="@author.Id" class="btn  btn-warning">Edit</a>
+                    <a asp-action="delete" asp-route-id="@author.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
+                    
                 </div>
             </div>
         </div>
