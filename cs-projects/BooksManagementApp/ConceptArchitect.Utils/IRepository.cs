@@ -1,6 +1,6 @@
 ﻿namespace ConceptArchitect.Utils
 {
-    public interface IRepository<Entity,Id>
+    public interface IRepository<Entity, Id>
     {
         Task<Entity> Add(Entity entity);
         Task<List<Entity>> GetAll();
@@ -9,7 +9,7 @@
 
         Task<Entity> GetById(Id id);
 
-        Task<Entity> Update(Entity entity, Action<Entity,Entity> mergeOldNew);
+        Task<Entity> Update(Entity entity, Action<Entity, Entity> mergeOldNew);
 
         Task Delete(Id id);
 
