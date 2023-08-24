@@ -1,40 +1,77 @@
 ﻿@using ConceptArchitect.BookManagement
 @model Book
+<style>
+    .formbox {
+        width: 60%;
+        height: 40%;
+        background-color: black;
+        border: 10px groove;
+        border-color: navajowhite;
+    }
+
+    .form-label {
+        color: white;
+        text-align: left;
+    }
+
+    .heading {
+        color: white;
+    }
+
+    .form-control {
+        width: 50%;
+        height: 50%;
+        color: white;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .button {
+        border-radius: 50px;
+        height: 100px;
+        width: 400px;
+    }
+</style>
 
 
+<center>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
-<h2>Add New Book</h2>
 
 
 
 <form asp-action="Add" method="POST">
 
-
+        <div class="formbox">
+            <h2 class="heading">Add New Book</h2>
 
     <label asp-for="@Model.Id" class='form-label'>Id</label>
-    <input type='text' name="Id" value="@Model.Id" class='form-control' />
+    <input type='text' name="Id" value="@Model.Id" class='form-control' placeholder="Enter Id" />
 
 
 
     <label asp-for="@Model.Title" class='form-label'>Title</label>
-    <input type='text' name="Title" value="@Model.Title" class='form-control' />
+    <input type='text' name="Title" value="@Model.Title" class='form-control'placeholder="Enter Book Title" />
 
 
 
     <label asp-for="@Model.Description" class='form-label'>Description</label>
-    <input type='text' name="Description" value="@Model.Description" class='form-control' />
+    <input type='text' name="Description" value="@Model.Description" class='form-control' placeholder="Give Book Description" />
 
 
 
     <label asp-for="@Model.AuthorId" class='form-label'>Author Id</label>
-    <input type='text' name="AuthorId" value="@Model.AuthorId" class='form-control' />
+    <input type='text' name="AuthorId" value="@Model.AuthorId" class='form-control' placeholder="Provide Author Id" />
 
     <label asp-for="@Model.CoverPhoto" class='form-label'>Enter Photo Url</label>
-    <input type='text' name="Coverphoto" value="@Model.CoverPhoto" class='form-control' />
+    <input type='text' name="Coverphoto" value="@Model.CoverPhoto" class='form-control' placeholder="Give book URL" />
 
+            <div class="button">
 
-
-    <div>
-        <input type="submit" value="Add Book" class='btn btn-primary form-control' />
+                <input type="submit" value="Add Book" class=' btn btn-info form-control' />
+            </div>
+    </form>
     </div>
-</form>
+
+</center>
