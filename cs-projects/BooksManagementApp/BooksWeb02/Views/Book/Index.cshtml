@@ -4,8 +4,25 @@
 <a asp-action="Add" class='btn-secondary btn btn-sm'>Add New</a>
 
 <h2>Recommended Books</h2>
+<style>
+    .card {
+        border-radius: 10px;
+        background-color: black;
+    }
+
+    .card-img-top {
+        border-radius: 25px;
+    }
 
 
+    .card-title {
+        color: white;
+    }
+
+    .card-text {
+        color: white;
+    }
+</style>
 @*<table class="table">
     <thead>
         <tr>
@@ -19,12 +36,15 @@
     <div class="row">
         @foreach (var book in Model)
         {
+      
             <div class='col col-md-3'>
                 <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="@book.CoverPhoto" alt="Card image cap">
+                    <img class="card-img-top" src="@book.CoverPhoto" alt="Card image cap" >
                     <div class="card-body">
+                        <marquee>
                         <h5 class="card-title">@book.Title</h5>
                         <p class="card-text">Book Description</p>
+                    </marquee>
                         <a asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
                         <a asp-action="Update" asp-route-id="@book.Id" class="btn  btn-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@book.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
@@ -48,5 +68,10 @@
 
 
     </div>
+   
 @*</table>*@
     
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

@@ -1,35 +1,72 @@
 ﻿@using ConceptArchitect.BookManagement
 @model Author
-
-<h2>Add New Author</h2>
-
-
-<form asp-action="Add" method="POST">
+<style>
+    .formbox{
+       
+        width:60%;
+        height:40%;
+        background-color:black;
+        border:10px groove;
+        border-color:navajowhite;
+    }
+    .form-label{
+        color:white;
+        text-align:left;
+    }
+    .heading{
+        color:white;
+    }
+    .form-control{
+        width:50%;
+        height:50%;
+        color:white;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+    .button{
+        border-radius:50px;
+        height:100px;
+        width:400px;
+    }
     
-    <label asp-for="@Model.Id" class='form-label'>Id</label>
-    <input type='text' name="Id" value="@Model.Id" class='form-control' />
+</style>
 
+
+<center>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<form asp-action="Add" method="POST">
+   
+
+    <div class="formbox">
+        <h2 class="heading">Add New Author</h2>
+            <label asp-for="@Model.Id" class='form-label'>Id</label>
+    <input type='text' name="Id" value="@Model.Id" class='form-control' placeholder="Enter Author Id" />
+           
     <label asp-for="@Model.Name" class='form-label'>Name</label>
-    <input type='text' name="Name" value="@Model.Name" class='form-control' />
+    <input type='text' name="Name" value="@Model.Name" class='form-control' placeholder="Enter Author Name"/>
 
     <label asp-for="@Model.BirthDate" class='form-label'>Birth Date</label>
-    <input type='text' name="BirthDate" value="@Model.BirthDate" class='form-control' />
+    <input type='date' name="BirthDate"  value="@Model.BirthDate" class='form-control' placeholder="dd-mm-yyyy" />
 
 
     <label asp-for="@Model.Biography" class='form-label'>Biography</label>
-    <input type='text' name="biography" value="@Model.Biography" class='form-control' />
+    <input type='text' name="biography" value="@Model.Biography" class='form-control' placeholder="Give Author's Biography'" />
 
      <label asp-for="@Model.Email" class='form-label'>Email</label>
-     <input type='text' name="email" value="@Model.Email" class='form-control' />
+     <input type='text' name="email" value="@Model.Email" class='form-control' placeholder="Enter Email" />
 
      <label asp-for="@Model.Photo" class='form-label'>Photo</label>
-     <input type='text' name="photo" value="@Model.Photo" class='form-control' />
+     <input type='text' name="photo" value="@Model.Photo" class='form-control' placeholder="Enter Photo URL"/>
 
      
 
 
-    <div>
+    <div class="button">
         
-        <input type="submit" value="Add Author" class='btn btn-primary form-control'/>
+        <input type="submit" value="Add Author" class=' btn btn-info form-control'/>
     </div>
 </form>
+</div>
+
+</center>

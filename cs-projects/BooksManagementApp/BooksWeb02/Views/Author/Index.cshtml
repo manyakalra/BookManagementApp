@@ -1,8 +1,26 @@
 ﻿@model IEnumerable<ConceptArchitect.BookManagement.Author>
 
 
-<a asp-action="Add" class='btn-secondary btn btn-sm'>Add New</a>
+<a asp-action="Add" class='btn-secondary btn btn-sm' >Add New</a>
+<style>
+    .card {
+        border-radius: 10px;
+        background-color: black;
+    }
 
+    .card-img-top {
+        border-radius: 25px;
+    }
+
+
+    .card-title {
+        color: white;
+    }
+
+    .card-text {
+        color: white;
+    }
+</style>
 <div class="row">
     
     @foreach (var author in Model)
@@ -11,14 +29,22 @@
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="@author.Photo" alt="Card image cap">
                 <div class="card-body ">
+                    <marquee>
                     <h5 class="card-title">@author.Name</h5>
                     <p class="card-text">author biography</p>
+                    </marquee>
                     <a asp-action="details" asp-route-id="@author.Id" class="btn  btn-info">Details</a>
                     <a asp-action="Update" asp-route-id="@author.Id" class="btn  btn-warning">Edit</a>
-                    <a asp-action="delete" asp-route-id="@author.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
-                    
-                </div>
+                    <a asp-action="delete" asp-route-id="@author.Id" class="btn  btn-danger" onclick=" deleteCard()">Delete</a>
+                                    </div>
             </div>
         </div>
     }
 </div>
+
+
+
+<!-- Include Bootstrap JS and jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
