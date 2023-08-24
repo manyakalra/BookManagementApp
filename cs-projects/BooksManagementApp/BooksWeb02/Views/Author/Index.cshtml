@@ -1,8 +1,24 @@
 ﻿@model IEnumerable<ConceptArchitect.BookManagement.Author>
 
 
-<a asp-action="Add" class='btn-secondary btn btn-sm'>Add New</a>
+<a asp-action="Add" class='btn-secondary btn btn-sm' >Add New</a>
+<style>
+    .card{
+        border-radius:10px;
+        background-color:black;
+    }
+        .card-img-top{
+            border-radius:25px;
+        }
 
+    
+    .card-title{
+ color:white;
+    }
+    .card-text{
+color:white;
+    }
+</style>
 <div class="row">
     
     @foreach (var author in Model)
@@ -11,8 +27,10 @@
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="@author.Photo" alt="Card image cap">
                 <div class="card-body ">
+                    <marquee>
                     <h5 class="card-title">@author.Name</h5>
                     <p class="card-text">author biography</p>
+                    </marquee>
                     <a asp-action="details" asp-route-id="@author.Id" class="btn  btn-info">Details</a>
                     <a asp-action="Update" asp-route-id="@author.Id" class="btn  btn-warning">Edit</a>
                     <a asp-action="delete" asp-route-id="@author.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
