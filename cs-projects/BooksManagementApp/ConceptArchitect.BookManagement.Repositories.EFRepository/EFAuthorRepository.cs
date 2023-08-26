@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ConceptArchitect.BookManagement.Repositories.EFRepository
 {
@@ -30,6 +31,7 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
             await context.SaveChangesAsync();
         }
 
+
         public async Task<List<Author>> GetAll()
         {
             await Task.CompletedTask;
@@ -46,6 +48,12 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
             return q.ToList();
         }
 
+        public async Task<List<Author>> Search(string term)
+        {
+            await Task.CompletedTask;
+            List<Author> author = context.Authors.Where(a => a.Name.Contains(term) || a.Biography.Contains(term)).ToList();
+            return author;
+        }
         public async Task<Author> GetById(string id)
         {
             await Task.CompletedTask;

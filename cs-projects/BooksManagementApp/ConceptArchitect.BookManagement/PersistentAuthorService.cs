@@ -74,8 +74,8 @@ namespace ConceptArchitect.BookManagement
         public async Task<List<Author>> SearchAuthors(string term)
         {
             term = term.ToLower();
-
-            return await repository.GetAll(a => a.Name.ToLower().Contains(term) || a.Biography.ToLower().Contains(term));
+            return await repository.Search(term);
+          //  return await repository.GetAll(a => a.Name.ToLower().Contains(term) || a.Biography.ToLower().Contains(term));
         }
 
         public async Task<Author> UpdateAuthor(Author author)

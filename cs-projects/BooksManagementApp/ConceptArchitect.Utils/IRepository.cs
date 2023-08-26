@@ -7,6 +7,8 @@
 
         Task<List<Entity>> GetAll(Func<Entity, bool> predicate);
 
+        Task<List<Entity>> Search(string term);
+
         Task<Entity> GetById(Id id);
 
         Task<Entity> Update(Entity entity, Action<Entity, Entity> mergeOldNew);

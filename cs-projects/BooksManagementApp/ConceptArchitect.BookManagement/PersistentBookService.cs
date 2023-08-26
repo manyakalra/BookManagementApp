@@ -73,8 +73,7 @@ namespace ConceptArchitect.BookManagement
         public async Task<List<Book>> SearchBooks(string term)
         {
             term = term.ToLower();
-
-            return await repository.GetAll(b => b.Title.ToLower().Contains(term) || b.Description.ToLower().Contains(term));
+            return await repository.Search(term);
         }
 
         public async Task<Book> UpdateBook(Book book)
@@ -84,7 +83,7 @@ namespace ConceptArchitect.BookManagement
                 old.Title = newDetails.Title;
                 old.Description = newDetails.Description;
                 old.AuthorId = newDetails.AuthorId;
-                old.CoverPhoto = newDetails.CoverPhoto;
+                old.Cover = newDetails.Cover;
             });
         }
     }

@@ -20,11 +20,12 @@ namespace BooksWeb02.Extensions
             services.AddDbContext<BMSContext>((serviceProvider, contextBuilder) =>
             {
                 var config = serviceProvider.GetRequiredService<IConfiguration>();
-                var connectionString = config.GetConnectionString("EFContext");
+                var connectionString = config.GetConnectionString("EFContext2");
                 contextBuilder.UseSqlServer(connectionString);
             });
 
             services.AddTransient<IRepository<Author, string>, EFAuthorRepository>();
+            services.AddTransient<IRepository<Book, string>, EFBookRepository>();
 
             return services;
 

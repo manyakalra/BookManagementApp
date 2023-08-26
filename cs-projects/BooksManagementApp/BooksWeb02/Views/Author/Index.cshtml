@@ -2,6 +2,15 @@
 
 
 <a asp-action="Add" class='btn-secondary btn btn-sm' >Add New</a>
+<div class="input-group">
+    <div class="form-outline">
+        <form asp-action="index" method="get" >
+        <label for="term"></label>
+        <input type="text" id="search" name="term" placeholder="Search an Author" value="@ViewData["term"]" class="form-control" />
+        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+    </form>
+</div>
+</div>
 <style>
     .card{
         border-radius:10px;
@@ -33,7 +42,7 @@ color:white;
                     </marquee>
                     <a asp-action="details" asp-route-id="@author.Id" class="btn  btn-info">Details</a>
                     <a asp-action="Update" asp-route-id="@author.Id" class="btn  btn-warning">Edit</a>
-                    <a asp-action="delete" asp-route-id="@author.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
+                    <a asp-action="delete" asp-route-id="@author.Id" class="btn  btn-danger" >Delete</a>
                     
                 </div>
             </div>

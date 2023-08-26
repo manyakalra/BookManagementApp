@@ -17,11 +17,12 @@ namespace ConceptArchitect.BookManagement
         //optional
         public DateTime? DeathDate { get; set; }
 
-        public string Tags { get; set; }
+        public string? Tags { get; set; }
 
 
         //optional
-        public string Photo { get; set; }
+        
+        public string? Photo { get; set; }
 
 
         [WordCount(10)]

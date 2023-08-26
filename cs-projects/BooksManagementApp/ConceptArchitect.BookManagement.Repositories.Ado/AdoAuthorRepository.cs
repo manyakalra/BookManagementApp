@@ -12,7 +12,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
             this.db = db;
         }
 
-
+        
         public async Task<Author> Add(Author author)
         {
             var query = $"insert into authors(id,name,biography,photo,email) " +
@@ -37,7 +37,6 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
                 Biography = reader["biography"].ToString(),
                 Photo = reader["photo"].ToString(),
                 Email = reader["email"].ToString()
-
             };
         }
 
@@ -54,6 +53,10 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
                    where predicate(author)
                    select author).ToList();
             
+        }
+        public async Task<List<Author>> Search(string term)
+        {
+            return await GetAll(a => a.Name.ToLower().Contains(term) || a.Biography.ToLower().Contains(term));
         }
 
         public async Task<Author> GetById(string id)

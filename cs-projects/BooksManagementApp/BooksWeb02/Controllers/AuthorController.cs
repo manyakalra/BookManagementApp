@@ -12,13 +12,20 @@ namespace BooksWeb02.Controllers
             this.authorService = authors;
         }
 
-        public async Task<ViewResult> Index()
+       
+        public async Task<ViewResult> Index(string term)
         {
-            var authors = await authorService.GetAllAuthors();
-
+            List<Author> authors;
+            if (term == null)
+                authors = await authorService.GetAllAuthors();
+            else
+            {
+                ViewData["term"] = term;
+                authors = await authorService.SearchAuthors(term);
+            }
             return View(authors);
         }
-
+        
         public async Task<ViewResult> Details(string id)
         {
             var author = await authorService.GetAuthorById(id);
@@ -41,10 +48,39 @@ namespace BooksWeb02.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Delete(string id)
+        /*public async Task<ActionResult> Delete(string id)
         {
             await authorService.DeleteAuthor(id);
             return RedirectToAction("Index");
+        }*/
+        [HttpGet]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var author = await authorService.GetAuthorById(id);
+            return View(author); //returns a View for confirmation
+        }
+
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id, string _)
+        {
+            await authorService.DeleteAuthor(id);
+            return RedirectToAction("Index");
+        }
+
+        public async Task<ActionResult> Dropdown(string? selectedId, string? name)
+        {
+            var authors = await authorService.GetAllAuthors();
+
+            ViewBag.SelectedId = selectedId; //side optional information
+            ViewBag.Name = name;
+            return PartialView("_AuthorDropdown", authors);
+        }
+
+        public async Task<List<Author>> List()
+        {
+            var authors = await authorService.GetAllAuthors();
+            return authors;
         }
 
         [HttpGet]
@@ -69,10 +105,5 @@ namespace BooksWeb02.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ViewResult> Search(string term)
-        {
-            var authors = await authorService.SearchAuthors(term);
-            return View("Index", authors);
-        }
     }
 }

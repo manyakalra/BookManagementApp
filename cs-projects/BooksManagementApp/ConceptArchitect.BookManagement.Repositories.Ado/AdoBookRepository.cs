@@ -20,7 +20,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
         public async Task<Book> Add(Book book)
         {
             var query = $"insert into books(id,title,description,author_id,cover_photo) " +
-                              $"values('{book.Id}','{book.Title}','{book.Description}','{book.AuthorId}','{book.CoverPhoto}')";
+                              $"values('{book.Id}','{book.Title}','{book.Description}','{book.AuthorId}','{book.Cover}')";
 
             await db.ExecuteUpdateAsync(query);
 
@@ -40,7 +40,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
                 Title = reader["title"].ToString(),
                 Description = reader["description"].ToString(),
                 AuthorId = reader["author_id"].ToString(),
-                CoverPhoto = reader["cover_photo"].ToString()
+                Cover = reader["cover_photo"].ToString()
 
             };
         }
@@ -63,7 +63,11 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
         {
             return await db.QueryOneAsync($"select * from books where id='{id}'", BookExtractor);
         }
-
+        public async Task<List<Book>> Search(string term)
+        {
+            return await GetAll(a => a.Title.ToLower().Contains(term) || a.Description.ToLower().Contains(term));
+       
+        }
         public async Task<Book> Update(Book entity, Action<Book, Book> mergeOldNew)
         {
             var oldBook = await GetById(entity.Id);
@@ -74,7 +78,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
                             $"Title='{oldBook.Title}', " +
                             $"Description='{oldBook.Description}', " +
                             $"author_id='{oldBook.AuthorId}', " +
-                            $"cover_photo='{oldBook.CoverPhoto}' " +
+                            $"cover_photo='{oldBook.Cover}' " +
                             $"where id='{oldBook.Id}'";
 
                 await db.ExecuteUpdateAsync(query);

@@ -12,12 +12,18 @@ namespace BooksWeb02.Controllers
             this.bookService = books;
         }
 
-        public async Task<ViewResult> Index()
+        public async Task<ViewResult> Index(string term)
         {
-            var books = await bookService.GetAllBooks();
+            List<Book> books;
+            if (term == null)
+                books = books = await bookService.GetAllBooks();
+            else
+            {
+                ViewData["term"] = term;
+                books = await bookService.SearchBooks(term);
+            }
             return View(books);
         }
-
         public async Task<ViewResult> Details(string id)
         {
             var book = await bookService.GetBookById(id);
@@ -38,12 +44,26 @@ namespace BooksWeb02.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<ActionResult> Delete(string id)
+        /*public async Task<ActionResult> Delete(string id)
         {
             await bookService.DeleteBook(id);
             return RedirectToAction("Index");
         }
+*/
+        [HttpGet]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var book = await bookService.GetBookById(id);
+            return View(book); //returns a View for confirmation
+        }
 
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id, string _)
+        {
+            await bookService.DeleteBook(id);
+            return RedirectToAction("Index");
+        }
         [HttpGet]
         public async Task<ViewResult> Update(string id)
         {
@@ -54,7 +74,7 @@ namespace BooksWeb02.Controllers
                 Title = book.Title,
                 Description = book.Description,
                 AuthorId = book.AuthorId,
-                CoverPhoto = book.CoverPhoto
+                Cover = book.Cover
             });
         }
 
@@ -63,12 +83,6 @@ namespace BooksWeb02.Controllers
         {
             await bookService.UpdateBook(book);
             return RedirectToAction("Index");
-        }
-
-        public async Task<ViewResult> Search(string term)
-        {
-            var books = await bookService.SearchBooks(term);
-            return View("Index", books);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace BooksWeb02
 
             services.AddTransient<IAuthorService, PersistentAuthorService>();
 
+            services.AddTransient<IBookService, PersistentBookService>();
+
             return services;
         }
 
@@ -45,7 +47,7 @@ namespace BooksWeb02
             }
 
 
-            app.UseOnUrl("/admin/seed", async context =>
+            app.UseOnUrl("/admin/seed/authors", async context =>
             {
                 var authorService = context.RequestServices.GetService<IAuthorService>();
 
@@ -59,7 +61,6 @@ namespace BooksWeb02
                     BirthDate = new DateTime(1906, 1, 1),
                     DeathDate = new DateTime(1976, 1, 1)
                 });
-
                 await authorService.AddAuthor(new Author()
                 {
                     Id = "mahatma-gandhi",
@@ -83,6 +84,33 @@ namespace BooksWeb02
                 context.Response.Redirect("/author");
             });
 
+            app.UseOnUrl("/admin/seed/books", async context =>
+            {
+                var authorService = context.RequestServices.GetService<IAuthorService>();
+                var bookService = context.RequestServices.GetService<IBookService>();
+
+                await bookService.AddBook(new Book()
+                {
+                    Id = "my-experiments-with-truth",
+                    Title = "My Experiements with Truth",
+                    AuthorId = "mahatma-gandhi",
+                    Cover = "https://m.media-amazon.com/images/I/71GWX22G92L._AC_UY327_FMwebp_QL65_.jpg",
+                    Description = "The autobiography of Mahatma Gandhi presnted as his experiments with truth. A must read"
+                });
+
+                await bookService.AddBook(new Book()
+                {
+                    Id = "kurukshetra",
+                    Title = "Kurukshetra",
+                    AuthorId = "dinkar",
+                    Cover = "https://m.media-amazon.com/images/I/51rZ7I5lG8L._SX331_BO1,204,203,200_.jpg",
+                    Description = "An epic poem, a conversastion between Bhisma and Yudhishthira about the necessity of war"
+
+                });
+
+                context.Response.Redirect("/book");
+            });
+
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -92,7 +120,6 @@ namespace BooksWeb02
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
             return app;
         }
