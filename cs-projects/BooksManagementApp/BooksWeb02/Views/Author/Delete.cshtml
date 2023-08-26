@@ -3,11 +3,10 @@
 
 <h1>Confirm Delete @Model.Name</h1>
 
-<partial name="Details" for="@Model" />
+<partial name="AuthorInfo" for="@Model" />
 
 <form method="POST">
     <input type="hidden" name="id" value="@Model.Id"  />
     <input type="submit" value="Yes! Delete the Author" class='btn btn-danger' />
     <p><a asp-action="index" >No. I have changed my mind</a></p>
 </form>
-

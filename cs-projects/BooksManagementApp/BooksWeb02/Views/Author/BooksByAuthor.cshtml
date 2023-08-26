@@ -1,0 +1,44 @@
+﻿@*@model IEnumerable<ConceptArchitect.BookManagement.Book>*@
+@using ConceptArchitect.BookManagement
+@model dynamic
+<style>
+    .card {
+        border-radius: 10px;
+        background-color: black;
+    }
+
+    .card-img-top {
+        border-radius: 25px;
+    }
+
+    .card-title {
+        color: white;
+    }
+
+    .card-text {
+        color: white;
+    }
+</style>
+<div class="row">
+    @foreach (var book in Model)
+    {
+        <div class='col col-md-3'>
+            <div class="card" style="width: 15rem;">
+                <img class="card-img-top" src="@book.Cover" alt="Card image cap">
+                <div class="card-body">
+                    <marquee>
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">Book Description</p>
+                    </marquee>
+                    <a asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
+                    <a asp-action="Update" asp-route-id="@book.Id" class="btn  btn-warning">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@book.Id" class="btn  btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+</div>

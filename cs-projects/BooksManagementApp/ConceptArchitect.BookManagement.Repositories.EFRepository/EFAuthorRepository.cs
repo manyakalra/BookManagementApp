@@ -51,7 +51,10 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
         public async Task<List<Author>> Search(string term)
         {
             await Task.CompletedTask;
-            List<Author> author = context.Authors.Where(a => a.Name.Contains(term) || a.Biography.Contains(term)).ToList();
+            List<Author> author = context.Authors.Where(a => 
+                                                            a.Name.Contains(term) ||
+                                                            a.Biography.Contains(term))
+                                                            .ToList();
             return author;
         }
         public async Task<Author> GetById(string id)

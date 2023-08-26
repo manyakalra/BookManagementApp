@@ -86,5 +86,6 @@ namespace ConceptArchitect.BookManagement
                 old.Cover = newDetails.Cover;
             });
         }
+
     }
 }

@@ -24,6 +24,11 @@ namespace BooksWeb02.Controllers
             }
             return View(books);
         }
+
+        public async Task<ViewResult> BooksByAuthor(string id)
+        {
+            return await Index(id);
+        }
         public async Task<ViewResult> Details(string id)
         {
             var book = await bookService.GetBookById(id);

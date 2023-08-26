@@ -1,4 +1,5 @@
-﻿using ConceptArchitect.BookManagement;
+﻿using BooksWeb02.ViewModels;
+using ConceptArchitect.BookManagement;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksWeb02.Controllers
@@ -26,13 +27,13 @@ namespace BooksWeb02.Controllers
             return View(authors);
         }
         
+
         public async Task<ViewResult> Details(string id)
         {
             var author = await authorService.GetAuthorById(id);
 
             return View(author);
         }
-
 
         [HttpGet]
         public ViewResult Add()
@@ -104,6 +105,50 @@ namespace BooksWeb02.Controllers
             await authorService.UpdateAuthor(author);
             return RedirectToAction("Index");
         }
+        public async Task<ViewResult> BooksByAuthor(string authorId)
+        {
+            return await Index(authorId);
+        }
 
+        public async Task<ViewResult> Edit(string id)
+        {
+            var author = await authorService.GetAuthorById(id);
+            var vm = new EditAuthorViewModel()
+            {
+                Id = author.Id,
+                Name = author.Name,
+                Biography = author.Biography,
+                BirthDate = author.BirthDate,
+                DeathDate = author.DeathDate,
+                Tags = author.Tags,
+                Photo = author.Photo
+            };
+            return View(vm);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(EditAuthorViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var author = new Author()
+                {
+                    Id = vm.Id,
+                    Name = vm.Name,
+                    Biography = vm.Biography,
+                    BirthDate = vm.BirthDate,
+                    DeathDate = vm.DeathDate,
+                    Tags = vm.Tags,
+                    Photo = vm.Photo
+                };
+
+                await authorService.UpdateAuthor(author);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return View(vm);
+            }
+        }
     }
 }
