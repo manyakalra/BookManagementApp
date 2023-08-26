@@ -4,6 +4,7 @@ using ConceptArchitect.BookManagement.Repositories.EFRepository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ConceptArchitect.BookManagement.Repositories.EFRepository.Migrations
 {
     [DbContext(typeof(BMSContext))]
-    partial class BMSContextModelSnapshot : ModelSnapshot
+    [Migration("20230826192323_init_4")]
+    partial class init_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -84,53 +87,6 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("ConceptArchitect.BookManagement.Review", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Rating")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ReviewDetails")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserEmail")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserEmail");
-
-                    b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("ConceptArchitect.BookManagement.User", b =>
-                {
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Photo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("PhotoUrl");
-
-                    b.HasKey("Email");
-
-                    b.ToTable("Users");
-                });
-
             modelBuilder.Entity("ConceptArchitect.BookManagement.Book", b =>
                 {
                     b.HasOne("ConceptArchitect.BookManagement.Author", "Author")
@@ -140,17 +96,6 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository.Migrations
                         .IsRequired();
 
                     b.Navigation("Author");
-                });
-
-            modelBuilder.Entity("ConceptArchitect.BookManagement.Review", b =>
-                {
-                    b.HasOne("ConceptArchitect.BookManagement.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserEmail")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("ConceptArchitect.BookManagement.Author", b =>

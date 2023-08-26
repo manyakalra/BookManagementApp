@@ -22,8 +22,4 @@
     <ProjectReference Include="..\ConceptArchitect.Utils\ConceptArchitect.Utils.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Search\" />
-  </ItemGroup>
-
 </Project>
