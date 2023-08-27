@@ -36,9 +36,9 @@ color:white;
             <div class="card" style="width: 18rem;">
                 <img class="card-img-top" src="@author.Photo" alt="Card image cap">
                 <div class="card-body ">
-                    <marquee>
                     <h5 class="card-title">@author.Name</h5>
-                    <p class="card-text">author biography</p>
+                    <marquee>
+                    <p class="card-text">@author.Biography</p>
                     </marquee>
                     <a asp-action="details" asp-route-id="@author.Id" class="btn  btn-info">Details</a>
                     <a asp-action="Update" asp-route-id="@author.Id" class="btn  btn-warning">Edit</a>
