@@ -33,6 +33,7 @@
         color: white;
     }
 </style>
+<br />
     <div class="row">
         @foreach (var book in Model)
         {
@@ -40,9 +41,9 @@
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" src="@book.Cover" alt="Card image cap">
                     <div class="card-body">
-                        <marquee>
                         <h5 class="card-title">@book.Title</h5>
-                        <p class="card-text">Book Description</p>
+                    <marquee>
+                        <p class="card-text">@book.Description</p>
                     </marquee>
                         <a asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
                         <a asp-action="Update" asp-route-id="@book.Id" class="btn  btn-warning">Edit</a>
