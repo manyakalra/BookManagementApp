@@ -48,6 +48,9 @@
                         <a asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
                         <a asp-action="Update" asp-route-id="@book.Id" class="btn  btn-warning">Edit</a>
                         <a asp-action="Delete" asp-route-id="@book.Id" class="btn  btn-danger" onclick="confirmDelete()">Delete</a>
+                        <a asp-action="AddToFavorites" asp-route-id="@book.Id" class="btn  btn-primary" style="margin:.5rem 0rem">Mark as Favorite</a>
+                        <a asp-controller="Review" asp-action="AddReview" asp-route-id="@book.Id" class="btn  btn-secondary" style="margin:.5rem 0rem">Add a review</a>
+
                     </div>
                 </div>
             </div>

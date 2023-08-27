@@ -6,7 +6,6 @@ namespace ConceptArchitect.BookManagement
 {
     public class Author
     {
-        [UniqueAuthorId]
         public string Id { get; set; }
 
 
@@ -17,7 +16,7 @@ namespace ConceptArchitect.BookManagement
         //optional
         public DateTime? DeathDate { get; set; }
 
-        public string Tags { get; set; }
+        public string? Tags { get; set; }
 
 
         //optional
@@ -34,8 +33,6 @@ namespace ConceptArchitect.BookManagement
 
         public DateTime BirthDate { get; set; }
 
-        //EF will auto populate is based on foreign key
-        public List<Book> Books { get; set; } = new List<Book>();
 
         public override string ToString()
         {

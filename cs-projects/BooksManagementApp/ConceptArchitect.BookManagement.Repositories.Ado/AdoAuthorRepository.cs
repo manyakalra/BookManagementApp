@@ -16,7 +16,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
         public async Task<Author> Add(Author author)
         {
             var query = $"insert into authors(id,name,biography,photo,email) " +
-                              $"values('{author.Id}','{author.Name}','{author.Biography}','{author.Photo}','{author.Email}')";
+                              $"values('{author.Id}','{author.Name}','{author.Biography}','{author.Photo}','{author.Email}');";
 
             await db.ExecuteUpdateAsync(query);
 
@@ -25,7 +25,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
 
         public async Task Delete(string id)
         {
-            await db.ExecuteUpdateAsync($"delete from authors where id='{id}'");
+            await db.ExecuteUpdateAsync($"delete from authors where id='{id}';");
         }
 
         private Author AuthorExtractor(IDataReader reader)
@@ -43,7 +43,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
 
         public async Task<List<Author>> GetAll()
         {
-            return await db.QueryAsync("select * from authors", AuthorExtractor);
+            return await db.QueryAsync("select * from authors;", AuthorExtractor);
         }
 
         public async Task<List<Author>> GetAll(Func<Author, bool> predicate)
@@ -58,7 +58,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
 
         public async Task<Author> GetById(string id)
         {
-            return await db.QueryOneAsync($"select * from authors where id='{id}'", AuthorExtractor);
+            return await db.QueryOneAsync($"select * from authors where id='{id}';", AuthorExtractor);
         }
 
         public async Task<Author> Update(Author entity, Action<Author, Author> mergeOldNew)
@@ -72,7 +72,7 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
                             $"biography='{oldAuthor.Biography}', " +
                             $"Photo='{oldAuthor.Photo}', " +
                             $"Email='{oldAuthor.Email}' " +
-                            $"where id='{oldAuthor.Id}'";
+                            $"where id='{oldAuthor.Id}';";
 
                 await db.ExecuteUpdateAsync(query);
             }
@@ -81,6 +81,21 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
 
             
 
+        }
+
+        public Task<List<Author>> GetAllFavorites(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Author> AddFavorite(Author entity, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteFavorite(string bookId, string userId)
+        {
+            throw new NotImplementedException();
         }
     }
 }

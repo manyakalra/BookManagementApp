@@ -16,5 +16,8 @@ namespace ConceptArchitect.BookManagement
         Task<Book> UpdateBook(Book book);
         Task DeleteBook(string bookId);
         Task<List<Book>> SearchBooks(string term);
+        Task<List<Book>> GetAllFavorites(string userId);
+        Task<Book> AddFav(Book book, string userId);
+        Task DeleteFavorite(string bookId, string userId);
     }
 }

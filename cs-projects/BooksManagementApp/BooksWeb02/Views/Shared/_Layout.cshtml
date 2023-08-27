@@ -18,17 +18,22 @@
         <div class="navbar">
             <div>
                 <a style="text-decoration:none" asp-area="" asp-controller="Home" asp-action="Index">
-       <h3>
-                        
-     Book Management App</h3></a></li>
+                    <h3>Book Management App</h3>
+                </a>
             </div>
             <ul>
                 <li><a asp-controller="author" asp-action="index">Authors</a></li>
                 <li><a asp-controller="author" asp-action="add">Add Author</a></li>
                 <li><a asp-controller="book" asp-action="index">Books</a></li>
                 <li><a asp-controller="book" asp-action="add">Add Book</a></li>
-                <li class="bg-success text-white"><a asp-controller="book" asp-action="add">Login</a></li>
             </ul>
+            <div class="dropdown">
+                <button class="dropbtn">Members</button>
+                <div class="dropdown-content">
+                    <a class="nav-link text-light" asp-controller="user" asp-action="login">Login</a>
+                    <a class="nav-link text-light" asp-controller="user" asp-action="add">Register</a>
+                </div>
+            </div>
         </div>
     </header>
     <div class="container">

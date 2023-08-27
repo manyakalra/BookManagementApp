@@ -12,6 +12,8 @@
         Task<Entity> Update(Entity entity, Action<Entity, Entity> mergeOldNew);
 
         Task Delete(Id id);
-
+        Task<List<Entity>> GetAllFavorites(string userId);
+        Task<Entity> AddFavorite(Entity entity, string userId);
+        Task DeleteFavorite(string bookId, string userId);
     }
 }

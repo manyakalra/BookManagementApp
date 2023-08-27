@@ -82,5 +82,35 @@ namespace ConceptArchitect.BookManagement.Repositories.Ado
 
             return entity;
         }
+
+        public async Task<List<Book>> GetAllFavorites(string userEmail)
+        {
+            return await db.QueryAsync($"Select * from Books where id in(Select book_id from Favorites where user_id = '{userEmail}');", BookExtractor);
+        }
+
+        public async Task<List<Book>> GetAllFavorites(Func<Book, bool> predicate)
+        {
+            var books = await GetAllFavorites("");
+
+            return (from book in books
+                    where predicate(book)
+                    select book).ToList();
+
+        }
+
+        public async Task<Book> AddFavorite(Book book, string userId)
+        {
+            var query = $"insert into favorites(book_id, user_id, status) " +
+                              $"values('{book.Id}','{userId}','Reading')";
+
+            await db.ExecuteUpdateAsync(query);
+
+            return book;
+        }
+
+        public async Task DeleteFavorite(string bookId, string userId)
+        {
+            await db.ExecuteUpdateAsync($"delete from favorites where book_id='{bookId}' and user_id='{userId}'");
+        }
     }
 }

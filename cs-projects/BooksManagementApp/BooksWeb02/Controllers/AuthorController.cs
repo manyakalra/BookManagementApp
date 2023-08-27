@@ -36,9 +36,13 @@ namespace BooksWeb02.Controllers
         [HttpPost]
         public async Task<ActionResult> Add(Author author)
         {
-            await authorService.AddAuthor(author);
+            if(ModelState.IsValid)
+            {
+                await authorService.AddAuthor(author);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            return View(author);
         }
 
         public async Task<ActionResult> Delete(string id)
@@ -51,15 +55,7 @@ namespace BooksWeb02.Controllers
         public async Task<ViewResult> Update(string id)
         {
             var author = await authorService.GetAuthorById(id);
-            return View(new Author()
-            {
-                Id = author.Id,
-                Name = author.Name,
-                Biography = author.Biography,
-                BirthDate = author.BirthDate,
-                Email = author.Email,
-                Photo = author.Photo
-            });
+            return View(author);
         }
 
         [HttpPost]

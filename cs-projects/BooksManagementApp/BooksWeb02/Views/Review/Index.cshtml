@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ConceptArchitect.BookManagement.Review>
+
+<h2>All Reviews</h2>
+
+<div class="row">
+
+    @foreach (var review in Model)
+    {
+        <div class='col col-md-3'>
+            <div class="card" style="width: 18rem;margin-bottom:5rem">
+
+                <div class="card-body">
+                    <h5 class="card-title">@review.BookId</h5>
+                    <p class="card-text">@review.ReviewerEmail</p>
+                    <p class="card-text">@review.Rating</p>
+                    <p class="card-text">@review.Details</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>

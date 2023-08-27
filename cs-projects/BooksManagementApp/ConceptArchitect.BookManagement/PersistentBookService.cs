@@ -3,6 +3,7 @@ using ConceptArchitect.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -86,6 +87,21 @@ namespace ConceptArchitect.BookManagement
                 old.AuthorId = newDetails.AuthorId;
                 old.CoverPhoto = newDetails.CoverPhoto;
             });
+        }
+
+        public async Task<List<Book>> GetAllFavorites(string userId)
+        {
+            return await repository.GetAllFavorites(userId);
+        }
+
+        public async Task<Book> AddFav(Book book, string userId)
+        {
+            return await repository.AddFavorite(book, userId);
+        }
+
+        public async Task DeleteFavorite(string bookId, string userId)
+        {
+            await repository.DeleteFavorite(bookId, userId);
         }
     }
 }

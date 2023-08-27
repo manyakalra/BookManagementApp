@@ -23,11 +23,21 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
             return entity;
         }
 
+        public Task<Author> AddFavorite(Author entity, string userId)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Delete(string id)
         {
             var author = await GetById(id);
             context.Authors.Remove(author);
             await context.SaveChangesAsync();
+        }
+
+        public Task DeleteFavorite(string bookId, string userId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<List<Author>> GetAll()
@@ -44,6 +54,11 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
                    select author;
 
             return q.ToList();
+        }
+
+        public Task<List<Author>> GetAllFavorites(string userId)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Author> GetById(string id)
