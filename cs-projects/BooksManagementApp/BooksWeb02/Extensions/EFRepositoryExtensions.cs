@@ -20,7 +20,7 @@ namespace BooksWeb02.Extensions
             services.AddDbContext<BMSContext>((serviceProvider, contextBuilder) =>
             {
                 var config = serviceProvider.GetRequiredService<IConfiguration>();
-                var connectionString = config.GetConnectionString("EFContext2");
+                var connectionString = config.GetConnectionString("Azure");
                 contextBuilder.UseSqlServer(connectionString);
             });
 

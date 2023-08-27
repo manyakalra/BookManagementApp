@@ -1,5 +1,6 @@
 ﻿using BooksWeb02.ViewModels;
 using ConceptArchitect.BookManagement;
+using ConceptArchitect.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksWeb02.Controllers
@@ -106,6 +107,24 @@ namespace BooksWeb02.Controllers
             return await Index(userId);
         }
 
-
+        [HttpGet]
+        public ViewResult Login()
+        {
+            return View(new User());
+        }
+        [HttpPost]
+        public async Task<ActionResult> Login(User user)
+        {
+            try
+            {
+                var response = await userService.GetUserById(user.Email);
+            }
+            catch (EntityNotFoundException ex)
+            {
+                return RedirectToAction("Login", "User", null);
+            }
+            HttpContext.Session.SetString("session", user.Email);
+            return RedirectToAction("Index", "Home", null);
+        }
     }
 }
