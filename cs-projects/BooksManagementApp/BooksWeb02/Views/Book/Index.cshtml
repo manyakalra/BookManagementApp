@@ -6,13 +6,13 @@
 
 <a asp-action="Add" class='btn-secondary btn btn-sm'>Add New</a>
 <div class="input-group">
-    <div class="form-outline">
-        <form asp-action="index" method="get">
+        <form class="form-inline" asp-action="index" method="get">
             <label for="term"></label>
             <input type="text" id="search" name="term" placeholder="Search a Book" value="@ViewData["term"]" class="form-control" />
-            <button type="submit" value="Search" class="btn btn-primary">Search</button>
+        <span class="input-group-addon"> </span>
+            <input type="submit" value="Search" class="btn btn-primary" />
         </form>
-    </div>
+    @*</div>*@
 </div>
 <style>
     .card {

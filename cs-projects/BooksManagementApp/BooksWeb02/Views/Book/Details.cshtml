@@ -1,30 +1,50 @@
-﻿@using ConceptArchitect.BookManagement
-@model Book
+﻿@using BooksWeb02.ViewModels;
+@model BookDetailReviewViewModel;
 
 
-
-
-
-<h2>About @Model.Title</h2>
-
-
+<h2>About @Model.Book.Title</h2>
 
 <div class='row'>
     <div class='col col-md-4'>
-        <img src="@Model.Cover" class="author-details-photo" />
+        <img src="@Model.Book.Cover" class="author-details-photo" />
+       
     </div>
-
-
 
     <div class='col col-md-8'>
         <h3>Description</h3>
-        <p>@Model.Description</p>
+        <p>@Model.Book.Description</p>
     </div>
-
-
 
     <div class='col col-md-8'>
-        <h3>Author ID</h3>
-        <h5>@Model.AuthorId</h5>
+        <a style="margin-top:0.5rem;margin-left:1rem" asp-action="Update" asp-route-id="@Model.Book.Id" class="btn  btn-warning">Edit</a>
+        
+        <a style="margin-top:0.5rem;margin-left:5rem" asp-action="Delete" asp-route-id="@Model.Book.Id" class="btn  btn-danger">Delete</a>
+        <br />
+        <br />
+        <h4>Author :</h4>
+        <h5><a style="text-decoration:none; background-color:burlywood" asp-controller="author" asp-action="details" asp-route-id="@Model.Book.AuthorId" class="btn  btn-info">@Model.Book.AuthorId</a></h5>
     </div>
 </div>
+<br />
+
+<br />
+
+<br />
+
+<br />
+<h3>User Reviews for @Model.Book.Title</h3>
+<br />
+@foreach(var review in Model.Reviews)
+{
+        <div class="card">
+            <div class="card-body">
+            <div class="card-title">
+                @review.Rating<svg height="20" width="50">
+                    <polygon points="8,0.6 3.4,14.6 14,6.5 0.8,6.5 13,15" style="fill:lime;stroke:purple;stroke-width:1;fill-rule:nonzero;" />Stars
+                </svg><b>@review.Title</b>
+            </div>
+                <p class="card-text">@review.ReviewDetails</p>
+            <p class="font-weight-bold">@review.UserId</p>
+            </div>
+        </div>
+}

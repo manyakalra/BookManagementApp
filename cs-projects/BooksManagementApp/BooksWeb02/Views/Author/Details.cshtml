@@ -1,11 +1,56 @@
-﻿@*@model IEnumerable<ConceptArchitect.BookManagement.Author>
-*@
-@using ConceptArchitect.BookManagement
-@model dynamic
+﻿@using BooksWeb02.ViewModels;
+@model AuthorDetailBookViewModel;
+
+<style>
+    .card {
+        border-radius: 10px;
+        background-color: black;
+    }
+
+    .card-img-top {
+        border-radius: 25px;
+    }
 
 
-<partial name="AuthorInfo" for="@Model" />
+    .card-title {
+        color: white;
+    }
+
+    .card-text {
+        color: white;
+    }
+</style>
+<partial name="AuthorInfo" for="@Model.Author" />
 <br />
-<h3>
+
+<a style="margin-top:0.1rem;margin-left:1rem" asp-action="Update" asp-route-id="@Model.Author.Id" class="btn  btn-warning">Edit</a>
+<a style="margin-top:0.1rem;margin-left:4rem" asp-action="delete" asp-route-id="@Model.Author.Id" class="btn  btn-danger">Delete</a>
+@*<h3>
     <a asp-controller="book" asp-action="booksbyauthor" asp-route-id="@Model.Id">Books By @Model.Name</a>
-</h3>
+</h3>*@
+<br />
+<br />
+<h5>Books By @Model.Author.Name</h5>
+<br />
+<div class="row">
+    @*@for(var i=0;i<10;i++)*@
+    @foreach (var book in Model.Books)
+    {
+        <div class='col col-md-3'>
+            <div class="card" style="width: 10rem;">
+                <img class="card-img-top" src="@book.Cover" alt="Card image cap">
+                <div class="card-body">
+                    <marquee>
+                        <h5 class="card-title">@book.Title</h5>
+                        <p class="card-text">Book Description</p>
+                    </marquee>
+                    <a asp-controller="book" asp-action="Details" asp-route-id="@book.Id" class="btn  btn-info">Details</a>
+                </div>
+            </div>
+        </div>
+
+    }
+
+
+
+</div>

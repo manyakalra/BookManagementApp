@@ -51,11 +51,12 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
         public async Task<List<Review>> Search(string term)
         {
             await Task.CompletedTask;
-            List<Review> author = context.Reviews.Where(a =>
+            List<Review> author = context.Reviews.Where(a => a.Title.Contains(term) ||
                                                             a.ReviewDetails.Contains(term) ||
                                                             a.User.Name.Contains(term) ||
-                                                            a.User.Email.Contains(term))
-                                                            .ToList();
+                                                            a.User.Email.Contains(term)||
+                                                            a.Book.Id.Equals(term)
+                                                            ).ToList();
             return author;
         }
         public async Task<Review> GetById(string id)

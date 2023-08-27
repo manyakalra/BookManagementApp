@@ -23,6 +23,10 @@ namespace BooksWeb02
 
             services.AddTransient<IBookService, PersistentBookService>();
 
+            services.AddTransient<IUserService, PersistentUserService>();
+
+            services.AddTransient<IReviewService, PersistentReviewService>();
+
             return services;
         }
 
@@ -31,9 +35,6 @@ namespace BooksWeb02
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-
-
-
 
             }
             else
@@ -106,6 +107,74 @@ namespace BooksWeb02
                     Cover = "https://m.media-amazon.com/images/I/51rZ7I5lG8L._SX331_BO1,204,203,200_.jpg",
                     Description = "An epic poem, a conversastion between Bhisma and Yudhishthira about the necessity of war"
 
+                });
+
+                context.Response.Redirect("/book");
+            });
+            app.UseOnUrl("/admin/seed/users", async context =>
+            {
+                // var authorService = context.RequestServices.GetService<IAuthorService>();
+                var userService = context.RequestServices.GetService<IUserService>();
+
+                await userService.AddUser(new User()
+                {
+                    Email = "user1@gmail.com",
+                    Password = "user123",
+                    Name = "User 1",
+                    Photo= "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                });
+                await userService.AddUser(new User()
+                {
+                    Email = "user2@gmail.com",
+                    Password = "user123",
+                    Name = "User 2",
+                    Photo = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                });
+                await userService.AddUser(new User()
+                {
+                    Email = "user3@gmail.com",
+                    Password = "user123",
+                    Name = "User 3",
+                    Photo = "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                });
+
+                context.Response.Redirect("/");
+            });
+
+
+            app.UseOnUrl("/admin/seed/reviews", async context =>
+            {
+               // var authorService = context.RequestServices.GetService<IAuthorService>();
+                var reviewService = context.RequestServices.GetService<IReviewService>();
+
+                await reviewService.AddReview(new Review()
+                {
+                    Id = "review-dinkar-1",
+                    Title = "Good Book",
+                    BookId = "kurukshetra",
+                    Rating = "4",
+                    UserId = "user1@gmail.com",
+
+                    ReviewDetails = "Kurukshetra is widely regarded as one of the greatest works in Hindi literature, and Dinkar's mastery of language"
+                });
+                await reviewService.AddReview(new Review()
+                {
+                    Id = "review-dinkar-3",
+                    Title = "Readable Book",
+                    BookId = "kurukshetra",
+                    Rating = "2",
+                    UserId = "user2@gmail.com",
+                    ReviewDetails = "Just finished reading this book, interesting and boring at the same time."
+                });
+                await reviewService.AddReview(new Review()
+                {
+                    Id = "review-dinkar-2",
+                    Title = "Okay Book",
+                    BookId = "kurukshetra",
+                    Rating = "3",
+                    UserId = "user2@gmail.com",
+
+                    ReviewDetails = "The autobiography of Mahatma Gandhi presnted as his experiments with truth. An okay okay book"
                 });
 
                 context.Response.Redirect("/book");

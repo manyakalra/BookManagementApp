@@ -1,0 +1,36 @@
+﻿@model IEnumerable<ConceptArchitect.BookManagement.Review>
+
+
+<a asp-action="Add" class='btn-secondary btn btn-sm' >Add New</a>
+<div class="input-group">
+    <div class="form-outline">
+        <form asp-action="index" method="get" >
+        <label for="term"></label>
+        <input type="text" id="search" name="term" placeholder="Search an Author" value="@ViewData["term"]" class="form-control" />
+        <button type="submit" value="Search" class="btn btn-primary">Search</button>
+    </form>
+</div>
+</div>
+
+<table>
+    @foreach (var author in Model)
+    {
+        <table>
+            <tr>
+                <th>Rating</th>
+                <th>Contact</th>
+                <th>Country</th>
+            </tr>
+            <tr>
+                <td>Alfreds Futterkiste</td>
+                <td>Maria Anders</td>
+                <td>Germany</td>
+            </tr>
+            <tr>
+                <td>Centro comercial Moctezuma</td>
+                <td>Francisco Chang</td>
+                <td>Mexico</td>
+            </tr>
+        </table>
+    }
+</table>

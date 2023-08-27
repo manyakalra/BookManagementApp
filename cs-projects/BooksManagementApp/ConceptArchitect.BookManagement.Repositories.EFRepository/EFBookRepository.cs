@@ -51,7 +51,7 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository
                                                 a.Title.Contains(term) || 
                                                 a.Description.Contains(term) || 
                                                 a.Author.Name.Contains(term) ||
-                                                a.Author.Id.Equals(term))
+                                                a.AuthorId.Equals(term))
                                                 .ToList();
             return author;
         }

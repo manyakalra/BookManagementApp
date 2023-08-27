@@ -89,6 +89,10 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository.Migrations
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("BookId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Rating")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -97,13 +101,19 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserEmail")
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserEmail");
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Reviews");
                 });
@@ -144,11 +154,19 @@ namespace ConceptArchitect.BookManagement.Repositories.EFRepository.Migrations
 
             modelBuilder.Entity("ConceptArchitect.BookManagement.Review", b =>
                 {
-                    b.HasOne("ConceptArchitect.BookManagement.User", "User")
+                    b.HasOne("ConceptArchitect.BookManagement.Book", "Book")
                         .WithMany()
-                        .HasForeignKey("UserEmail")
+                        .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("ConceptArchitect.BookManagement.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
 
                     b.Navigation("User");
                 });

@@ -7,10 +7,11 @@ namespace BooksWeb02.Controllers
     public class AuthorController:Controller
     {
         IAuthorService authorService;
-
-        public AuthorController(IAuthorService  authors)
+        IBookService bookService;
+        public AuthorController(IAuthorService  authors,IBookService bookService)
         {
             this.authorService = authors;
+            this.bookService = bookService;
         }
 
        
@@ -32,7 +33,14 @@ namespace BooksWeb02.Controllers
         {
             var author = await authorService.GetAuthorById(id);
 
-            return View(author);
+            var book = await bookService.SearchBooks(id);
+            
+            var authorBooks = new AuthorDetailBookViewModel
+            {
+                Author=author,
+                Books = book
+            };
+            return View(authorBooks);
         }
 
         [HttpGet]

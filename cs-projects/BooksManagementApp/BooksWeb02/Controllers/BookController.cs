@@ -1,4 +1,5 @@
-﻿using ConceptArchitect.BookManagement;
+﻿using BooksWeb02.ViewModels;
+using ConceptArchitect.BookManagement;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BooksWeb02.Controllers
@@ -6,10 +7,12 @@ namespace BooksWeb02.Controllers
     public class BookController : Controller
     {
         IBookService bookService;
+        IReviewService reviewService;
 
-        public BookController(IBookService books)
+        public BookController(IBookService books, IReviewService reviewService)
         {
             this.bookService = books;
+            this.reviewService = reviewService;
         }
 
         public async Task<ViewResult> Index(string term)
@@ -32,7 +35,14 @@ namespace BooksWeb02.Controllers
         public async Task<ViewResult> Details(string id)
         {
             var book = await bookService.GetBookById(id);
-            return View(book);
+            var reviews = await reviewService.SearchReviews(id);
+
+            var bookReviews = new BookDetailReviewViewModel
+            {
+                Book = book,
+                Reviews = reviews
+            };
+            return View(bookReviews);
         }
 
         [HttpGet]
