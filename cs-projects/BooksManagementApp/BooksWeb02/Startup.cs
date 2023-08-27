@@ -18,6 +18,7 @@ namespace BooksWeb02
             services.AddSingleton<IBookService, PersistentBookService>();*/
 
             services.AddEFBmsRepository();
+            services.AddSwaggerGen();
 
             services.AddTransient<IAuthorService, PersistentAuthorService>();
 
@@ -45,6 +46,11 @@ namespace BooksWeb02
                     await bmsContext.Database.EnsureCreatedAsync();
                     context.Response.Redirect("/");
                 });
+            }
+            if(app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
             }
 
 
